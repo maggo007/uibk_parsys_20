@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# Execute job in the queue "std.q" unless you have special requirements.
+#$ -q std.q
+
+# The batch system should use the current directory as working directory.
+#$ -cwd
+
+# Name your job. Unless you use the -o and -e options, output will
+# go to a unique file name.ojob_id for each job.
+#$ -N kopp_nbody_comparison
+
+##$ -M markus.kopp@student.uibk.ac.at
+##$ -m e
+
+# Join the error stream to the output stream.
+#$ -j yes
+
+#$ -pe openmp 8
+
+##module load openmpi/4.0.3
+
+N=10000
+T=1000
+for XN in 100, 500, 1000, 2000, 5000, 10000
+do
+    for XT in 1, 2, 5, 10, 20, 40, 50, 100
+    do
+        echo "nbody_seq with N=$XN and T=$XT"
+        perf stat -B -d ./nbody_seq $XN $XT
+        echo "--------------------"
+        for FILES in nbody_omp nbody_omp2 nbody_omp_race
+        do
+            for THREADS in {2..8..2};
+            do
+                echo "$FILES with N=$XN and T=$XT and THREADS=$THREADS"
+                OMP_NUM_THREADS=$THREADS perf stat -B -d ./$FILES $XN $XT
+                echo "--------------------"               
+            done
+        done
+    done
+done
+

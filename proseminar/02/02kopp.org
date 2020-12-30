@@ -1,0 +1,625 @@
+#+options: ':nil *:t -:t ::t <:t H:3 \n:t ^:nil arch:headline
+#+options: author:t broken-links:nil c:nil creator:nil
+#+options: d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t num:nil
+#+options: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+options: timestamp:t title:t toc:nil todo:t |:t
+#+options: center:nil
+#+title: Assignment 2
+#+author: Markus Kopp
+#+email: markus.kopp@student.uibk.ac.at
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 28.0.50 (Org mode 9.4)
+
+#+latex_class: scrartcl
+#+latex_class_options:
+#+latex_header:
+#+latex_header_extra:
+#+description:
+#+keywords:
+#+subtitle:
+#+latex_compiler: pdflatex
+#+date: \today
+* Exercise 1
+** Sequential version
+#+name: ex01_seq
+#+begin_src C :results output :exports both :eval never-export
+  #include <stdio.h>
+  #include <stdlib.h>
+
+  //random float between -1 and +1
+  float RandomNumber()
+  {
+    return (float)rand()/(float)RAND_MAX * 2.0f - 1.0;
+  }
+
+  int main(int argc, char *argv[])
+  {
+    // 'parsing' optional input parameter = problem size
+    long SIZE = 20000;
+    if (argc > 1) {
+      SIZE = atol(argv[1]);
+    }
+    long in = 0;
+    long out = 0;
+    for (long i = 0; i < SIZE; ++i) {
+      float x = RandomNumber();
+      float y = RandomNumber();
+      ((x * x + y * y) < 1.0f) ? in++ : out++;
+    }
+
+    printf("inside=%ld outside=%ld total=%ld \n", in ,out, SIZE);
+    printf("%f\n", (double)in/(double)SIZE*4.0);
+
+    return EXIT_SUCCESS;
+  }
+
+#+end_src
+
+#+RESULTS: ex01_seq
+: inside=15689 outside=4311 total=20000 
+: 3.137800
+
+The implementation is pretty straight forward. It is not optimized and also counts the points outside, which are not used for the final result.
+** Parallel version
+#+name: ex01_mpi
+#+begin_src C :results output :exports both :eval never-export
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <mpi.h>
+
+  //random float between -1 and +1
+  float RandomNumber()
+  {
+    return (float)rand()/(float)RAND_MAX * 2.0f - 1.0;
+  }
+
+  int main(int argc, char *argv[])
+  {
+    int rank;
+    MPI_Init(&argc, &argv);
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    srand(time(NULL)+rank);
+    // 'parsing' optional input parameter = problem size
+    long SIZE = 20000;
+    if (argc > 1) {
+      SIZE = atol(argv[1]);
+    }
+    long in = 0;
+    long out = 0;
+    long reducedin = 0;
+    long reducedout = 0;
+    long reducedsize = 0;
+    for (long i = 0; i < SIZE; ++i) {
+      float x = RandomNumber();
+      float y = RandomNumber();
+      ((x * x + y * y) < 1.0f) ? in++ : out++;
+    }
+
+    printf("inside=%ld outside=%ld total=%ld \n", in ,out, SIZE);
+    printf("%f\n", (double)in/(double)SIZE*4.0);
+
+    MPI_Reduce(&in, &reducedin, 1, MPI_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
+    MPI_Reduce(&out, &reducedout, 1, MPI_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
+    MPI_Reduce(&SIZE, &reducedsize, 1, MPI_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
+
+    if (rank == 0){
+      printf("final inside=%ld outside=%ld total=%ld \n", reducedin ,reducedout, reducedsize);
+      printf("%f\n", (double)reducedin/(double)reducedsize*4.0);
+    }
+  
+    MPI_Finalize();
+    return EXIT_SUCCESS;
+  }
+#+end_src
+
+#+RESULTS: ex01_mpi
+: [n002.intern.lcc2:07697] MCW rank 0 bound to socket 0[core 0[hwt 0]]: [B/././.][./././.]
+: [n002.intern.lcc2:07697] MCW rank 1 bound to socket 0[core 1[hwt 0]]: [./B/./.][./././.]
+: [n002.intern.lcc2:07697] MCW rank 2 bound to socket 0[core 2[hwt 0]]: [././B/.][./././.]
+: [n002.intern.lcc2:07697] MCW rank 3 bound to socket 0[core 3[hwt 0]]: [./././B][./././.]
+: [n002.intern.lcc2:07697] MCW rank 4 bound to socket 1[core 4[hwt 0]]: [./././.][B/././.]
+: [n002.intern.lcc2:07697] MCW rank 5 bound to socket 1[core 5[hwt 0]]: [./././.][./B/./.]
+: [n002.intern.lcc2:07697] MCW rank 6 bound to socket 1[core 6[hwt 0]]: [./././.][././B/.]
+: [n002.intern.lcc2:07697] MCW rank 7 bound to socket 1[core 7[hwt 0]]: [./././.][./././B]
+: [n006.intern.lcc2:15873] MCW rank 24 bound to socket 0[core 0[hwt 0]]: [B/././.][./././.]
+: [n004.intern.lcc2:29064] MCW rank 16 bound to socket 0[core 0[hwt 0]]: [B/././.][./././.]
+: [n006.intern.lcc2:15873] MCW rank 25 bound to socket 0[core 1[hwt 0]]: [./B/./.][./././.]
+: [n006.intern.lcc2:15873] MCW rank 26 bound to socket 0[core 2[hwt 0]]: [././B/.][./././.]
+: [n004.intern.lcc2:29064] MCW rank 17 bound to socket 0[core 1[hwt 0]]: [./B/./.][./././.]
+: [n006.intern.lcc2:15873] MCW rank 27 bound to socket 0[core 3[hwt 0]]: [./././B][./././.]
+: [n004.intern.lcc2:29064] MCW rank 18 bound to socket 0[core 2[hwt 0]]: [././B/.][./././.]
+: [n006.intern.lcc2:15873] MCW rank 28 bound to socket 1[core 4[hwt 0]]: [./././.][B/././.]
+: [n004.intern.lcc2:29064] MCW rank 19 bound to socket 0[core 3[hwt 0]]: [./././B][./././.]
+: [n006.intern.lcc2:15873] MCW rank 29 bound to socket 1[core 5[hwt 0]]: [./././.][./B/./.]
+: [n004.intern.lcc2:29064] MCW rank 20 bound to socket 1[core 4[hwt 0]]: [./././.][B/././.]
+: [n006.intern.lcc2:15873] MCW rank 30 bound to socket 1[core 6[hwt 0]]: [./././.][././B/.]
+: [n004.intern.lcc2:29064] MCW rank 21 bound to socket 1[core 5[hwt 0]]: [./././.][./B/./.]
+: [n005.intern.lcc2:26285] MCW rank 32 bound to socket 0[core 0[hwt 0]]: [B/././.][./././.]
+: [n006.intern.lcc2:15873] MCW rank 31 bound to socket 1[core 7[hwt 0]]: [./././.][./././B]
+: [n004.intern.lcc2:29064] MCW rank 22 bound to socket 1[core 6[hwt 0]]: [./././.][././B/.]
+: [n005.intern.lcc2:26285] MCW rank 33 bound to socket 0[core 1[hwt 0]]: [./B/./.][./././.]
+: [n004.intern.lcc2:29064] MCW rank 23 bound to socket 1[core 7[hwt 0]]: [./././.][./././B]
+: [n005.intern.lcc2:26285] MCW rank 34 bound to socket 0[core 2[hwt 0]]: [././B/.][./././.]
+: [n005.intern.lcc2:26285] MCW rank 35 bound to socket 0[core 3[hwt 0]]: [./././B][./././.]
+: [n005.intern.lcc2:26285] MCW rank 36 bound to socket 1[core 4[hwt 0]]: [./././.][B/././.]
+: [n005.intern.lcc2:26285] MCW rank 37 bound to socket 1[core 5[hwt 0]]: [./././.][./B/./.]
+: [n005.intern.lcc2:26285] MCW rank 38 bound to socket 1[core 6[hwt 0]]: [./././.][././B/.]
+: [n005.intern.lcc2:26285] MCW rank 39 bound to socket 1[core 7[hwt 0]]: [./././.][./././B]
+: [n003.intern.lcc2:03655] MCW rank 8 bound to socket 0[core 0[hwt 0]]: [B/././.][./././.]
+: [n003.intern.lcc2:03655] MCW rank 9 bound to socket 0[core 1[hwt 0]]: [./B/./.][./././.]
+: [n003.intern.lcc2:03655] MCW rank 10 bound to socket 0[core 2[hwt 0]]: [././B/.][./././.]
+: [n003.intern.lcc2:03655] MCW rank 11 bound to socket 0[core 3[hwt 0]]: [./././B][./././.]
+: [n003.intern.lcc2:03655] MCW rank 12 bound to socket 1[core 4[hwt 0]]: [./././.][B/././.]
+: [n003.intern.lcc2:03655] MCW rank 13 bound to socket 1[core 5[hwt 0]]: [./././.][./B/./.]
+: [n003.intern.lcc2:03655] MCW rank 14 bound to socket 1[core 6[hwt 0]]: [./././.][././B/.]
+: [n003.intern.lcc2:03655] MCW rank 15 bound to socket 1[core 7[hwt 0]]: [./././.][./././B]
+: inside=15722 outside=4278 total=20000 
+: inside=15699 outside=4301 total=20000 
+: 3.139800
+: inside=15629 outside=4371 total=20000 
+: 3.125800
+: inside=15684 outside=4316 total=20000 
+: 3.136800
+: inside=15711 outside=4289 total=20000 
+: 3.142200
+: inside=15725 outside=4275 total=20000 
+: 3.145000
+: inside=15673 outside=4327 total=20000 
+: 3.134600
+: inside=15628 outside=4372 total=20000 
+: 3.125600
+: inside=15651 outside=4349 total=20000 
+: 3.130200
+: inside=15670 outside=4330 total=20000 
+: 3.134000
+: inside=15760 outside=4240 total=20000 
+: 3.152000
+: inside=15725 outside=4275 total=20000 
+: 3.145000
+: inside=15787 outside=4213 total=20000 
+: 3.157400
+: inside=15686 outside=4314 total=20000 
+: 3.137200
+: inside=15689 outside=4311 total=20000 
+: 3.137800
+: inside=15759 outside=4241 total=20000 
+: 3.151800
+: inside=15679 outside=4321 total=20000 
+: 3.135800
+: inside=15833 outside=4167 total=20000 
+: 3.166600
+: inside=15706 outside=4294 total=20000 
+: 3.141200
+: inside=15744 outside=4256 total=20000 
+: 3.148800
+: inside=15679 outside=4321 total=20000 
+: 3.135800
+: inside=15749 outside=4251 total=20000 
+: 3.149800
+: inside=15647 outside=4353 total=20000 
+: 3.129400
+: inside=15703 outside=4297 total=20000 
+: 3.140600
+: inside=15726 outside=4274 total=20000 
+: 3.145200
+: inside=15723 outside=4277 total=20000 
+: 3.144600
+: inside=15585 outside=4415 total=20000 
+: 3.117000
+: inside=15734 outside=4266 total=20000 
+: 3.146800
+: inside=15795 outside=4205 total=20000 
+: 3.159000
+: inside=15681 outside=4319 total=20000 
+: 3.136200
+: inside=15657 outside=4343 total=20000 
+: 3.131400
+: inside=15684 outside=4316 total=20000 
+: 3.136800
+: inside=15685 outside=4315 total=20000 
+: 3.137000
+: inside=15661 outside=4339 total=20000 
+: 3.132200
+: inside=15776 outside=4224 total=20000 
+: 3.155200
+: inside=15730 outside=4270 total=20000 
+: 3.146000
+: inside=15735 outside=4265 total=20000 
+: 3.147000
+: inside=15754 outside=4246 total=20000 
+: 3.150800
+: inside=15691 outside=4309 total=20000 
+: 3.138200
+: inside=15620 outside=4380 total=20000 
+: 3.124000
+: 3.144400
+: final inside=628175 outside=171825 total=800000 
+: 3.140875
+
+Using 40 slots distributed on five nodes with using their eight cores fully and the reduce function from mpi to sum up all the inside, outside and even the total size. Size for example could be calculated on one node for example with getting the size of the mpi job with *MPI_Comm_size(MPI_COMM_WORLD, &size)*. The reduce function executed on every slot and having the final value at the defined rank. *MPI_Reduce(&in, &reducedin, 1, MPI_LONG, MPI_SUM, 0, MPI_COMM_WORLD)* here the sixth argument is the rank that has the reduced sum of all other plus its own.
+
+* Exercise 2
+
+When working on the second example which simulates heat dissipation in a room (1D in our case) my approach was that you split up the problem into how many slots are used to work on the problem. The only thing that is a problem here is that on the edge of two cells each of the corresponding workers needs a value for its neighboring worker. So in my first solution I wanted to make sure that no deadlock can happen with sending and receiving messages which later turned out not to be a problem because there seems to be no circular dependency and the first approach was modified to a more simple solution.
+
+** wave based parallel version
+#+begin_src C :results output :exports both :eval never-export
+      int main(int argc, char **argv) {
+        int rank;
+        int size;
+        int partsize;
+        MPI_Init(&argc, &argv);
+        MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+        MPI_Comm_size(MPI_COMM_WORLD, &size);
+
+        printf("rank=%d with size=%d\n", rank, size);
+        // 'parsing' optional input parameter = problem size
+        int N = 2000;
+        if (argc > 1) {
+          N = atoi(argv[1]);
+        }
+        int T = N * 500;
+        printf("Computing heat-distribution for room size N=%d for T=%d timesteps\n",
+               N, T);
+        if (N % size != 0) {
+          printf("size not ok for problem size. not dividable without remainder");
+          exit(EXIT_FAILURE);
+        }
+        partsize = N / size;
+
+        // ---------- setup ----------
+
+        // create a buffer for storing temperature fields
+        Vector A = createVector(N);
+
+        // set up initial conditions in A
+        for (int i = 0; i < N; i++) {
+          A[i] = 273; // temperature is 0° C everywhere (273 K)
+        }
+
+        // and there is a heat source in one corner
+        int source_x = N / 4;
+        A[source_x] = 273 + 60;
+
+        printf("Initial:\t");
+        printTemperature(A, N);
+        printf("\n");
+
+        // ---------- compute ----------
+
+        // create a second buffer for the computation
+        Vector B = createVector(N);
+
+        // for each time step ..
+        for (int t = 0; t < T; t++) {
+          // make two waves to send and receive overlapping parts (now only using one)
+          for (int wave = 0; wave < 2; ++wave) {
+            // .. we propagate the temperature for the assigned part of N[(rank*partsize)+i,(rank*partsize)+(i+1),...,(ranke*partsize)+(partsize-1)] for i < partsize
+            // example for N = 12, partsize=4, size=3, rank=0, operates on N[(0*4)+0, (0*4)+1, (0*4)+2, (0*4)*3] --> N[0,1,2,3]
+            // example for N = 12, partsize=4, size=3, rank=1, operates on N[(1*4)+0, (1*4)+1, (1*4)+2, (1*4)+3] --> N[4,5,6,7]
+            // example for N = 12, partsize=4, size=3, rank=2, operates on N[(2*4)+0, (2*4)+1, (2*4)+2, (2*4)+3] --> N[8,9,10,11]
+            long long start = rank * partsize;
+            long long stop = rank * partsize + partsize;
+            // printf("rank %d working on array %lld exusive %lld\n", rank, start, stop);
+            for (long long i = start; i < stop; i++) {
+
+              // first wave even ranks send data
+              if ((rank + wave) % 2 == 0) {
+                // send left and right overlapping part (coould be updated to work on none left and right side parts)
+                if (i == start && i-1 >= 0) {
+                  // printf("send from %d to %d\n", rank, rank-1);
+                  MPI_Send(&(A[i]), 1, MPI_DOUBLE, rank-1, 0, MPI_COMM_WORLD);
+                }
+                if (i == stop -1 && i+1 < N){
+                  // printf("send from %d to %d\n", rank, rank+1);
+                  MPI_Send(&(A[i]), 1, MPI_DOUBLE, rank+1, 0, MPI_COMM_WORLD);
+                }
+
+                } else {
+                //receive values before operating
+                if (i == start && i-1 >= 0) {
+                  // printf("receive from %d to me=%d \n", rank-1, rank, i-1);
+                  MPI_Recv(&(A[i-1]), 1, MPI_DOUBLE, rank-1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+                }
+                if (i == stop -1 && i+1 < N){
+                  // printf("receive from %d to me=%d for node %d\n", rank+1, rank, i+1);
+                  MPI_Recv(&(A[i+1]), 1, MPI_DOUBLE, rank+1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+                }
+                // center stays constant (the heat is still on)
+                if (i == source_x) {
+                  B[i] = A[i];
+                  continue;
+                }
+
+                // get temperature at current position
+                value_t tc = A[i];
+
+                // get temperatures of adjacent cells
+                value_t tl = (i != 0) ? A[i - 1] : tc;
+                value_t tr = (i != N - 1) ? A[i + 1] : tc;
+
+                // compute new temperature at current position
+                B[i] = tc + 0.2 * (tl + tr + (-2 * tc));
+              }
+            }
+          }
+        ...
+       }
+      ...
+    // done
+    MPI_Finalize();
+    return (success) ? EXIT_SUCCESS : EXIT_FAILURE;
+  }
+#+end_src
+
+The most important part is the first only odd numbered ranks work on updating their cells and have two receive operations that match two send operations from its neighbors. The problem here is that only half the workers are updating their cells and it takes two for loops to complete the update. You could probably speed it up by partially updating the cells on the senders and only update the edge cells with the missing neighbor values.
+
+** simple parallel solution
+#+begin_src C :results output :exports both :eval never-export
+    int main(int argc, char **argv) {
+      int rank;
+      int size;
+      int partsize;
+      MPI_Init(&argc, &argv);
+      MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+      MPI_Comm_size(MPI_COMM_WORLD, &size);
+
+      printf("rank=%d with size=%d\n", rank, size);
+      // 'parsing' optional input parameter = problem size
+      int N = 2000;
+      if (argc > 1) {
+        N = atoi(argv[1]);
+      }
+      int T = N * 500;
+      printf("Computing heat-distribution for room size N=%d for T=%d timesteps\n",
+             N, T);
+      if (N % size != 0) {
+        printf("size not ok for problem size. not dividable without remainder");
+        exit(EXIT_FAILURE);
+      }
+      partsize = N / size;
+
+      // ---------- setup ----------
+
+      // create a buffer for storing temperature fields
+      Vector A = createVector(N);
+
+      // set up initial conditions in A
+      for (int i = 0; i < N; i++) {
+        A[i] = 273; // temperature is 0° C everywhere (273 K)
+      }
+
+      // and there is a heat source in one corner
+      int source_x = N / 4;
+      A[source_x] = 273 + 60;
+
+      printf("Initial:\t");
+      printTemperature(A, N);
+      printf("\n");
+
+      // ---------- compute ----------
+
+      // create a second buffer for the computation
+      Vector B = createVector(N);
+
+      // for each time step ..
+      for (int t = 0; t < T; t++) {
+        // make two waves to send and receive overlapping parts (now only using one)
+        // .. we propagate the temperature for the assigned part of N[(rank*partsize)+i,(rank*partsize)+(i+1),...,(ranke*partsize)+(partsize-1)] for i < partsize
+        // example for N = 12, partsize=4, size=3, rank=0, operates on N[(0*4)+0, (0*4)+1, (0*4)+2, (0*4)*3] --> N[0,1,2,3]
+        // example for N = 12, partsize=4, size=3, rank=1, operates on N[(1*4)+0, (1*4)+1, (1*4)+2, (1*4)+3] --> N[4,5,6,7]
+        // example for N = 12, partsize=4, size=3, rank=2, operates on N[(2*4)+0, (2*4)+1, (2*4)+2, (2*4)+3] --> N[8,9,10,11]
+        long long start = rank * partsize;
+        long long stop = rank * partsize + partsize;
+        // printf("rank %d working on array %lld exusive %lld\n", rank, start, stop);
+        for (long long i = start; i < stop; i++) {
+
+          // send left and right overlapping part (coould be updated to work on none left and right side parts)
+          if (i == start && i-1 >= 0) {
+            // printf("send from %d to %d\n", rank, rank-1);
+            MPI_Send(&(A[i]), 1, MPI_DOUBLE, rank-1, 0, MPI_COMM_WORLD);
+          }
+          if (i == stop -1 && i+1 < N){
+            // printf("send from %d to %d\n", rank, rank+1);
+            MPI_Send(&(A[i]), 1, MPI_DOUBLE, rank+1, 0, MPI_COMM_WORLD);
+          }
+
+          //receive values before operating
+          if (i == start && i-1 >= 0) {
+            // printf("receive from %d to me=%d \n", rank-1, rank, i-1);
+            MPI_Recv(&(A[i-1]), 1, MPI_DOUBLE, rank-1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+          }
+          if (i == stop -1 && i+1 < N){
+            // printf("receive from %d to me=%d for node %d\n", rank+1, rank, i+1);
+            MPI_Recv(&(A[i+1]), 1, MPI_DOUBLE, rank+1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+          }
+          // center stays constant (the heat is still on)
+          if (i == source_x) {
+            B[i] = A[i];
+            continue;
+          }
+
+          // get temperature at current position
+          value_t tc = A[i];
+
+          // get temperatures of adjacent cells
+          value_t tl = (i != 0) ? A[i - 1] : tc;
+          value_t tr = (i != N - 1) ? A[i + 1] : tc;
+
+          // compute new temperature at current position
+          B[i] = tc + 0.2 * (tl + tr + (-2 * tc));
+
+        }
+        ...
+
+      }
+      ...
+      // done
+      MPI_Finalize();
+      return (success) ? EXIT_SUCCESS : EXIT_FAILURE;
+    }
+#+end_src
+
+This version is simpler and only needs to check if there is a neighbor that needs a value to be sent. The problem here is that for example for the second worker to start working it needs the last value from the first worker. So it could be optimized by working on cells that are only depended on the values a worker already has instead of waiting for a value. Another way would be to send the edge values as the first step and don't do it when the loop comes to an edge value this was implemented in the last version no sophisticated benchmark was used but execution time on my laptop were about the same between the normal and the optimized version.
+
+** simple parallel solution optimized
+
+#+begin_src C :results output :exports both :eval never-export
+  int main(int argc, char **argv) {
+    int rank;
+    int size;
+    int partsize;
+    MPI_Init(&argc, &argv);
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    MPI_Comm_size(MPI_COMM_WORLD, &size);
+
+    printf("rank=%d with size=%d\n", rank, size);
+    // 'parsing' optional input parameter = problem size
+    int N = 2000;
+    if (argc > 1) {
+      N = atoi(argv[1]);
+    }
+    int T = N * 500;
+    printf("Computing heat-distribution for room size N=%d for T=%d timesteps\n",
+           N, T);
+    if (N % size != 0) {
+      printf("size not ok for problem size. not dividable without remainder");
+      exit(EXIT_FAILURE);
+    }
+    partsize = N / size;
+
+    // ---------- setup ----------
+
+    // create a buffer for storing temperature fields
+    Vector A = createVector(N);
+
+    // set up initial conditions in A
+    for (int i = 0; i < N; i++) {
+      A[i] = 273; // temperature is 0° C everywhere (273 K)
+    }
+
+    // and there is a heat source in one corner
+    int source_x = N / 4;
+    A[source_x] = 273 + 60;
+
+    printf("Initial:\t");
+    printTemperature(A, N);
+    printf("\n");
+
+    // ---------- compute ----------
+
+    // create a second buffer for the computation
+    Vector B = createVector(N);
+
+    // for each time step ..
+    for (int t = 0; t < T; t++) {
+      // make two waves to send and receive overlapping parts (now only using one)
+      // .. we propagate the temperature for the assigned part of N[(rank*partsize)+i,(rank*partsize)+(i+1),...,(ranke*partsize)+(partsize-1)] for i < partsize
+      // example for N = 12, partsize=4, size=3, rank=0, operates on N[(0*4)+0, (0*4)+1, (0*4)+2, (0*4)*3] --> N[0,1,2,3]
+      // example for N = 12, partsize=4, size=3, rank=1, operates on N[(1*4)+0, (1*4)+1, (1*4)+2, (1*4)+3] --> N[4,5,6,7]
+      // example for N = 12, partsize=4, size=3, rank=2, operates on N[(2*4)+0, (2*4)+1, (2*4)+2, (2*4)+3] --> N[8,9,10,11]
+      long long start = rank * partsize;
+      long long stop = rank * partsize + partsize;
+      // printf("rank %d working on array %lld exusive %lld\n", rank, start, stop);
+
+      //finish send operations before entering loop
+      if (start-1 >= 0) {
+        // printf("send from %d to %d\n", rank, rank-1);
+        MPI_Send(&(A[start]), 1, MPI_DOUBLE, rank-1, 0, MPI_COMM_WORLD);
+        }
+      if (stop +1 < N){
+        // printf("send from %d to %d\n", rank, rank+1);
+        MPI_Send(&(A[stop-1]), 1, MPI_DOUBLE, rank+1, 0, MPI_COMM_WORLD);
+      }
+      for (long long i = start; i < stop; i++) {
+        //receive values before operating
+        if (i == start && i-1 >= 0) {
+          // printf("receive from %d to me=%d \n", rank-1, rank, i-1);
+          MPI_Recv(&(A[i-1]), 1, MPI_DOUBLE, rank-1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        }
+        if (i == stop -1 && i+1 < N){
+          // printf("receive from %d to me=%d for node %d\n", rank+1, rank, i+1);
+          MPI_Recv(&(A[i+1]), 1, MPI_DOUBLE, rank+1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        }
+        // center stays constant (the heat is still on)
+        if (i == source_x) {
+          B[i] = A[i];
+          continue;
+        }
+
+        // get temperature at current position
+        value_t tc = A[i];
+
+        // get temperatures of adjacent cells
+        value_t tl = (i != 0) ? A[i - 1] : tc;
+        value_t tr = (i != N - 1) ? A[i + 1] : tc;
+
+        // compute new temperature at current position
+        B[i] = tc + 0.2 * (tl + tr + (-2 * tc));
+
+      }
+
+    ...
+    }
+    ...
+    // done
+    MPI_Finalize();
+    return (success) ? EXIT_SUCCESS : EXIT_FAILURE;
+  }  
+#+end_src
+
+The sending of edge values is done for each rank at the beginning of each timestep. Receiving is done when calculating the cell that needs it. The outputs were compared in the last timestep if the leftmost sector is the same as the sequential versions. Which looks like this with only the leftmost part that matches.
+
+*** sequential N=2000
+#+begin_example
+Final:		--------...............    X
+#+end_example
+
+*** mpi_waves N=2000 on 4 slots
+#+begin_example
+Final:		--------...............    X
+#+end_example
+
+*** mpi_simple N=2000 on 4 slots
+#+begin_example
+Final:		--------...............    X
+#+end_example
+
+*** mpi_simple_optimized N=2000 on 4 slots
+#+begin_example
+Final:		--------...............    X
+#+end_example
+
+** comparison of parallelization
+when looking at the different solutions you can look at how many parallel ranks are active at the same time.
+
+\clearpage
+#+begin_example
+waves
+|x| |x| |
+| |x| |x|
+|x| |x| |
+| |x| |x|
+...
+#+end_example
+
+#+begin_example
+simple
+|x| | | |
+|x|x| | |
+|x|x|x| |
+|x|x|x|x|
+|x|x|x|x|
+...
+#+end_example
+
+#+begin_example
+simple optimized
+|x|x|x|x|
+|x|x|x|x|
+...
+#+end_example
+
+If the ranksize would be getting as big as the problem size than it would take ranksize steps until you fully utilize the parallel capacity.

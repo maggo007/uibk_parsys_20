@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Execute job in the queue "std.q" unless you have special requirements.
+#$ -q std.q
+
+# The batch system should use the current directory as working directory.
+#$ -cwd
+
+# Name your job. Unless you use the -o and -e options, output will
+# go to a unique file name.ojob_id for each job.
+#$ -N kopp_pi
+
+##$ -M markus.kopp@student.uibk.ac.at
+##$ -m e
+
+# Join the error stream to the output stream.
+#$ -j yes
+
+#$ -pe openmp 8
+
+##module load openmpi/4.0.3
+
+N=100000000
+echo "pi_seq for comparision with N=$N"
+time ./pi_seq $N
+echo "--------------------"
+for FILE in pi_omp_atomic pi_omp_atomic_float pi_omp_critical pi_omp_critical_float pi_omp_reduction pi_omp_reduction_float pi_omp_reduction2 pi_omp_reduction2_float 
+do
+    for X in {1..8}; do
+        echo "$FILE test with threads=$X and N=$N"
+        time OMP_NUM_THREADS=$X ./$FILE $N
+        echo "--------------------"
+    done
+done

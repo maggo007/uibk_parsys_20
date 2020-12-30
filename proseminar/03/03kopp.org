@@ -1,0 +1,2371 @@
+#+options: ':nil *:t -:t ::t <:t H:3 \n:t ^:nil arch:headline
+#+options: author:t broken-links:nil c:nil creator:nil
+#+options: d:(not "LOGBOOK") date:t e:t email:t f:t inline:t num:t
+#+options: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+options: timestamp:t title:t toc:t todo:t |:t
+#+options: center:nil
+#+title: Assignment 3
+#+author: Markus Kopp
+#+email: markus.kopp@student.uibk.ac.at
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 28.0.50 (Org mode 9.4)
+
+#+latex_class: scrartcl
+#+latex_class_options:
+#+latex_header:
+#+latex_header_extra:
+#+description:
+#+keywords:
+#+subtitle:
+#+latex_compiler: pdflatex
+#+date: \today
+
+* Exercise 01
+Extending the solution was pretty straight forward except that subarrays for 3D arrays that were linear in memory didn't work out as planned. Some other things needed fixing like the formula for updating the cell is using different factors for 1D 2D and 3D. It was hardcoded in the 1D solution we got to *0.2* for the influence of the neighboring cells. This value is to big for the 3D part and will increase the temperature in the call over the starting value of the heatsource. It was adjusted to *1/(Number of Neighbors +1)* for 2D and 3D solutions. Also the 3D solutions was not updated to make arbitrary size of width height and depth. Starting at the Solution for 2D variable names were changed to row, columns and slides for y, x and z. So for addressing the linear memory columns are sequential. Rows jump over size of column dimension and slide which would be the hight of the cube if you look at row and columns as a 2d area that is flat on the ground and it jumps over the address of row size times column size of the array. The mpi calls will interpret the multidimensional arrays with row, col, slides. So subarrays have to be constructed with that in mind. The printing of the array in 2D was taken from the solution that was given to us in the OpenCL parallel programming lecture and is also mentioned in the source code. On approach was used for sending the cell data to its neighbors by using non blocking iSend calls but this lead to unexpected memory leaks and segmentation faults if when not using an MPI barrier.
+
+** heat_stencil_1D_seq
+Intermediate printing was disabled for running on the cluster because it produces output files in about 90MB of size. Timesteps was also set to 50000 to not increase timesteps and size of the array at the same time. This version is the same as the one from the last exercise.
+#+begin_src C :eval never-export
+  #include <stdio.h>
+  #include <stdlib.h>
+
+  typedef double value_t;
+
+  #define RESOLUTION 120
+
+  // -- vector utilities --
+
+  typedef value_t *Vector;
+
+  Vector createVector(int N);
+
+  void releaseVector(Vector m);
+
+  void printTemperature(Vector m, int N);
+
+  // -- simulation code ---
+
+  int main(int argc, char **argv) {
+    // 'parsing' optional input parameter = problem size
+    int N = 2000;
+    if (argc > 1) {
+      N = atoi(argv[1]);
+    }
+    int T = 50000;
+    printf("Computing heat-distribution for room size N=%d for T=%d timesteps\n", N, T);
+
+    // ---------- setup ----------
+
+    // create a buffer for storing temperature fields
+    Vector A = createVector(N);
+
+    // set up initial conditions in A
+    for (int i = 0; i < N; i++) {
+      A[i] = 273; // temperature is 0° C everywhere (273 K)
+    }
+
+    // and there is a heat source in one corner
+    int source_x = N / 4;
+    A[source_x] = 273 + 60;
+
+    printf("Initial:\t");
+    printTemperature(A, N);
+    printf("\n");
+
+    // ---------- compute ----------
+
+    // create a second buffer for the computation
+    Vector B = createVector(N);
+
+    // for each time step ..
+    for (int t = 0; t < T; t++) {
+      // .. we propagate the temperature
+      for (long long i = 0; i < N; i++) {
+        // center stays constant (the heat is still on)
+        if (i == source_x) {
+          B[i] = A[i];
+          continue;
+        }
+
+        // get temperature at current position
+        value_t tc = A[i];
+
+        // get temperatures of adjacent cells
+        value_t tl = (i != 0) ? A[i - 1] : tc;
+        value_t tr = (i != N - 1) ? A[i + 1] : tc;
+
+        // compute new temperature at current position
+        B[i] = tc + 0.2 * (tl + tr + (-2 * tc));
+      }
+
+      // swap matrices (just pointers, not content)
+      Vector H = A;
+      A = B;
+      B = H;
+
+      // show intermediate step
+      if (!(t % 1000) && 0) {
+        printf("Step t=%d:\t", t);
+        printTemperature(A, N);
+        printf("\n");
+      }
+    }
+
+    releaseVector(B);
+
+    // ---------- check ----------
+
+    printf("Final:\t\t");
+    printTemperature(A, N);
+    printf("\n");
+
+    int success = 1;
+    for (long long i = 0; i < N; i++) {
+      value_t temp = A[i];
+      if (273 <= temp && temp <= 273 + 60)
+        continue;
+      success = 0;
+      break;
+    }
+
+    printf("Verification: %s\n", (success) ? "OK" : "FAILED");
+
+    // ---------- cleanup ----------
+
+    releaseVector(A);
+
+    // done
+    return (success) ? EXIT_SUCCESS : EXIT_FAILURE;
+  }
+
+  Vector createVector(int N) {
+    // create data and index vector
+    return malloc(sizeof(value_t) * N);
+  }
+
+  void releaseVector(Vector m) { free(m); }
+
+  void printTemperature(Vector m, int N) {
+    const char *colors = " .-:=+*^X#%@";
+    const int numColors = 12;
+
+    // boundaries for temperature (for simplicity hard-coded)
+    const value_t max = 273 + 30;
+    const value_t min = 273 + 0;
+
+    // set the 'render' resolution
+    int W = RESOLUTION;
+
+    // step size in each dimension
+    int sW = N / W;
+
+    // room
+    // left wall
+    printf("X");
+    // actual room
+    for (int i = 0; i < W; i++) {
+      // get max temperature in this tile
+      value_t max_t = 0;
+      for (int x = sW * i; x < sW * i + sW; x++) {
+        max_t = (max_t < m[x]) ? m[x] : max_t;
+      }
+      value_t temp = max_t;
+
+      // pick the 'color'
+      int c = ((temp - min) / (max - min)) * numColors;
+      c = (c >= numColors) ? numColors - 1 : ((c < 0) ? 0 : c);
+
+      // print the average temperature
+      printf("%c", colors[c]);
+    }
+    // right wall
+    printf("X");
+  }
+
+#+end_src
+** heat_stencil_1D_mpi
+The mpi version sends and receives with its neighbors So that when A sends to B than B starts the receive operation first and then switches to sending.
+t=0 A -> B
+t=1 A <- B
+So for a linear 1D array you can use the ranks to assign the range for the array and then use modulo 2 to only work with ranks that are not direct neighbors and for example have them send first.
+
+| A(Rank 0)  | B(Rank 1) | C(Rank 2) | D(Rank 3) |
+|------------+-----------+-----------+-----------|
+| Rank%2 = 0 | Rank%2 =1 | Rank%2=0  | Rank%2=1  |
+#+begin_src C :eval never-export
+  #include <mpi.h>
+  #include <stdio.h>
+  #include <stdlib.h>
+
+  typedef double value_t;
+
+  #define RESOLUTION 120
+
+  // -- vector utilities --
+
+  typedef value_t *Vector;
+
+  Vector createVector(int N);
+
+  void releaseVector(Vector m);
+
+  void printTemperature(Vector m, int N);
+
+  // -- simulation code ---
+
+  int main(int argc, char **argv) {
+    int rank;
+    int size;
+    int partsize;
+    MPI_Init(&argc, &argv);
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    MPI_Comm_size(MPI_COMM_WORLD, &size);
+
+    printf("rank=%d with size=%d\n", rank, size);
+    // 'parsing' optional input parameter = problem size
+    int N = 2000;
+    if (argc > 1) {
+      N = atoi(argv[1]);
+    }
+    int T = 50000;
+    printf("Computing heat-distribution for room size N=%d for T=%d timesteps\n",
+           N, T);
+    if (N % size != 0) {
+      printf("size not ok for problem size. not dividable without remainder");
+      exit(EXIT_FAILURE);
+    }
+    partsize = N / size;
+
+    // ---------- setup ----------
+
+    // create a buffer for storing temperature fields
+    Vector A = createVector(N);
+
+    // set up initial conditions in A
+    for (int i = 0; i < N; i++) {
+      A[i] = 273; // temperature is 0° C everywhere (273 K)
+    }
+
+    // and there is a heat source in one corner
+    int source_x = N / 4;
+    A[source_x] = 273 + 60;
+
+    printf("Initial:\t");
+    printTemperature(A, N);
+    printf("\n");
+
+    // ---------- compute ----------
+
+    // create a second buffer for the computation
+    Vector B = createVector(N);
+
+    // for each time step ..
+    for (int t = 0; t < T; t++) {
+      // make two waves to send and receive overlapping parts (now only using one)
+      // .. we propagate the temperature for the assigned part of N[(rank*partsize)+i,(rank*partsize)+(i+1),...,(ranke*partsize)+(partsize-1)] for i < partsize
+      // example for N = 12, partsize=4, size=3, rank=0, operates on N[(0*4)+0, (0*4)+1, (0*4)+2, (0*4)*3] --> N[0,1,2,3]
+      // example for N = 12, partsize=4, size=3, rank=1, operates on N[(1*4)+0, (1*4)+1, (1*4)+2, (1*4)+3] --> N[4,5,6,7]
+      // example for N = 12, partsize=4, size=3, rank=2, operates on N[(2*4)+0, (2*4)+1, (2*4)+2, (2*4)+3] --> N[8,9,10,11]
+      long long start = rank * partsize;
+      long long stop = rank * partsize + partsize;
+      // printf("rank %d working on array %lld exusive %lld\n", rank, start, stop);
+
+    
+      //finish send operations before entering loop
+
+      if (rank % 2 == 0){
+        if (stop < N) {
+          MPI_Send(&(A[stop-1]), 1, MPI_DOUBLE, rank+1, 0, MPI_COMM_WORLD);
+          MPI_Recv(&(A[stop]), 1, MPI_DOUBLE, rank+1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        }
+        if (start-1 >= 0) {
+          // printf("send from %d to %d\n", rank, rank-1);
+          MPI_Send(&(A[start]), 1, MPI_DOUBLE, rank-1, 0, MPI_COMM_WORLD);
+          MPI_Recv(&(A[start-1]), 1, MPI_DOUBLE, rank-1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        }
+      
+      } else {
+        // printf("receive from %d to me=%d for node %d\n", rank+1, rank, i+1);
+        if (start-1 >= 0) {
+          // printf("send from %d to %d\n", rank, rank-1);
+          MPI_Recv(&(A[start-1]), 1, MPI_DOUBLE, rank-1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+          MPI_Send(&(A[start]), 1, MPI_DOUBLE, rank-1, 0, MPI_COMM_WORLD);        
+        }
+        if (stop < N) {
+          MPI_Recv(&(A[stop]), 1, MPI_DOUBLE, rank+1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+          MPI_Send(&(A[stop-1]), 1, MPI_DOUBLE, rank+1, 0, MPI_COMM_WORLD);
+        }
+      }
+      for (long long i = start; i < stop; i++) {
+        // center stays constant (the heat is still on)
+        if (i == source_x) {
+          B[i] = A[i];
+          continue;
+        }
+
+        // get temperature at current position
+        value_t tc = A[i];
+
+        // get temperatures of adjacent cells
+        value_t tl = (i != 0) ? A[i - 1] : tc;
+        value_t tr = (i != N - 1) ? A[i + 1] : tc;
+
+        // compute new temperature at current position
+        B[i] = tc + 0.2 * (tl + tr + (-2 * tc));
+
+      }
+
+      // swap matrices (just pointers, not content)
+      Vector H = A;
+      A = B;
+      B = H;
+
+      // show intermediate step
+      if (!(t % 1000) && 0) {
+        printf("Step t=%d:\t", t);
+        printTemperature(A, N);
+        printf("\n");
+      }
+    }
+
+    releaseVector(B);
+
+    // ---------- check ----------
+
+    printf("Final:\t\t");
+    printTemperature(A, N);
+    printf("\n");
+
+    int success = 1;
+    for (long long i = 0; i < N; i++) {
+      value_t temp = A[i];
+      if (273 <= temp && temp <= 273 + 60)
+        continue;
+      success = 0;
+      break;
+    }
+
+    printf("Verification: %s\n", (success) ? "OK" : "FAILED");
+
+    // ---------- cleanup ----------
+
+    releaseVector(A);
+
+    // done
+    MPI_Finalize();
+    return (success) ? EXIT_SUCCESS : EXIT_FAILURE;
+  }
+
+  Vector createVector(int N) {
+    // create data and index vector
+    return malloc(sizeof(value_t) * N);
+  }
+
+  void releaseVector(Vector m) { free(m); }
+
+  void printTemperature(Vector m, int N) {
+    const char *colors = " .-:=+*^X#%@";
+    const int numColors = 12;
+
+    // boundaries for temperature (for simplicity hard-coded)
+    const value_t max = 273 + 30;
+    const value_t min = 273 + 0;
+
+    // set the 'render' resolution
+    int W = RESOLUTION;
+
+    // step size in each dimension
+    int sW = N / W;
+
+    // room
+    // left wall
+    printf("X");
+    // actual room
+    for (int i = 0; i < W; i++) {
+      // get max temperature in this tile
+      value_t max_t = 0;
+      for (int x = sW * i; x < sW * i + sW; x++) {
+        max_t = (max_t < m[x]) ? m[x] : max_t;
+      }
+      value_t temp = max_t;
+
+      // pick the 'color'
+      int c = ((temp - min) / (max - min)) * numColors;
+      c = (c >= numColors) ? numColors - 1 : ((c < 0) ? 0 : c);
+
+      // print the average temperature
+      printf("%c", colors[c]);
+    }
+    // right wall
+    printf("X");
+  }
+  
+#+end_src
+
+** heat_stencil_2D_seq
+For 2D we used the openCL version for printing the 2D output which resizes the output to a fixed x and y size. You can also see the 1/Neighbors+1 scaling factor. In the for loop x is in the inner loop so we stay in the linear parts that hopefully is cached for speedup.
+#+begin_src C :eval never-export
+  //some parts are copied from our old solutions in parallel openCL course https://git.uibk.ac.at/csat2062/parallel_local
+
+  #include <stdio.h>
+  #include <stdlib.h>
+
+  typedef double value_t;
+
+  #define RESOLUTION 120
+
+  // -- vector utilities --
+
+  typedef value_t *Vector;
+
+  Vector createVector(int N, int M);
+
+  void releaseVector(Vector m);
+
+  void printTemperature(Vector m, int N, int M);
+
+  // -- simulation code ---
+
+  int main(int argc, char **argv) {
+    // 'parsing' optional input parameter = problem size
+    int N = 1000;
+    int M = 1000;
+    if (argc == 3) {
+      N = atoi(argv[1]);
+      M = atoi(argv[2]);
+    }
+    int T = 50000;
+    printf("Computing heat-distribution for room size N=%d x %d for T=%d timesteps\n", N,M, T);
+
+    // ---------- setup ----------
+
+    // create a buffer for storing temperature fields
+    Vector A = createVector(N,M);
+
+    // set up initial conditions in A
+    for (int y = 0; y < M; ++y) {
+      for (int x = 0; x < N; ++x) {
+        A[x + y*N] = 273; // temperature is 0° C everywhere (273 K)
+      }
+    }
+
+    // and there is a heat source in one corner
+    int source_x = N / 4;
+    int source_y = M / 4;
+    A[source_y * N + source_x] = 273 + 60;
+
+    printf("Initial:\n");
+    printTemperature(A, N, M);
+    printf("\n");
+
+    // ---------- compute ----------
+
+    // create a second buffer for the computation
+    Vector B = createVector(N,M);
+
+    // for each time step ..
+    for (int t = 0; t < T; t++) {
+      // .. we propagate the temperature
+      for (int y = 0; y < M; y++) {
+        for (int x = 0; x < N; x++) {
+          // center stays constant (the heat is still on)
+          if (x == source_x && y == source_y) {
+            B[y*N+x] = A[y*N+x];
+            continue;
+          }
+
+          // get current temperature at (x,y)
+          value_t tc = A[y*N+x];
+
+          // get temperatures left/right and up/down
+          value_t tl = ( x !=  0  ) ? A[y*N+(x-1)] : tc;
+          value_t tr = ( x != N-1 ) ? A[y*N+(x+1)] : tc;
+          value_t tu = ( y !=  0  ) ? A[(y-1)*N+x] : tc;
+          value_t td = ( y != M-1 ) ? A[(y+1)*N+x] : tc;
+
+          // update temperature at current point
+          B[y*N+x] = tc + 1.0/5 * (tl + tr + tu + td + (-4*tc));
+
+        }
+      }
+
+      // swap matrices (just pointers, not content)
+      Vector H = A;
+      A = B;
+      B = H;
+
+      // show intermediate step
+      if (!(t % 1000) && 0) {
+        printf("Step t=%d:\n", t);
+        printTemperature(A, N, M);
+        printf("\n");
+      }
+    }
+
+    releaseVector(B);
+
+    // ---------- check ----------
+
+    printf("Final:\n");
+    printTemperature(A, N, M);
+    printf("\n");
+
+    int success = 1;
+    for(int y = 0; y<M; y++) {
+      for(int x = 0; x<N; x++) {
+        value_t temp = A[y*N+x];
+        if (273 <= temp && temp <= 273+60) continue;
+        success = 0;
+        break;
+      }
+    }
+
+
+    printf("Verification: %s\n", (success) ? "OK" : "FAILED");
+
+    // ---------- cleanup ----------
+
+    releaseVector(A);
+
+    // done
+    return (success) ? EXIT_SUCCESS : EXIT_FAILURE;
+  }
+
+  Vector createVector(int N, int M) {
+    // create data and index vector
+    return malloc(sizeof(value_t) * N * M);
+  }
+
+  void releaseVector(Vector m) { free(m); }
+
+
+  //taken from old parallel course https://git.uibk.ac.at/csat2062/parallel_local
+  void printTemperature(Vector m, int N, int M) {
+      const char* colors = " .-:=+*#%@";
+      const int numColors = 10;
+
+      // boundaries for temperature (for simplicity hard-coded)
+      const value_t max = 273 + 30;
+      const value_t min = 273 + 0;
+
+      // set the 'render' resolution
+      int H = 30;
+      int W = 60;
+
+      // step size in each dimension
+      int sH = M/H;
+      int sW = N/W;
+
+
+      // upper wall
+      for(int i=0; i<W+2; i++) {
+          printf("X");
+      }
+      printf("\n");
+
+      // room
+      for(int i=0; i<H; i++) {
+          // left wall
+          printf("X");
+          // actual room
+          for(int j=0; j<W; j++) {
+
+              // get max temperature in this tile
+              value_t max_t = 0;
+              for(int x=sH*i; x<sH*i+sH; x++) {
+                  for(int y=sW*j; y<sW*j+sW; y++) {
+                      max_t = (max_t < m[x*N+y]) ? m[x*N+y] : max_t;
+                  }
+              }
+              value_t temp = max_t;
+
+              // pick the 'color'
+              int c = ((temp - min) / (max - min)) * numColors;
+              c = (c >= numColors) ? numColors-1 : ((c < 0) ? 0 : c);
+
+              // print the average temperature
+              printf("%c",colors[c]);
+          }
+          // right wall
+          printf("X\n");
+      }
+
+      // lower wall
+      for(int i=0; i<W+2; i++) {
+          printf("X");
+      }
+      printf("\n");
+
+  }
+
+#+end_src
+
+** heat_stencil_2D_mpi
+For the mpi version every rank is working on a 2D patch. For using the same method that the immediate neighbors don't do the same thing as the middle cell i used the x,y coordiantes and summed them up. So by going one step in x or y direction it changes only by one and modulo 2 can be used again. Subarrays with size and starting point. It is important so free those datatypes to not run out of memory for big problem sizes and timesteps. For an additional speedup those patches could be copied to a new linear memory space for better cache hits. This was not done to make exchange of neighboring cells more easy. At the end a gather operation was used with custom strides depending on patch sizes.
+#+begin_src C :eval never-export
+  //some parts are copied from our old solutions in parallel openCL course https://git.uibk.ac.at/csat2062/parallel_local
+
+  #include <mpi.h>
+  #include <stdio.h>
+  #include <stdlib.h>
+
+  typedef double value_t;
+
+  #define RESOLUTION 120
+  #define DIMENSIONS 2
+
+  enum mode {SEND, RECEIVE};
+
+  // -- vector utilities --
+
+  typedef value_t *Vector;
+
+  Vector createVector(int N, int M);
+
+  void releaseVector(Vector m);
+
+  void printTemperature(Vector m, int N, int M);
+
+  void neighbourMPI(int dimension, int* arraysize, int* subsize, int* substart, int* neighbour, MPI_Comm cartesian, double* sendbuffer, enum mode mode);
+
+  // -- simulation code ---
+
+  int main(int argc, char **argv) {
+    int rank;
+    int size;
+    int partsize_row;
+    int partsize_col;
+    int dim[2] = {0,0};
+    int periodic[2], coord[2];
+    MPI_Comm cart;
+    //MPI_Datatype subarray;
+    MPI_Datatype gather, gather2;
+    MPI_Init(&argc, &argv);
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    MPI_Comm_size(MPI_COMM_WORLD, &size);
+
+    printf("rank=%d with size=%d\n", rank, size);
+    // 'parsing' optional input parameter = problem size
+    int N = 1000;
+    int M = 1000;
+    if (argc == 3) {
+      N = atoi(argv[1]);
+      M = atoi(argv[2]);
+    }
+    int T = 50000;
+
+    /* if (N % size != 0) { */
+    /*   printf("size not ok for problem size. not dividable without remainder\n"); */
+    /*   exit(EXIT_FAILURE); */
+    /* } */
+
+    int arraysize[2] = {M,N};
+
+    printf("Computing heat-distribution for room size N=%d x %d for T=%d timesteps\n", N,M, T);
+
+    // ---------- setup ----------
+
+    // create a buffer for storing temperature fields
+    Vector A = createVector(N,M);
+
+    // set up initial conditions in A
+    for (int row = 0; row < M; ++row) {
+      for (int col = 0; col < N; ++col) {
+        A[col + row*N] = 273; // temperature is 0° C everywhere (273 K)
+      }
+    }
+    MPI_Dims_create(size, 2, dim);
+    printf("dims=%d %d\n", dim[0], dim[1]);
+    if (M % dim[0] != 0 || N % dim[1] != 0){
+      printf("size not ok for problem size. not dividable without remainder\n");
+      exit(EXIT_FAILURE);
+    }
+    partsize_row = M / dim[0];
+    partsize_col = N / dim[1];
+    //dim[0] = size/2;
+    //dim[1] = size/2;
+    periodic[0] = 0;
+    periodic[1] = 0;
+    int reorder = 1;
+    MPI_Cart_create(MPI_COMM_WORLD, 2, dim, periodic, reorder, &cart);
+
+    MPI_Cart_coords(cart, rank, DIMENSIONS, coord);
+
+    // and there is a heat source in one corner
+    int source_row = M / 4;
+    int source_col = N / 4;
+    A[source_row * N + source_col] = 273 + 60;
+
+    printf("Initial:\n");
+    printTemperature(A, N, M);
+    printf("\n");
+
+    // ---------- compute ----------
+
+    // create a second buffer for the computation
+    Vector B = createVector(N,M);
+
+    long long start_row = coord[0] * partsize_row;
+    long long stop_row = coord[0] * partsize_row + partsize_row;
+    long long start_col = coord[1] * partsize_col;
+    long long stop_col = coord[1] * partsize_col + partsize_col;
+
+    printf("rank %d is at coord(%d,%d) with array start_row=%lld stop_row=%lld start_col=%lld stop_col=%lld\n", rank, coord[0], coord[1], start_row, stop_row, start_col, stop_col);
+    int neighbour[DIMENSIONS];
+    int subsize[DIMENSIONS];
+    int substart[DIMENSIONS];
+    // for each time step ..
+    for (int t = 0; t < T; t++) {
+      // .. we propagate the temperature
+
+      if((coord[0]+coord[1]) % 2 == 0){
+        // send to left neighbour
+        if (coord[1] != 0){
+          subsize[0] = partsize_row;
+          subsize[1] = 1;
+          substart[0] = start_row;
+          substart[1] = start_col;
+          neighbour[0] = coord[0];
+          neighbour[1] = coord[1]-1;
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, SEND);
+        }
+
+        // receive from right neighbour
+        if (coord[1] < dim[1]-1){
+          subsize[0] = partsize_row;
+          subsize[1] = 1;
+          substart[0] = start_row;
+          substart[1] = stop_col;
+          neighbour[0] = coord[0];
+          neighbour[1] = coord[1]+1;
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, RECEIVE);
+        }
+
+        // send to right  neighbour
+        if (coord[1] < dim[1]-1){
+          subsize[0] = partsize_row;
+          subsize[1] = 1;
+          substart[0] = start_row;
+          substart[1] = stop_col-1;
+          neighbour[0] = coord[0];
+          neighbour[1] = coord[1]+1;
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, SEND);
+        }
+
+        // receive from left neighbour
+        if (coord[1] != 0){
+          subsize[0] = partsize_row;
+          subsize[1] = 1;
+          substart[0] = start_row;
+          substart[1] = start_col-1;
+          neighbour[0] = coord[0];
+          neighbour[1] = coord[1]-1;
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, RECEIVE);
+        }
+
+        // send to bottom neighbour
+        if (coord[0] < dim[0]-1){
+          subsize[0] = 1;
+          subsize[1] = partsize_col;
+          substart[0] = stop_row-1;
+          substart[1] = start_col;
+          neighbour[0] = coord[0]+1;
+          neighbour[1] = coord[1];
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, SEND);
+        }
+        // receive from top neighbour
+        if (coord[0] != 0){
+          subsize[0] = 1;
+          subsize[1] = partsize_col;
+          substart[0] = start_row-1;
+          substart[1] = start_col;
+          neighbour[0] = coord[0]-1;
+          neighbour[1] = coord[1];
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, RECEIVE);
+        }
+        // send to top neighbour
+        if (coord[0] != 0){
+          subsize[0] = 1;
+          subsize[1] = partsize_col;
+          substart[0] = start_row;
+          substart[1] = start_col;
+          neighbour[0] = coord[0]-1;
+          neighbour[1] = coord[1];
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, SEND);
+        }
+        // receive from bottom neighbour
+        if (coord[0] < dim[0]-1){
+          subsize[0] = 1;
+          subsize[1] = partsize_col;
+          substart[0] = stop_row;
+          substart[1] = start_col;
+          neighbour[0] = coord[0]+1;
+          neighbour[1] = coord[1];
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, RECEIVE);
+        }
+
+
+      }else{
+
+        // receive from right neighbour
+        if (coord[1] < dim[1]-1){
+          subsize[0] = partsize_row;
+          subsize[1] = 1;
+          substart[0] = start_row;
+          substart[1] = stop_col;
+          neighbour[0] = coord[0];
+          neighbour[1] = coord[1]+1;
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, RECEIVE);
+        }
+
+        // send to left neighbour
+        if (coord[1] != 0){
+          subsize[0] = partsize_row;
+          subsize[1] = 1;
+          substart[0] = start_row;
+          substart[1] = start_col;
+          neighbour[0] = coord[0];
+          neighbour[1] = coord[1]-1;
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, SEND);
+        }
+
+
+        // receive from left neighbour
+        if (coord[1] != 0){
+          subsize[0] = partsize_row;
+          subsize[1] = 1;
+          substart[0] = start_row;
+          substart[1] = start_col-1;
+          neighbour[0] = coord[0];
+          neighbour[1] = coord[1]-1;
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, RECEIVE);
+        }
+
+        // send to right  neighbour
+        if (coord[1] < dim[1]-1){
+          subsize[0] = partsize_row;
+          subsize[1] = 1;
+          substart[0] = start_row;
+          substart[1] = stop_col-1;
+          neighbour[0] = coord[0];
+          neighbour[1] = coord[1]+1;
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, SEND);
+        }
+
+
+
+        // receive from top neighbour
+        if (coord[0] != 0){
+          subsize[0] = 1;
+          subsize[1] = partsize_col;
+          substart[0] = start_row-1;
+          substart[1] = start_col;
+          neighbour[0] = coord[0]-1;
+          neighbour[1] = coord[1];
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, RECEIVE);
+        }
+        // send to bottom neighbour
+        if (coord[0] < dim[0]-1){
+          subsize[0] = 1;
+          subsize[1] = partsize_col;
+          substart[0] = stop_row-1;
+          substart[1] = start_col;
+          neighbour[0] = coord[0]+1;
+          neighbour[1] = coord[1];
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, SEND);
+        }
+
+
+
+        // receive from bottom neighbour
+        if (coord[0] < dim[0]-1){
+          subsize[0] = 1;
+          subsize[1] = partsize_col;
+          substart[0] = stop_row;
+          substart[1] = start_col;
+          neighbour[0] = coord[0]+1;
+          neighbour[1] = coord[1];
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, RECEIVE);
+        }
+        // send to top neighbour
+        if (coord[0] != 0){
+          subsize[0] = 1;
+          subsize[1] = partsize_col;
+          substart[0] = start_row;
+          substart[1] = start_col;
+          neighbour[0] = coord[0]-1;
+          neighbour[1] = coord[1];
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, SEND);
+        }
+
+
+      }
+
+      for (int row = start_row; row < stop_row; row++) {
+        for (int col = start_col; col < stop_col; col++) {
+          // center stays constant (the heat is still on)
+          if (col == source_col && row == source_row) {
+            B[row*N+col] = A[col+row*N];
+            continue;
+          }
+
+          // get current temperature at (x,y)
+          value_t tc = A[row*N+col];
+
+          // get temperatures left/right and up/down
+          value_t tl = ( col !=  0  ) ? A[row*N+(col-1)] : tc;
+          value_t tr = ( col != N-1 ) ? A[row*N+(col+1)] : tc;
+          value_t tu = ( row !=  0  ) ? A[(row-1)*N+col] : tc;
+          value_t td = ( row != M-1 ) ? A[(row+1)*N+col] : tc;
+
+          // update temperature at current point
+          B[row*N+col] = tc + 1.0/5 * (tl + tr + tu + td + (-4*tc));
+
+        }
+      }
+
+      // swap matrices (just pointers, not content)
+      Vector H = A;
+      A = B;
+      B = H;
+
+      // show intermediate step
+      if (!(t % 1000) && 0) {
+        printf("Step t=%d:\n", t);
+        printTemperature(A, N, M);
+        printf("\n");
+      }
+    }
+
+
+    //int subsize[2] = {partsize_row, partsize_col};
+    subsize[0] = partsize_row;
+    subsize[1] = partsize_col;
+    //int substart[2] = {start_row, start_col};
+    substart[0] = start_row;
+    substart[1] = start_col;
+    int sendcount[size];
+    int displacement[size];
+    for (int i=0; i < size; ++i) {
+      sendcount[i]=1;
+    }
+    int colcount = 0;
+    int rowcount = 0;
+    for (int i=0; i < size; ++i) {
+
+      displacement[i]=colcount + rowcount;
+      colcount += partsize_col;
+      if ((i+1) % dim[1] == 0){
+        colcount = 0;
+        rowcount += partsize_row * N;
+      }
+    }
+
+    //printf("subsize %d %d start %d %d\n",subsize[0], subsize[1], substart[0], substart[1] );
+    MPI_Type_create_subarray(DIMENSIONS, arraysize, subsize, substart, MPI_ORDER_C, MPI_DOUBLE, &gather);
+    MPI_Type_commit(&gather);
+    MPI_Type_create_resized(gather, 0, 1*sizeof(double), &gather2);
+    MPI_Type_commit(&gather2);
+
+    MPI_Gatherv(A, 1, gather, A, sendcount, displacement, gather2, 0, MPI_COMM_WORLD);
+    MPI_Type_free(&gather);
+    MPI_Type_free(&gather2);
+    // ---------- check ----------
+
+
+
+    int success = 1;
+    if (rank == 0){
+      printf("Final:\n");
+      printTemperature(A, N, M);
+      printf("\n");
+      for(int y = 0; y<M; y++) {
+        for(int x = 0; x<N; x++) {
+          value_t temp = A[y*N+x];
+          if (273 <= temp && temp <= 273+60) continue;
+          success = 0;
+          break;
+        }
+      }
+      printf("Verification: %s\n", (success) ? "OK" : "FAILED");
+    }
+
+
+
+    // ---------- cleanup ----------
+
+    releaseVector(A);
+    releaseVector(B);
+
+
+    MPI_Finalize();
+
+    // done
+    return (success) ? EXIT_SUCCESS : EXIT_FAILURE;
+  }
+
+  Vector createVector(int N, int M) {
+    // create data and index vector
+    return malloc(sizeof(value_t) * N * M);
+  }
+
+  void releaseVector(Vector m) { free(m); }
+
+
+  //taken from old parallel course https://git.uibk.ac.at/csat2062/parallel_local
+  void printTemperature(Vector m, int N, int M) {
+    const char* colors = " .-:=+*#%@";
+    const int numColors = 10;
+
+    // boundaries for temperature (for simplicity hard-coded)
+    const value_t max = 273 + 30;
+    const value_t min = 273 + 0;
+
+    // set the 'render' resolution
+    int H = 30;
+    int W = 60;
+
+    // step size in each dimension
+    int sH = M/H;
+    int sW = N/W;
+
+
+    // upper wall
+    for(int i=0; i<W+2; i++) {
+      printf("X");
+    }
+    printf("\n");
+
+    // room
+    for(int i=0; i<H; i++) {
+      // left wall
+      printf("X");
+      // actual room
+      for(int j=0; j<W; j++) {
+
+        // get max temperature in this tile
+        value_t max_t = 0;
+        for(int x=sH*i; x<sH*i+sH; x++) {
+          for(int y=sW*j; y<sW*j+sW; y++) {
+            max_t = (max_t < m[x*N+y]) ? m[x*N+y] : max_t;
+          }
+        }
+        value_t temp = max_t;
+
+        // pick the 'color'
+        int c = ((temp - min) / (max - min)) * numColors;
+        c = (c >= numColors) ? numColors-1 : ((c < 0) ? 0 : c);
+
+        // print the average temperature
+        printf("%c",colors[c]);
+      }
+      // right wall
+      printf("X\n");
+    }
+
+    // lower wall
+    for(int i=0; i<W+2; i++) {
+      printf("X");
+    }
+    printf("\n");
+
+  }
+  void neighbourMPI(int dimension, int* arraysize, int* subsize, int* substart, int* neighbour, MPI_Comm cartesian, double* buffer, enum mode mode){
+    int neighbourrank;
+    MPI_Datatype subarray;
+    MPI_Cart_rank(cartesian, neighbour, &neighbourrank);
+    MPI_Type_create_subarray(dimension, arraysize, subsize, substart, MPI_ORDER_C, MPI_DOUBLE, &subarray);
+    MPI_Type_commit(&subarray);
+    if (mode == SEND){
+      MPI_Send(buffer, 1, subarray, neighbourrank, 0, MPI_COMM_WORLD);
+    } else {
+      MPI_Recv(buffer, 1, subarray, neighbourrank, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    }
+    MPI_Type_free(&subarray);  
+  }
+
+#+end_src
+
+** heat_stencil_3D_seq
+The 3D version is an extension of 2D with above and below exchanges which correspond to Z coordiantes changes. The debugging prints were used to find out that the old factor of 0.2 is to big to influence the center cell with the temperatures around it because 6 neighbor cells are influencing it. The print is just squashing the z dimension to have a comparable 2D output.
+#+begin_src C :eval never-export
+  // some parts are copied from our old solutions in parallel openCL course
+  // https://git.uibk.ac.at/csat2062/parallel_local
+
+  #include <stdio.h>
+  #include <stdlib.h>
+
+  typedef double value_t;
+
+  #define RESOLUTION 120
+  #define NDEBUG
+
+  // -- vector utilities --
+
+  typedef value_t *Vector;
+
+  Vector createVector(int N, int M, int O);
+
+  void releaseVector(Vector m);
+
+  void printTemperature(Vector m, int N, int M, int O);
+
+  // -- simulation code ---
+
+  int main(int argc, char **argv) {
+    // 'parsing' optional input parameter = problem size
+    int N = 100;
+    int M = 100;
+    int Oz = 100;
+    if (argc >1) {
+      N = atoi(argv[1]);
+      M = atoi(argv[1]);
+      Oz = atoi(argv[1]);
+    }
+    int T = 50000;
+    printf("Computing heat-distribution for room size N=%d x %d x %d for T=%d timesteps\n", N, M, Oz, T);
+
+    // ---------- setup ----------
+
+    // create a buffer for storing temperature fields
+    Vector A = createVector(N, M, Oz);
+
+    // set up initial conditions in A
+    for (int z = 0; z < Oz; ++z) {
+      for (int y = 0; y < M; ++y) {
+        for (int x = 0; x < N; ++x) {
+          A[x + y * N + z * N * M] =  273; // temperature is 0° C everywhere (273 K)
+        }
+      }
+    }
+
+    // and there is a heat source in one corner
+    int source_x = N / 4;
+    int source_y = M / 4;
+    int source_z = Oz / 4;
+    A[source_z*N*M + source_y*N + source_x] = 273 + 60;
+
+    printf("Initial:\n");
+    printTemperature(A, N, M, Oz);
+    printf("\n");
+
+    // ---------- compute ----------
+
+    // create a second buffer for the computation
+    Vector B = createVector(N, M, Oz);
+
+    // for each time step ..
+    for (int t = 0; t < T; t++) {
+      // .. we propagate the temperature
+      for (int z = 0; z < Oz; z++) {
+        for (int y = 0; y < M; y++) {
+          for (int x = 0; x < N; x++) {
+            // center stays constant (the heat is still on)
+            if (x == source_x && y == source_y && z == source_z) {
+              B[z*N*M + y*N + x] = A[z*N*M + y*N + x];
+  #ifndef NDEBUG
+              printf("written origin %f on x=%d y=%d z=%d on step %d\n",A[x + y * N + z * N * M], x, y, z, t);
+  #endif
+          
+              continue;
+            }
+
+            // get current temperature at (x,y,z)
+            value_t tc = A[z*N*M + y*N + x];
+
+            // get temperatures left/right and up/down  and below/above
+            value_t tl = (x != 0    ) ? A[z*N*M + y*N + (x-1)] : tc;
+            value_t tr = (x != N - 1) ? A[z*N*M + y*N + (x+1)] : tc;
+            value_t tu = (y != 0    ) ? A[z*N*M + (y-1)*N + x] : tc;
+            value_t td = (y != M - 1) ? A[z*N*M + (y+1)*N + x] : tc;
+            value_t tb = (z != 0    ) ? A[(z-1)*N*M + y*N + x] : tc;
+            value_t ta = (z != Oz - 1) ? A[(z+1)*N*M + y*N + x] : tc;
+
+            // update temperature at current point
+            double temp = tc + 1.0/7 * (tl + tr + tu + td + tb + ta + (-6 * tc));
+  #ifndef NDEBUG
+            if (tc<0 || temp < 0){
+              printf("negative value\n");
+            }
+            if (temp > 273+60){
+              printf("to high value\n");
+            }
+            if (temp < 273){
+              printf("below start value\n");
+            }
+            printf("tc=%f\n", tc);
+            printf("tl=%f\n", tl);
+            printf("tr=%f\n", tr);
+            printf("tu=%f\n", tu);
+            printf("td=%f\n", td);
+            printf("tb=%f\n", tb);
+            printf("ta=%f\n", ta);
+            printf("written %f on x=%d y=%d z=%d on step %d\n", temp, x, y, z, t);
+            printf("---\n");
+  #endif
+            B[z*N*M + y*N + x] = temp;
+          }
+        }
+      }
+      // swap matrices (just pointers, not content)
+      Vector H = A;
+      A = B;
+      B = H;
+
+      // show intermediate step
+      if (!(t % 1000) && 0) {
+        printf("Step t=%d:\n", t);
+        printTemperature(A, N, M, Oz);
+        printf("\n");
+      }
+    }
+
+    releaseVector(B);
+
+    // ---------- check ----------
+
+    printf("Final:\n");
+    printTemperature(A, N, M, Oz);
+    printf("\n");
+
+    int success = 1;
+    for (int z = 0; z < Oz; z++) {
+      for (int y = 0; y < M; y++) {
+        for (int x = 0; x < N; x++) {
+          value_t temp = A[z*N*M + y*N + x];
+          if (273 <= temp && temp <= 273 + 60)
+            continue;
+          success = 0;
+          printf("failure on cell x=%d y=%d z=%d with value %f\n", x, y, z, temp);
+          break;
+        }
+      }
+    }
+
+    printf("Verification: %s\n", (success) ? "OK" : "FAILED");
+
+    // ---------- cleanup ----------
+
+    releaseVector(A);
+
+    // done
+    return (success) ? EXIT_SUCCESS : EXIT_FAILURE;
+  }
+
+  Vector createVector(int N, int M, int O) {
+    // create data and index vector
+    return malloc(sizeof(value_t) * N * M * O);
+  }
+
+  void releaseVector(Vector m) { free(m); }
+
+  // taken from old parallel course https://git.uibk.ac.at/csat2062/parallel_local
+  void printTemperature(Vector m, int N, int M, int Oz) {
+    const char *colors = " .-:=+*#%@";
+    const int numColors = 10;
+
+    // boundaries for temperature (for simplicity hard-coded)
+    const value_t max = 273 + 30;
+    const value_t min = 273 + 0;
+
+    // set the 'render' resolution
+    int H = 30;
+    int W = 50;
+
+    // step size in each dimension
+    int sH = N / H;
+    int sW = M / W;
+    int sD = Oz / W;
+
+    // upper wall
+    for (int i = 0; i < W + 2; i++) {
+      printf("X");
+    }
+    printf("\n");
+
+    // room
+    for (int i = 0; i < H; i++) {
+      // left wall
+      printf("X");
+      // actual room
+      for (int j = 0; j < W; j++) {
+
+        // get max temperature in this tile
+        value_t max_t = 0;
+        for (int x = sH * i; x < sH * i + sH; x++) {
+          for (int y = sW * j; y < sW * j + sW; y++) {
+            //add values over z coordinate
+            for (int z = 0; z < Oz; z++) {
+              max_t = (max_t < m[x * N + y + N*M*z]) ? m[x * N + y+ N*M*z] : max_t;
+            }
+          }
+        }
+        // avarage over z hight
+        value_t temp = max_t;
+
+        // pick the 'color'
+        int c = ((temp - min) / (max - min)) * numColors;
+        c = (c >= numColors) ? numColors - 1 : ((c < 0) ? 0 : c);
+
+        // print the average temperature
+        printf("%c", colors[c]);
+      }
+      // right wall
+      printf("X\n");
+    }
+
+    // lower wall
+    for (int i = 0; i < W + 2; i++) {
+      printf("X");
+    }
+    printf("\n");
+  }
+
+#+end_src
+
+** heat_stencil_3D_mpi
+The exchange of subarrays in 3D didn't work so it was done in a loop over the z coordiante and sending 2D patches. The exchange with modulo 2 also works here if you sum up the coordinates in x,y,z grid position.
+#+begin_src C :eval never-export
+  //some parts are copied from our old solutions in parallel openCL course https://git.uibk.ac.at/csat2062/parallel_local
+
+  #include <mpi.h>
+  #include <stdio.h>
+  #include <stdlib.h>
+
+  typedef double value_t;
+
+  #define RESOLUTION 120
+  #define DIMENSIONS 3
+
+  enum mode {SEND, RECEIVE};
+
+  // -- vector utilities --
+
+  typedef value_t *Vector;
+
+  Vector createVector(int N, int M, int Oz);
+
+  void releaseVector(Vector m);
+
+  void printTemperature(Vector m, int N, int M, int Oz);
+
+  void neighbourMPI(int dimension, int* arraysize, int* subsize, int* substart, int* neighbour, MPI_Comm cartesian, double* sendbuffer, enum mode mode);
+
+  // -- simulation code ---
+  int periodic[DIMENSIONS], coord[DIMENSIONS];
+
+  int main(int argc, char **argv) {
+    int rank;
+    int size;
+    int partsize_row;
+    int partsize_col;
+    int partsize_slide;
+    int dim[DIMENSIONS] = {0,0,0};
+
+    MPI_Comm cart;
+    //MPI_Datatype subarray;
+    MPI_Datatype gather, gather2;
+    MPI_Init(&argc, &argv);
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    MPI_Comm_size(MPI_COMM_WORLD, &size);
+
+    printf("rank=%d with size=%d\n", rank, size);
+    // 'parsing' optional input parameter = problem size
+    int N = 300;
+    if (argc > 1) {
+      N = atoi(argv[1]);
+    }
+    int T = 50000;
+
+    /* if (N % size != 0) { */
+    /*   printf("size not ok for problem size. not dividable without remainder\n"); */
+    /*   exit(EXIT_FAILURE); */
+    /* } */
+
+    int arraysize[DIMENSIONS] = {N,N,N};
+
+    printf("Computing heat-distribution for room size N=%d x %d x %d for T=%d timesteps\n", N,N,N, T);
+
+    // ---------- setup ----------
+
+    // create a buffer for storing temperature fields
+    Vector A = createVector(N,N,N);
+
+    // set up initial conditions in A
+    for (int slide = 0; slide < N; ++slide) {
+      for (int row = 0; row < N; ++row) {
+        for (int col = 0; col < N; ++col) {
+          A[col + row*N + slide*N*N] = 273; // temperature is 0° C everywhere (273 K)
+        }
+      }
+    }
+
+    MPI_Dims_create(size, DIMENSIONS, dim);
+    printf("dims=%d %d %d\n", dim[0], dim[1], dim[2]);
+    if (N % dim[0] != 0 || N % dim[1] != 0 || N % dim[2] != 0){
+      printf("size not ok for problem size. not dividable without remainder\n");
+      exit(EXIT_FAILURE);    
+    }
+    partsize_row = N / dim[0];
+    partsize_col = N / dim[1];
+    partsize_slide = N / dim[2];
+    //dim[0] = size/2;
+    //dim[1] = size/2;
+    periodic[0] = 0;
+    periodic[1] = 0;
+    periodic[2] = 0;
+    int reorder = 0;
+    MPI_Cart_create(MPI_COMM_WORLD, DIMENSIONS, dim, periodic, reorder, &cart);
+
+    MPI_Cart_coords(cart, rank, DIMENSIONS, coord);
+
+    // and there is a heat source in one corner
+    int source_row = N / 4;
+    int source_col = N / 4;
+    int source_slide = N / 4;
+    A[source_row * N + source_col + N*N* source_slide] = 273 + 60;
+
+    printf("Initial:\n");
+    printTemperature(A, N, N,N);
+    printf("\n");
+
+    // ---------- compute ----------
+
+    // create a second buffer for the computation
+    Vector B = createVector(N,N,N);
+
+    for (int slide = 0; slide < N; ++slide) {
+      for (int row = 0; row < N; ++row) {
+        for (int col = 0; col < N; ++col) {
+          B[col + row*N + slide*N*N] = 0; // temperature is 0° C everywhere (273 K)
+        }
+      }
+    }
+
+    long long start_row = coord[0] * partsize_row;
+    long long stop_row = coord[0] * partsize_row + partsize_row;
+    long long start_col = coord[1] * partsize_col;
+    long long stop_col = coord[1] * partsize_col + partsize_col;
+    long long start_slide = coord[2] * partsize_slide;
+    long long stop_slide = coord[2] * partsize_slide + partsize_slide;
+
+    printf("rank %d is at coord(%d,%d, %d) with array start_row=%lld stop_row=%lld start_col=%lld stop_col=%lld start_slide=%lld stop_slide=%lld \n", rank, coord[0], coord[1], coord[2], start_row, stop_row, start_col, stop_col, start_slide, stop_slide);
+    int neighbour[DIMENSIONS];
+    int subsize[DIMENSIONS];
+    int substart[DIMENSIONS];
+    // for each time step ..
+    for (int t = 0; t < T; t++) {
+      // .. we propagate the temperature
+
+      if((coord[0]+coord[1]+coord[2]) % 2 == 0){
+        // send to left neighbour
+        if (coord[1] != 0){
+          subsize[0] = partsize_row;
+          subsize[1] = 1;
+          subsize[2] = partsize_slide;
+          substart[0] = start_row;
+          substart[1] = start_col;
+          substart[2] = start_slide;
+          neighbour[0] = coord[0];
+          neighbour[1] = coord[1]-1;
+          neighbour[2] = coord[2];
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, SEND);
+        }
+
+        // receive from right neighbour
+        if (coord[1] < dim[1]-1){
+          subsize[0] = partsize_row;
+          subsize[1] = 1;
+          subsize[2] = partsize_slide;
+          substart[0] = start_row;
+          substart[1] = stop_col;
+          substart[2] = start_slide;
+          neighbour[0] = coord[0];
+          neighbour[1] = coord[1]+1;
+          neighbour[2] = coord[2];
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, RECEIVE);
+        }
+
+        // send to right  neighbour
+        if (coord[1] < dim[1]-1){
+          subsize[0] = partsize_row;
+          subsize[1] = 1;
+          subsize[2] = partsize_slide;
+          substart[0] = start_row;
+          substart[1] = stop_col-1;
+          substart[2] = start_slide;
+          neighbour[0] = coord[0];
+          neighbour[1] = coord[1]+1;
+          neighbour[2] = coord[2];
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, SEND);
+        }
+
+        // receive from left neighbour
+        if (coord[1] != 0){
+          subsize[0] = partsize_row;
+          subsize[1] = 1;
+          subsize[2] = partsize_slide;
+          substart[0] = start_row;
+          substart[1] = start_col-1;
+          substart[2] = start_slide;
+          neighbour[0] = coord[0];
+          neighbour[1] = coord[1]-1;
+          neighbour[2] = coord[2];
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, RECEIVE);
+        }
+
+        // send to bottom neighbour
+        if (coord[0] < dim[0]-1){
+          subsize[0] = 1;
+          subsize[1] = partsize_col;
+          subsize[2] = partsize_slide;
+          substart[0] = stop_row-1;
+          substart[1] = start_col;
+          substart[2] = start_slide;
+          neighbour[0] = coord[0]+1;
+          neighbour[1] = coord[1];
+          neighbour[2] = coord[2];
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, SEND);
+        }
+        // receive from top neighbour
+        if (coord[0] != 0){
+          subsize[0] = 1;
+          subsize[1] = partsize_col;
+          subsize[2] = partsize_slide;
+          substart[0] = start_row-1;
+          substart[1] = start_col;
+          substart[2] = start_slide;
+          neighbour[0] = coord[0]-1;
+          neighbour[1] = coord[1];
+          neighbour[2] = coord[2];
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, RECEIVE);
+        }
+        // send to top neighbour
+        if (coord[0] != 0){
+          subsize[0] = 1;
+          subsize[1] = partsize_col;
+          subsize[2] = partsize_slide;
+          substart[0] = start_row;
+          substart[1] = start_col;
+          substart[2] = start_slide;
+          neighbour[0] = coord[0]-1;
+          neighbour[1] = coord[1];
+          neighbour[2] = coord[2];
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, SEND);
+        }
+        // receive from bottom neighbour
+        if (coord[0] < dim[0]-1){
+          subsize[0] = 1;
+          subsize[1] = partsize_col;
+          subsize[2] = partsize_slide;
+          substart[0] = stop_row;
+          substart[1] = start_col;
+          substart[2] = start_slide;
+          neighbour[0] = coord[0]+1;
+          neighbour[1] = coord[1];
+          neighbour[2] = coord[2];
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, RECEIVE);
+        }
+
+        // send to below neighbour
+        if (coord[2] != 0){
+          subsize[0] = partsize_row;
+          subsize[1] = partsize_col;
+          subsize[2] = 1;
+          substart[0] = start_row;
+          substart[1] = start_col;
+          substart[2] = start_slide;
+          neighbour[0] = coord[0];
+          neighbour[1] = coord[1];
+          neighbour[2] = coord[2]-1;
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, SEND);
+        }
+        // receive from above neighbour
+        if (coord[2] < dim[2]-1){
+          subsize[0] = partsize_row;
+          subsize[1] = partsize_col;
+          subsize[2] = 1;
+          substart[0] = start_row;
+          substart[1] = start_col;
+          substart[2] = stop_slide;
+          neighbour[0] = coord[0];
+          neighbour[1] = coord[1];
+          neighbour[2] = coord[2]+1;
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, RECEIVE);
+        }
+
+        // send to above neighbour
+        if (coord[2] < dim[2]-1){
+          subsize[0] = partsize_row;
+          subsize[1] = partsize_col;
+          subsize[2] = 1;
+          substart[0] = start_row;
+          substart[1] = start_col;
+          substart[2] = stop_slide-1;
+          neighbour[0] = coord[0];
+          neighbour[1] = coord[1];
+          neighbour[2] = coord[2]+1;
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, SEND);
+        }
+
+        // receive from below neighbour
+        if (coord[2] != 0 ){
+          subsize[0] = partsize_row;
+          subsize[1] = partsize_col;
+          subsize[2] = 1;
+          substart[0] = start_row;
+          substart[1] = start_col;
+          substart[2] = start_slide-1;
+          neighbour[0] = coord[0];
+          neighbour[1] = coord[1];
+          neighbour[2] = coord[2]-1;
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, RECEIVE);
+        }
+
+      }else{
+
+        // receive from right neighbour
+        if (coord[1] < dim[1]-1){
+          subsize[0] = partsize_row;
+          subsize[1] = 1;
+          subsize[2] = partsize_slide;
+          substart[0] = start_row;
+          substart[1] = stop_col;
+          substart[2] = start_slide;
+          neighbour[0] = coord[0];
+          neighbour[1] = coord[1]+1;
+          neighbour[2] = coord[2];
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, RECEIVE);
+        }
+
+        // send to left neighbour
+        if (coord[1] != 0){
+          subsize[0] = partsize_row;
+          subsize[1] = 1;
+          subsize[2] = partsize_slide;
+          substart[0] = start_row;
+          substart[1] = start_col;
+          substart[2] = start_slide;
+          neighbour[0] = coord[0];
+          neighbour[1] = coord[1]-1;
+          neighbour[2] = coord[2];
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, SEND);
+        }
+
+
+        // receive from left neighbour
+        if (coord[1] != 0){
+          subsize[0] = partsize_row;
+          subsize[1] = 1;
+          subsize[2] = partsize_slide;
+          substart[0] = start_row;
+          substart[1] = start_col-1;
+          substart[2] = start_slide;
+          neighbour[0] = coord[0];
+          neighbour[1] = coord[1]-1;
+          neighbour[2] = coord[2];
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, RECEIVE);
+        }
+
+        // send to right  neighbour
+        if (coord[1] < dim[1]-1){
+          subsize[0] = partsize_row;
+          subsize[1] = 1;
+          subsize[2] = partsize_slide;
+          substart[0] = start_row;
+          substart[1] = stop_col-1;
+          substart[2] = start_slide;
+          neighbour[0] = coord[0];
+          neighbour[1] = coord[1]+1;
+          neighbour[2] = coord[2];
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, SEND);
+        }
+
+
+
+        // receive from top neighbour
+        if (coord[0] != 0){
+          subsize[0] = 1;
+          subsize[1] = partsize_col;
+          subsize[2] = partsize_slide;
+          substart[0] = start_row-1;
+          substart[1] = start_col;
+          substart[2] = start_slide;
+          neighbour[0] = coord[0]-1;
+          neighbour[1] = coord[1];
+          neighbour[2] = coord[2];
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, RECEIVE);
+        }
+        // send to bottom neighbour
+        if (coord[0] < dim[0]-1){
+          subsize[0] = 1;
+          subsize[1] = partsize_col;
+          subsize[2] = partsize_slide;
+          substart[0] = stop_row-1;
+          substart[1] = start_col;
+          substart[2] = start_slide;
+          neighbour[0] = coord[0]+1;
+          neighbour[1] = coord[1];
+          neighbour[2] = coord[2];
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, SEND);
+        }
+
+
+
+        // receive from bottom neighbour
+        if (coord[0] < dim[0]-1){
+          subsize[0] = 1;
+          subsize[1] = partsize_col;
+          subsize[2] = partsize_slide;
+          substart[0] = stop_row;
+          substart[1] = start_col;
+          substart[2] = start_slide;
+          neighbour[0] = coord[0]+1;
+          neighbour[1] = coord[1];
+          neighbour[2] = coord[2];
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, RECEIVE);
+        }
+        // send to top neighbour
+        if (coord[0] != 0){
+          subsize[0] = 1;
+          subsize[1] = partsize_col;
+          subsize[2] = partsize_slide;
+          substart[0] = start_row;
+          substart[1] = start_col;
+          substart[2] = start_slide;
+          neighbour[0] = coord[0]-1;
+          neighbour[1] = coord[1];
+          neighbour[2] = coord[2];
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, SEND);
+        }
+
+
+
+        // receive from above neighbour
+        if (coord[2] < dim[2]-1){
+          subsize[0] = partsize_row;
+          subsize[1] = partsize_col;
+          subsize[2] = 1;
+          substart[0] = start_row;
+          substart[1] = start_col;
+          substart[2] = stop_slide;
+          neighbour[0] = coord[0];
+          neighbour[1] = coord[1];
+          neighbour[2] = coord[2]+1;
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, RECEIVE);
+        }
+        // send to below neighbour
+        if (coord[2] != 0){
+          subsize[0] = partsize_row;
+          subsize[1] = partsize_col;
+          subsize[2] = 1;
+          substart[0] = start_row;
+          substart[1] = start_col;
+          substart[2] = start_slide;
+          neighbour[0] = coord[0];
+          neighbour[1] = coord[1];
+          neighbour[2] = coord[2]-1;
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, SEND);
+        }
+
+
+
+        // receive from below neighbour
+        if (coord[2] != 0 ){
+          subsize[0] = partsize_row;
+          subsize[1] = partsize_col;
+          subsize[2] = 1;
+          substart[0] = start_row;
+          substart[1] = start_col;
+          substart[2] = start_slide-1;
+          neighbour[0] = coord[0];
+          neighbour[1] = coord[1];
+          neighbour[2] = coord[2]-1;
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, RECEIVE);
+        }
+        // send to above neighbour
+        if (coord[2] < dim[2]-1){
+          subsize[0] = partsize_row;
+          subsize[1] = partsize_col;
+          subsize[2] = 1;
+          substart[0] = start_row;
+          substart[1] = start_col;
+          substart[2] = stop_slide-1;
+          neighbour[0] = coord[0];
+          neighbour[1] = coord[1];
+          neighbour[2] = coord[2]+1;
+          neighbourMPI(DIMENSIONS, arraysize, subsize, substart, neighbour, cart, A, SEND);
+        }
+
+      }
+
+      //MPI_Barrier(MPI_COMM_WORLD);
+      for (int slide = start_slide; slide < stop_slide; slide++){
+        for (int row = start_row; row < stop_row; row++) {
+          for (int col = start_col; col < stop_col; col++) {
+            // center stays constant (the heat is still on)
+            if (col == source_col && row == source_row && slide == source_slide) {
+              B[slide*N*N+row*N+col] = A[slide*N*N+row*N+col];
+              continue;
+            }
+
+            // get current temperature at (x,y,z)
+            value_t tc = A[row*N+col+slide*N*N];
+
+            // get temperatures left/right and up/down
+
+            value_t tl = (col != 0    ) ? A[slide*N*N + row*N + (col-1)] : tc;
+            value_t tr = (col != N - 1) ? A[slide*N*N + row*N + (col+1)] : tc;
+            value_t tu = (row != 0    ) ? A[slide*N*N + (row-1)*N + col] : tc;
+            value_t td = (row != N - 1) ? A[slide*N*N + (row+1)*N + col] : tc;
+            value_t tb = (slide != 0    ) ? A[(slide-1)*N*N + row*N + col] : tc;
+            value_t ta = (slide != N - 1) ? A[(slide+1)*N*N + row*N + col] : tc;
+
+            // update temperature at current point
+
+            value_t temp  = tc + 1.0/7 * (tl + tr + tu + td + tb + ta + (-6*tc));
+            B[row*N+col+slide*N*N] = temp;
+
+          }
+        }
+      }
+      // swap matrices (just pointers, not content)
+      Vector H = A;
+      A = B;
+      B = H;
+
+      // show intermediate step
+      if (!(t % 1000) && 0) {
+        printf("Step t=%d:\n", t);
+        printTemperature(A, N, N, N);
+        printf("\n");
+      }
+    }
+
+
+    subsize[0] = partsize_row;
+    subsize[1] = partsize_col;
+    subsize[2] = partsize_slide;
+
+    substart[0] = start_row;
+    substart[1] = start_col;
+    substart[2] = start_slide;
+    int sendcount[size];
+    int displacement[size];
+    for (int i=0; i < size; ++i) {
+      sendcount[i]=1;
+    }
+    int colcount = 0;
+    int rowcount = 0;
+    for (int i=0; i < size; ++i) {
+
+      displacement[i]=colcount + rowcount;
+      colcount += partsize_col;
+      if ((i+1) % dim[1] == 0){
+        colcount = 0;
+        rowcount += partsize_row * N;
+      }
+    }
+
+    /* printf("subsize %d %d start %d %d\n",subsize[0], subsize[1], substart[0], substart[1] ); */
+    /* MPI_Type_create_subarray(DIMENSIONS, arraysize, subsize, substart, MPI_ORDER_C, MPI_DOUBLE, &gather); */
+    /* MPI_Type_commit(&gather); */
+    /* MPI_Type_create_resized(gather, 0, 1*sizeof(double), &gather2); */
+    /* MPI_Type_commit(&gather2); */
+
+    /* MPI_Gatherv(A, 1, gather, A, sendcount, displacement, gather2, 0, MPI_COMM_WORLD); */
+    /* MPI_Type_free(&gather); */
+    /* MPI_Type_free(&gather2); */
+
+  // ---------- check ----------
+
+
+
+    int success = 1;
+    printf("Final:\n");
+    printTemperature(A, N, N, N);
+    printf("\n");
+
+    for (int z = 0; z < N; z++) {
+      for (int y = 0; y < N; y++) {
+        for (int x = 0; x < N; x++) {
+          value_t temp = A[z*N*N + y*N + x];
+          if (273 <= temp && temp <= 273 + 60)
+            continue;
+          success = 0;
+          printf("failure on cell x=%d y=%d z=%d with value %f\n", x, y, z, temp);
+          break;
+        }
+      }
+    }
+    printf("Verification: %s\n", (success) ? "OK" : "FAILED");
+
+
+
+
+    // ---------- cleanup ----------
+
+    releaseVector(A);
+    releaseVector(B);
+
+
+    MPI_Finalize();
+
+    // done
+    return (success) ? EXIT_SUCCESS : EXIT_FAILURE;
+  }
+
+  Vector createVector(int N, int M, int Oz) {
+    // create data and index vector
+    return malloc(sizeof(value_t) * N * M * Oz);
+  }
+
+  void releaseVector(Vector m) { free(m); }
+
+  // taken from old parallel course https://git.uibk.ac.at/csat2062/parallel_local
+  void printTemperature(Vector m, int N, int M, int Oz) {
+    const char *colors = " .-:=+*#%@";
+    const int numColors = 10;
+
+    // boundaries for temperature (for simplicity hard-coded)
+    const value_t max = 273 + 30;
+    const value_t min = 273 + 0;
+
+    // set the 'render' resolution
+    int H = 30;
+    int W = 50;
+    int D = 50;
+
+    // step size in each dimension
+    int sH = N / H;
+    int sW = M / W;
+    int sD = Oz / D;
+
+    // upper wall
+    for (int i = 0; i < W + 2; i++) {
+      printf("X");
+    }
+    printf("\n");
+
+    // room
+    for (int i = 0; i < H; i++) {
+      // left wall
+      printf("X");
+      // actual room
+      for (int j = 0; j < W; j++) {
+
+        // get max temperature in this tile
+        value_t max_t = 0;
+        for (int x = sH * i; x < sH * i + sH; x++) {
+          for (int y = sW * j; y < sW * j + sW; y++) {
+            //add values over z coordinate
+            for (int z = 0; z < Oz; z++) {
+              max_t = (max_t < m[x * N + y + N*M*z]) ? m[x * N + y+ N*M*z] : max_t;
+            }
+          }
+        }
+        // avarage over z hight
+        value_t temp = max_t;
+
+        // pick the 'color'
+        int c = ((temp - min) / (max - min)) * numColors;
+        c = (c >= numColors) ? numColors - 1 : ((c < 0) ? 0 : c);
+
+        // print the average temperature
+        printf("%c", colors[c]);
+      }
+      // right wall
+      printf("X\n");
+    }
+
+    // lower wall
+    for (int i = 0; i < W + 2; i++) {
+      printf("X");
+    }
+    printf("\n");
+  }
+
+  void neighbourMPI(int dimension, int* arraysize, int* subsize, int* substart, int* neighbour, MPI_Comm cartesian, double* buffer, enum mode mode){
+    int neighbourrank;
+    MPI_Datatype subarray;
+    MPI_Request req;
+    MPI_Cart_rank(cartesian, neighbour, &neighbourrank);
+    //printf("mypos: %d %d %d creating subarray @ %d %d %d with size %d %d %d mode %d for/from neighbour %d %d %d with rank %d \n",coord[0], coord[1], coord[2], substart[0], substart[1], substart[2], subsize[0], subsize[1], subsize[2], mode, neighbour[0], neighbour[1], neighbour[2], neighbourrank );
+    //only create 2d subarrays
+    MPI_Type_create_subarray(dimension-1, arraysize, subsize, substart, MPI_ORDER_C, MPI_DOUBLE, &subarray);
+    MPI_Type_commit(&subarray);
+    //send one by one
+    if (mode == SEND){
+      for (int i = 0; i < subsize[2]; ++i) {
+        MPI_Send(buffer+(substart[2]+i)*arraysize[0]*arraysize[1], 1, subarray, neighbourrank, 0, MPI_COMM_WORLD);
+      }
+      //printf("mypos: %d %d %d send value %f\n", coord[0], coord[1], coord[2], buffer[substart[0]*arraysize[0] + substart[1]+ substart[2]*arraysize[0]*arraysize[0]]);
+    } else {
+      for (int i=0; i < subsize[2]; ++i) {
+        MPI_Recv(buffer+(substart[2]+i)*arraysize[0]*arraysize[1], 1, subarray, neighbourrank, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      }
+      //printf("mypos: %d %d %d value after receive %f for position %d %d %d\n", coord[0], coord[1], coord[2], buffer[substart[0]*arraysize[0] + substart[1]+ substart[2]*arraysize[0]*arraysize[0]], substart[0], substart[1], substart[2]);
+    }
+    MPI_Type_free(&subarray);
+
+  }
+
+
+#+end_src
+
+** evaluating the output
+
+*** 1D_comparison
+
+**** Computing heat-distribution for room size N=1024 for T=50000 timesteps seq
+#+begin_example
+Final:		X:::::===+++**^XX#%@@@@@@@@@@@@@@@@@@@@@@@@@@@@%#XX^**++==:::---......                                                   X
+#+end_example
+
+**** Computing heat-distribution for room size N=1024 for T=50000 timesteps mpi N=2
+#+begin_example
+Final:		X:::::===+++**^XX#%@@@@@@@@@@@@@@@@@@@@@@@@@@@@%#XX^**++==:::---......                                                   X
+#+end_example
+
+*** 2D comparison
+
+**** Computing heat-distribution for room size N=256 x 256 for T=50000 timesteps seq
+#+begin_example
+Final:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X################********+++++=====:::::::----------.........X
+X#################*******+++++=====:::::::----------.........X
+X###################*****+++++=====:::::::----------.........X
+X#####################****++++=====:::::::----------.........X
+X###########%%%%%%%####***++++=====:::::::---------..........X
+X#########%%%%%%%%%%%###***+++=====:::::::---------..........X
+X#########%%%@@@@@@@%%##***+++=====::::::----------..........X
+X#########%%%@@@@@@@@%##***+++=====::::::---------...........X
+X**#######%%%@@@@@@@@%##***+++====::::::---------............X
+X*****#####%%%@@@@@@%%#***+++=====::::::---------............X
+X*******#####%%%%%%%##***+++=====::::::---------.............X
+X***********#######****++++=====::::::---------..............X
+X++++++**************+++++=====::::::---------...............X
+X++++++++++++++++++++++======:::::::---------................X
+X++++++++++++++++++========:::::::----------.................X
+X=======================:::::::::---------...................X
+X===================::::::::::-----------....................X
+X:::::::::::::::::::::::::::-----------......................X
+X::::::::::::::::::::::::------------.....................   X
+X:::::::::::::::::::---------------.....................     X
+X:::::::::::---------------------....................        X
+X-----------------------------.....................          X
+X--------------------------......................            X
+X----------------------........................              X
+X----------------............................                X
+X--------..................................                  X
+X........................................                    X
+X.......................................                     X
+X.....................................                       X
+X....................................                        X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+#+end_example
+
+**** Computing heat-distribution for room size N=256 x 256 for T=50000 timesteps N=2
+#+begin_example
+Final:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X################********+++++=====:::::::----------.........X
+X#################*******+++++=====:::::::----------.........X
+X###################*****+++++=====:::::::----------.........X
+X#####################****++++=====:::::::----------.........X
+X###########%%%%%%%####***++++=====:::::::---------..........X
+X#########%%%%%%%%%%%###***+++=====:::::::---------..........X
+X#########%%%@@@@@@@%%##***+++=====::::::----------..........X
+X#########%%%@@@@@@@@%##***+++=====::::::---------...........X
+X**#######%%%@@@@@@@@%##***+++====::::::---------............X
+X*****#####%%%@@@@@@%%#***+++=====::::::---------............X
+X*******#####%%%%%%%##***+++=====::::::---------.............X
+X***********#######****++++=====::::::---------..............X
+X++++++**************+++++=====::::::---------...............X
+X++++++++++++++++++++++======:::::::---------................X
+X++++++++++++++++++========:::::::----------.................X
+X=======================:::::::::---------...................X
+X===================::::::::::-----------....................X
+X:::::::::::::::::::::::::::-----------......................X
+X::::::::::::::::::::::::------------.....................   X
+X:::::::::::::::::::---------------.....................     X
+X:::::::::::---------------------....................        X
+X-----------------------------.....................          X
+X--------------------------......................            X
+X----------------------........................              X
+X----------------............................                X
+X--------..................................                  X
+X........................................                    X
+X.......................................                     X
+X.....................................                       X
+X....................................                        X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+#+end_example
+
+
+*** 3D comparison
+Because solution is not copied to rank 0 all patches are looked at for mpi solutions
+
+**** Computing heat-distribution for room size N=64 x 64 x 64 for T=50000 timesteps seq
+#+begin_example
+Final:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X--------------------------------------------------X
+X--------------------------------------------------X
+X--------------------------------------------------X
+X--------------------------------------------------X
+X--------------------------------------------------X
+X------------::::::::------------------------------X
+X----------::::::=:::::----------------------------X
+X----------::::=*%*=:::----------------------------X
+X----------:::=+%@%+=::----------------------------X
+X----------::::==+==:::----------------------------X
+X------------:::::::::-----------------------------X
+X--------------------------------------------------X
+X--------------------------------------------------X
+X--------------------------------------------------X
+X--------------------------------------------------X
+X--------------------------------------------------X
+X------------------------------------------------..X
+X----------------------------------------------....X
+X---------------------------------------------.....X
+X-------------------------------------------.......X
+X-----------------------------------------.........X
+X---------------------------------------...........X
+X-------------------------------------.............X
+X----------------------------------................X
+X--------------------------------..................X
+X------------------------------....................X
+X---------------------------.......................X
+X-------------------------.........................X
+X----------------------............................X
+X--------------------..............................X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+#+end_example
+
+**** Computing heat-distribution for room size N=64 x 64 x 64 for T=50000 timesteps N=2
+The output is overlaid but one can see that the pattern is the same.
+#+begin_example
+Final:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X--------------------------------------------------X
+Final:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X                                                  X
+X--------------------------------------------------X
+X                                                  X
+X--------------------------------------------------X
+X--------------------------------------------------X
+X                                                  X
+X                                                  X
+X--------------------------------------------------X
+X                                                  X
+X------------::::::::------------------------------X
+X                                                  X
+X----------::::::=:::::----------------------------X
+X                                                  X
+X----------::::=*%*=:::----------------------------X
+X                                                  X
+X----------:::=+%@%+=::----------------------------X
+X                @                                 X
+X----------::::==+==:::----------------------------X
+X                                                  X
+X------------:::::::::-----------------------------X
+X                                                  X
+X--------------------------------------------------X
+X                                                  X
+X--------------------------------------------------X
+X                                                  X
+X--------------------------------------------------X
+X                                                  X
+X--------------------------------------------------X
+X                                                  X
+X--------------------------------------------------X
+X-------------------------------------------------.X
+X------------------------------------------------..X
+X                                                  X
+X------------------------------------------------..X
+X                                                  X
+X----------------------------------------------....X
+X---------------------------------------------.....X
+X                                                  X
+X-------------------------------------------.......X
+X                                                  X
+X-----------------------------------------.........X
+X                                                  X
+X---------------------------------------...........X
+X                                                  X
+X-------------------------------------.............X
+X                                                  X
+X----------------------------------................X
+X                                                  X
+X--------------------------------..................X
+X                                                  X
+X------------------------------....................X
+X                                                  X
+X                                                  X
+X                                                  X
+X---------------------------.......................X
+X-------------------------.........................X
+X----------------------............................X
+X                                                  X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+X--------------------..............................X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+#+end_example
+
+*** Conclusion on output
+Seq and mpi solution are outputting the same thing. Now we create bash scripts that run multiple variations of the programs.
+
+* Exercise 02
+** Bash script
+If you only run one bash script you have to allocate the maximum slots because *-pe* can't be changed in the for loop. The problem is that you reserve 65 Slots in this example even if you run with only 2 slots.
+#+begin_src bash :eval never-export
+  #!/bin/bash
+
+  # Execute job in the queue "std.q" unless you have special requirements.
+  #$ -q std.q
+
+  # The batch system should use the current directory as working directory.
+  #$ -cwd
+
+  # Name your job. Unless you use the -o and -e options, output will
+  # go to a unique file name.ojob_id for each job.
+  #$ -N kopp_heat_3D
+
+  ##$ -M markus.kopp@student.uibk.ac.at
+  ##$ -m e
+
+  # Join the error stream to the output stream.
+  #$ -j yes
+
+  #$ -pe openmpi-8perhost 64
+
+  module load openmpi/4.0.3
+  for SIZE in 16 32 64 128; do
+      for X in 2 4 8 16 32 64; do
+          echo "new test with N=$X"
+          time mpiexec -np $X --report-bindings --display-devel-map ./heat_stencil_3D_mpi $SIZE
+          echo "--------------------"
+      done
+  done
+
+#+end_src
+
+** Measurements
+*** 1D
+#+ATTR_LATEX: :width \textwidth :caption Execution time
+| Arraysize | seq [s] | N=2 [s] | N=4 [s] | N=8 [s] | N=16 [s] | N=32 [s] | N=64 [s] |
+|-----------+---------+---------+---------+---------+----------+----------+----------|
+|      1024 |   0.378 |   1.395 |   1.092 |   1.109 |    1.429 |    1.508 |     1.94 |
+|      2048 |   0.714 |   1.292 |   1.187 |   1.276 |    1.375 |    1.494 |    1.518 |
+|      4096 |   1.422 |   1.595 |   1.343 |   1.213 |    1.474 |     1.44 |    1.582 |
+|      8192 |   2.836 |   2.261 |   1.751 |   1.357 |    1.535 |    1.476 |    1.548 |
+|     16384 |     8.9 |    5.33 |   3.194 |   2.155 |    1.956 |    1.771 |    1.593 |
+
+#+ATTR_LATEX: :width \textwidth :caption Speedup
+| Arraysize | SEQ |   N=2 |   N=4 |   N=8 |  N=16 |  N=32 |  N=64 |
+|-----------+-----+-------+-------+-------+-------+-------+-------|
+|      1024 |   1 | 0.271 | 0.346 | 0.341 | 0.265 | 0.251 | 0.195 |
+|      2048 |   1 | 0.553 | 0.602 | 0.560 | 0.519 | 0.478 | 0.470 |
+|      4096 |   1 | 0.892 | 1.059 | 1.172 | 0.965 | 0.988 | 0.899 |
+|      8192 |   1 | 1.254 | 1.620 | 2.090 | 1.848 | 1.921 | 1.832 |
+|     16384 |   1 | 1.670 | 2.786 | 4.130 | 4.550 | 5.025 | 5.587 |
+
+#+ATTR_LATEX: :width \textwidth :caption Efficiency 
+| Arraysize | SEQ |   N=2 |   N=4 |   N=8 |  N=16 |  N=32 |  N=64 |
+|-----------+-----+-------+-------+-------+-------+-------+-------|
+|      1014 |   1 | 0.135 | 0.087 | 0.043 | 0.017 | 0.008 | 0.003 |
+|      2048 |   1 | 0.276 | 0.150 | 0.070 | 0.032 | 0.015 | 0.007 |
+|      4096 |   1 | 0.446 | 0.265 | 0.147 | 0.060 | 0.031 | 0.014 |
+|      8192 |   1 | 0.627 | 0.405 | 0.261 | 0.115 | 0.060 | 0.029 |
+|     16384 |   1 | 0.835 | 0.697 | 0.516 | 0.284 | 0.157 | 0.087 |
+
+#+ATTR_LATEX: :width \textwidth :caption Throughput [FLOPS/s]
+| Arraysize |      SEQ |       N=2 |       N=4 |       N=8 |      N=16 |      N=32 |      N=64 |
+|-----------+----------+-----------+-----------+-----------+-----------+-----------+-----------|
+|      1014 | 8047.619 |  2180.645 |  2785.714 |  2743.012 |  2128.761 |  2017.241 |  1568.041 |
+|      2048 | 8605.042 |  4755.418 |  5176.074 |  4815.047 |  4468.364 |  4112.450 |  4047.431 |
+|      4096 | 8641.350 |  7704.075 |  9149.665 | 10130.256 |  8336.499 |  8533.333 |  7767.383 |
+|      8192 | 8665.726 | 10869.527 | 14035.408 | 18110.538 | 16010.423 | 16650.407 | 15875.969 |
+|     16384 | 5522.697 |  9221.764 | 15388.854 | 22808.353 | 25128.834 | 27753.811 | 30854.991 |
+#+attr_latex: :width 500px
+[[./graph/1d_time.png]]
+[[./graph/1d_tp.png]]
+*** 2D
+#+ATTR_LATEX: :width \textwidth :caption Execution time
+| Arraysize   | seq [s] | N=2 [s] | N=4 [s] | N=8 [s] | N=16 [s] | N=32 [s] | N=64 [s] |
+|-------------+---------+---------+---------+---------+----------+----------+----------|
+| 128 x 128   |  10.927 |   6.635 |   4.215 |   3.197 |    3.342 |    3.365 |    17.84 |
+| 256 x 256   |  43.581 |  23.191 |   12.68 |   7.438 |    5.735 |    4.529 |   17.122 |
+| 512 x 512   | 174.354 |  89.231 |  46.451 |  24.593 |   14.884 |    9.118 |   11.465 |
+| 1024 x 1024 | 714.765 | 366.571 | 188.441 |  98.249 |   52.039 |   26.693 |   17.098 |
+
+#+ATTR_LATEX: :width \textwidth :caption Speedup
+| Arraysize   | SEQ |   N=2 |   N=4 |   N=8 |   N=16 |   N=32 |   N=64 |
+|-------------+-----+-------+-------+-------+--------+--------+--------|
+| 128 x 128   |   1 | 1.647 | 2.592 | 3.418 |  3.270 |  3.247 |  0.613 |
+| 256 x 256   |   1 | 1.879 | 3.437 | 5.859 |  7.599 |  9.623 |  2.545 |
+| 512 x 512   |   1 | 1.954 | 3.754 | 7.090 | 11.714 | 19.122 | 15.208 |
+| 1024 x 1024 |   1 | 1.950 | 3.793 | 7.275 | 13.735 | 26.777 | 41.804 |
+
+#+ATTR_LATEX: :width \textwidth :caption Efficiency
+| Arraysize   | SEQ |   N=2 |   N=4 |   N=8 |  N=16 |  N=32 |  N=64 |
+|-------------+-----+-------+-------+-------+-------+-------+-------|
+| 128 x 128   |   1 | 0.823 | 0.648 | 0.427 | 0.204 | 0.101 | 0.010 |
+| 256 x 256   |   1 | 0.940 | 0.859 | 0.732 | 0.475 | 0.301 | 0.040 |
+| 512 x 512   |   1 | 0.977 | 0.938 | 0.886 | 0.732 | 0.598 | 0.238 |
+| 1024 x 1024 |   1 | 0.975 | 0.948 | 0.909 | 0.858 | 0.837 | 0.653 |
+
+#+ATTR_LATEX: :width \textwidth :caption Throughput [FLOPS/s]
+| Arraysize |      SEQ |       N=2 |       N=4 |       N=8 |       N=16 |       N=32 |       N=64 |
+|-----------+----------+-----------+-----------+-----------+------------+------------+------------|
+|     16384 | 7497.026 | 12346.647 | 19435.350 | 25624.023 |  24512.268 |  24344.725 |   4591.928 |
+|     65536 | 7518.873 | 14129.619 | 25842.271 | 44054.853 |  57136.879 |  72351.512 |  19137.951 |
+|    262144 | 7517.579 | 14689.065 | 28217.261 | 53296.466 |  88062.349 | 143750.823 | 114323.594 |
+|   1048576 | 7335.110 | 14302.495 | 27822.395 | 53363.189 | 100749.054 | 196414.041 | 306637.034 |
+#+attr_latex: :width 500px
+[[./graph/2d_time.png]]
+[[./graph/2d_tp.png]]
+*** 3D
+#+ATTR_LATEX: :width \textwidth :caption Execution time
+| Arraysize       |  seq [s] | N=2 [s] | N=4 [s] | N=8 [s] | N=16 [s] | N=32 [s] | N=64 [s] |
+|-----------------+----------+---------+---------+---------+----------+----------+----------|
+| 16 x 16 x 16    |    2.347 |   2.553 |   3.338 |   2.919 |    5.693 |   47.327 |   45.934 |
+| 32 x 32 x 32    |   25.403 |  16.162 |  12.049 |   7.501 |    10.57 |   56.596 |   64.378 |
+| 64 x 64 x 64    |  204.396 | 119.287 |    66.2 |  37.503 |   31.489 |   55.897 |   81.194 |
+| 128 x 128 x 128 | 1699.752 | 909.276 | 870.501 | 745.537 |  388.653 |  332.281 |  127.658 |
+
+#+ATTR_LATEX: :width \textwidth :caption Speedup
+| Arraysize       | SEQ |   N=2 |   N=4 |   N=8 |  N=16 |  N=32 |   N=64 |
+|-----------------+-----+-------+-------+-------+-------+-------+--------|
+| 16 x 16 x 16    |   1 | 0.919 | 0.703 | 0.804 | 0.412 | 0.050 |  0.051 |
+| 32 x 32 x 32    |   1 | 1.572 | 2.108 | 3.387 | 2.403 | 0.449 |  0.395 |
+| 64 x 64 x 64    |   1 | 1.713 | 3.088 | 5.450 | 6.491 | 3.657 |  2.517 |
+| 128 x 128 x 128 |   1 | 1.869 | 1.953 | 2.280 | 4.373 | 5.115 | 13.315 |
+
+
+#+ATTR_LATEX: :width \textwidth :caption Efficiency
+| Arraysize       | SEQ |   N=2 |   N=4 |   N=8 |  N=16 |  N=32 |  N=64 |
+|-----------------+-----+-------+-------+-------+-------+-------+-------|
+| 16 x 16 x 16    |   1 | 0.460 | 0.176 | 0.101 | 0.026 | 0.002 | 0.001 |
+| 32 x 32 x 32    |   1 | 0.786 | 0.527 | 0.423 | 0.150 | 0.014 | 0.006 |
+| 64 x 64 x 64    |   1 | 0.857 | 0.772 | 0.681 | 0.406 | 0.114 | 0.039 |
+| 128 x 128 x 128 |   1 | 0.935 | 0.488 | 0.285 | 0.273 | 0.160 | 0.208 |
+
+
+
+#+ATTR_LATEX: :width \textwidth :caption Throughput [FLOPS/s]
+| Arraysize |       SEQ |       N=2 |       N=4 |       N=8 |      N=16 |      N=32 |       N=64 |
+|-----------+-----------+-----------+-----------+-----------+-----------+-----------+------------|
+|      4096 | 12216.447 | 11230.709 |  8589.575 |  9822.542 |  5036.360 |   605.828 |    624.200 |
+|     32768 |  9029.485 | 14192.303 | 19036.933 | 30579.389 | 21700.662 |  4052.866 |   3562.956 |
+|    262144 |  8977.710 | 15383.135 | 27719.154 | 48929.632 | 58274.572 | 32828.381 |  22600.291 |
+|   2097152 |  8636.592 | 16144.783 | 16863.925 | 19690.591 | 37771.647 | 44179.667 | 114995.253 |
+#+attr_latex: :width 500px
+[[./graph/3d_time.png]]
+[[./graph/3d_tp.png]]

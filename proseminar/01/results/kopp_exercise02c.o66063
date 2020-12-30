@@ -1,0 +1,82 @@
+  Loading openmpi/4.0.3 for compiler gnu-4.8.5
+ Data for JOB [6396,1] offset 0 Total slots allocated 2
+
+ Mapper requested: NULL  Last mapper: round_robin  Mapping policy: BYCORE:NOOVERSUBSCRIBE  Ranking policy: SLOT
+ Binding policy: NONE  Cpu set: NULL  PPR: NULL  Cpus-per-rank: 0
+ 	Num new daemons: 0	New daemon starting vpid INVALID
+ 	Num nodes: 2
+
+ Data for node: n002	State: 3	Flags: 11
+ 	Daemon: [[6396,0],0]	Daemon launched: True
+ 	Num slots: 1	Slots in use: 1	Oversubscribed: FALSE
+ 	Num slots allocated: 1	Max slots: 0
+ 	Num procs: 1	Next node_rank: 1
+ 	Data for proc: [[6396,1],0]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 0
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  [B/././.][./././.]
+ 		Binding: UNBOUND
+
+ Data for node: n003	State: 3	Flags: 13
+ 	Daemon: [[6396,0],1]	Daemon launched: True
+ 	Num slots: 1	Slots in use: 1	Oversubscribed: FALSE
+ 	Num slots allocated: 1	Max slots: 0
+ 	Num procs: 1	Next node_rank: 1
+ 	Data for proc: [[6396,1],1]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 1
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  [B/././.][./././.]
+ 		Binding: UNBOUND
+ Data for JOB [6396,1] offset 0 Total slots allocated 2
+
+ Mapper requested: NULL  Last mapper: round_robin  Mapping policy: BYCORE:NOOVERSUBSCRIBE  Ranking policy: SLOT
+ Binding policy: NONE  Cpu set: NULL  PPR: NULL  Cpus-per-rank: 0
+ 	Num new daemons: 0	New daemon starting vpid INVALID
+ 	Num nodes: 2
+
+ Data for node: n002	State: 1	Flags: 10
+ 	Daemon: [[6396,0],0]	Daemon launched: False
+ 	Num slots: 1	Slots in use: 0	Oversubscribed: FALSE
+ 	Num slots allocated: 1	Max slots: 0
+ 	Num procs: 1	Next node_rank: 1
+ 	Data for proc: [[6396,1],0]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 0
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  [B/././.][./././.]
+ 		Binding: UNBOUND
+
+ Data for node: n003	State: 1	Flags: 10
+ 	Daemon: [[6396,0],1]	Daemon launched: False
+ 	Num slots: 1	Slots in use: 0	Oversubscribed: FALSE
+ 	Num slots allocated: 1	Max slots: 0
+ 	Num procs: 1	Next node_rank: 1
+ 	Data for proc: [[6396,1],1]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 1
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  [B/././.][./././.]
+ 		Binding: UNBOUND
+# OSU MPI Bandwidth Test v5.6.2
+# Size      Bandwidth (MB/s)
+1                       0.63
+2                       1.26
+4                       2.51
+8                       5.09
+16                     10.24
+32                     20.45
+64                     40.71
+128                    77.77
+256                   153.90
+512                   294.52
+1024                  531.28
+2048                  752.65
+4096                  928.34
+8192                 1062.91
+16384                1117.81
+32768                1308.39
+65536                1424.76
+131072               1485.61
+262144               1504.70
+524288               1521.78
+1048576              1531.43
+2097152              1537.69
+4194304              1540.03

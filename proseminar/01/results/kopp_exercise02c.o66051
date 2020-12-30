@@ -1,0 +1,35 @@
+  Loading openmpi/4.0.3 for compiler gnu-4.8.5
+Machine (31GB)
+  Package L#0
+    L2 L#0 (6144KB)
+      L1d L#0 (32KB) + L1i L#0 (32KB) + Core L#0 + PU L#0 (P#0)
+      L1d L#1 (32KB) + L1i L#1 (32KB) + Core L#1 + PU L#1 (P#2)
+    L2 L#1 (6144KB)
+      L1d L#2 (32KB) + L1i L#2 (32KB) + Core L#2 + PU L#2 (P#4)
+      L1d L#3 (32KB) + L1i L#3 (32KB) + Core L#3 + PU L#3 (P#6)
+  Package L#1
+    L2 L#2 (6144KB)
+      L1d L#4 (32KB) + L1i L#4 (32KB) + Core L#4 + PU L#4 (P#1)
+      L1d L#5 (32KB) + L1i L#5 (32KB) + Core L#5 + PU L#5 (P#3)
+    L2 L#3 (6144KB)
+      L1d L#6 (32KB) + L1i L#6 (32KB) + Core L#6 + PU L#6 (P#5)
+      L1d L#7 (32KB) + L1i L#7 (32KB) + Core L#7 + PU L#7 (P#7)
+  HostBridge L#0
+    PCIBridge
+      PCIBridge
+        PCIBridge
+          PCI 8086:1096
+            Net L#0 "enp4s0f0"
+          PCI 8086:1096
+            Net L#1 "enp4s0f1"
+    PCIBridge
+      PCI 15b3:6274
+        Net L#2 "ib0"
+        OpenFabrics L#3 "mthca0"
+    PCIBridge
+      PCI 1002:515e
+        GPU L#4 "card0"
+        GPU L#5 "renderD128"
+        GPU L#6 "controlD64"
+    PCI 8086:2681
+      Block(Disk) L#7 "sda"

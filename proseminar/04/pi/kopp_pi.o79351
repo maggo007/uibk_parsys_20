@@ -1,0 +1,84 @@
+pi_seq for comparision with N=100000000
+inside=78537983 outside=21462017 total=100000000 
+3.141519
+
+real	0m3.067s
+user	0m3.053s
+sys	0m0.001s
+--------------------
+pi_omp_atomic test with threads=1 and N=100000000
+inside=78541954 outside=21458046 total=100000000 numberofthreads=1
+3.141678
+
+real	0m2.183s
+user	0m2.164s
+sys	0m0.001s
+--------------------
+pi_omp_atomic test with threads=2 and N=100000000
+inside=78539874 outside=21460126 total=100000000 numberofthreads=2
+3.141595
+
+real	0m1.082s
+user	0m2.159s
+sys	0m0.001s
+--------------------
+pi_omp_atomic test with threads=3 and N=100000000
+inside=78543096 outside=21456903 total=100000000 numberofthreads=3
+3.141724
+sum of in and out not adding up to SIZE
+
+real	0m0.722s
+user	0m2.160s
+sys	0m0.001s
+--------------------
+pi_omp_atomic test with threads=4 and N=100000000
+inside=78546098 outside=21453902 total=100000000 numberofthreads=4
+3.141844
+
+real	0m0.542s
+user	0m2.160s
+sys	0m0.001s
+--------------------
+pi_omp_atomic test with threads=5 and N=100000000
+inside=78547898 outside=21452102 total=100000000 numberofthreads=5
+3.141916
+
+real	0m0.434s
+user	0m2.161s
+sys	0m0.001s
+--------------------
+pi_omp_atomic test with threads=6 and N=100000000
+inside=78544866 outside=21455130 total=100000000 numberofthreads=6
+3.141795
+sum of in and out not adding up to SIZE
+
+real	0m0.363s
+user	0m2.163s
+sys	0m0.001s
+--------------------
+pi_omp_atomic test with threads=7 and N=100000000
+inside=78544772 outside=21455226 total=100000000 numberofthreads=7
+3.141791
+sum of in and out not adding up to SIZE
+
+real	0m0.312s
+user	0m2.165s
+sys	0m0.002s
+--------------------
+pi_omp_atomic test with threads=8 and N=100000000
+inside=78543198 outside=21456802 total=100000000 numberofthreads=8
+3.141728
+
+real	0m0.274s
+user	0m2.173s
+sys	0m0.001s
+--------------------
+pi_omp_atomic_float test with threads=1 and N=100000000
+numberofthreads=1
+3.141460
+
+real	0m2.532s
+user	0m2.515s
+sys	0m0.001s
+--------------------
+pi_omp_atomic_float test with threads=2 and N=100000000

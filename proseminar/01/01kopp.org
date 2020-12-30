@@ -1,0 +1,128 @@
+#+options: ':nil *:t -:t ::t <:t H:3 \n:t ^:nil arch:headline
+#+options: author:t broken-links:nil c:nil creator:nil
+#+options: d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t num:nil
+#+options: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+options: timestamp:t title:t toc:nil todo:t |:t
+#+options: center:nil
+#+title: Assignment 1
+#+author: Markus Kopp
+#+email: markus.kopp@student.uibk.ac.at
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 28.0.50 (Org mode 9.4)
+
+#+latex_class: scrartcl
+#+latex_class_options:
+#+latex_header:
+#+latex_header_extra:
+#+description:
+#+keywords:
+#+subtitle:
+#+latex_compiler: pdflatex
+#+date: \today
+
+* Exercise 1
+- Study how to submit jobs in SGE, how to check their state and how to cancel them.
+  *qsub* for starting a script, part of the arguments that normally are used with qsub can be added in the script. *qconf -spl* for example gives you a list of parallel environments you can use.
+   *qstat* for an overview of all jobs. 
+  
+- Prepare a submission script that starts an arbitrary executable, e.g. `/bin/hostname`
+  *exercise01.script*
+- In your opionion, what are the 5 most important parameters available when submitting a job and why? What are possible settings of these parameters, and what effect do they have?
+  *-q queuename* because there could be specific ones that fit the specific nodes setup. *qstat* only displays the first 10 characters by default tho.
+  *-pe parallelenvironment* also something that could be specific to the nodes and needs to be checked if available
+  *-t 1-n* a job array that can start multiple jobs without using openMPI. Could be useful if openMPI is not available but the application itself is capable to work in parallel.
+  *-N name* nothing is more infuriating then not being able to identify running jobs. A good name is like a good functionname that can tell others what is going on.
+  *-M email* *-n joboptions [b|e|a|n|s]* If you are  not a fan of watching progress bars that take hours to complete this could be a nice option to check your results the moment you get a notification via email.
+- How do you run your program in parallel? What environment setup is required?
+  Depending on how you want to distribute your jobs on the nodes you should first run *qconf -spl* to show the available environments.
+  For example *openmpi-2perhost 8* will reserve two slots per node to run the 8 total ones. You still have to make sure to start 8 parallel jobs by for example utilizing openmpi's *mpiexec* command.
+* Exercise 2
+osu_latency
+| on same host same socket         | kopp_exercise02d.o66146 |
+| on same host different sockets   | kopp_exercise02d.o66145 |
+| on different hosts               | kopp_exercise02d.o66147 |
+osu_bw
+| on same host same socket           | kopp_exercise02d.o66139 |
+| on same host different sockets     | kopp_exercise02d.o66140 |
+| on different hosts                 | kopp_exercise02d.o66131 |
+
+changed with *--map-by* and *--bind-to* arguments. *--display-devel-map* outputs a detailed mapping and binding for each job. *execise02d.script* was used for the test and adjusted different executable and mappings and bindings.
+
+Example for latency mapped to same host but different sockets
+
+#+BEGIN_EXAMPLE
+  Loading openmpi/4.0.3 for compiler gnu-4.8.5
+ Data for JOB [25649,1] offset 0 Total slots allocated 2
+
+ Mapper requested: NULL  Last mapper: round_robin  Mapping policy: BYSOCKET:NOOVERSUBSCRIBE  Ranking policy: SOCKET
+ Binding policy: CORE  Cpu set: NULL  PPR: NULL  Cpus-per-rank: 0
+ 	Num new daemons: 0	New daemon starting vpid INVALID
+ 	Num nodes: 1
+
+ Data for node: n002	State: 3	Flags: 11
+ 	Daemon: [[25649,0],0]	Daemon launched: True
+ 	Num slots: 2	Slots in use: 2	Oversubscribed: FALSE
+ 	Num slots allocated: 2	Max slots: 0
+ 	Num procs: 2	Next node_rank: 2
+ 	Data for proc: [[25649,1],0]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 0
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  [B/B/B/B][./././.]
+ 		Binding: [B/././.][./././.]
+ 	Data for proc: [[25649,1],1]
+ 		Pid: 0	Local rank: 1	Node rank: 1	App rank: 1
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  [./././.][B/B/B/B]
+ 		Binding: [./././.][B/././.]
+#+END_EXAMPLE
+
+Topology was created for one node with */bin/lstopo-no-graphics*. It shows the 6MB L2 cache that two cores share which is strange because Intel mentions 12MB cache on their product page that is dynamically shared between all cores.
+
+#+begin_example
+  Loading openmpi/4.0.3 for compiler gnu-4.8.5
+Machine (31GB)
+  Package L#0
+    L2 L#0 (6144KB)
+      L1d L#0 (32KB) + L1i L#0 (32KB) + Core L#0 + PU L#0 (P#0)
+      L1d L#1 (32KB) + L1i L#1 (32KB) + Core L#1 + PU L#1 (P#2)
+    L2 L#1 (6144KB)
+      L1d L#2 (32KB) + L1i L#2 (32KB) + Core L#2 + PU L#2 (P#4)
+      L1d L#3 (32KB) + L1i L#3 (32KB) + Core L#3 + PU L#3 (P#6)
+  Package L#1
+    L2 L#2 (6144KB)
+      L1d L#4 (32KB) + L1i L#4 (32KB) + Core L#4 + PU L#4 (P#1)
+      L1d L#5 (32KB) + L1i L#5 (32KB) + Core L#5 + PU L#5 (P#3)
+    L2 L#3 (6144KB)
+      L1d L#6 (32KB) + L1i L#6 (32KB) + Core L#6 + PU L#6 (P#5)
+      L1d L#7 (32KB) + L1i L#7 (32KB) + Core L#7 + PU L#7 (P#7)
+  HostBridge L#0
+    PCIBridge
+      PCIBridge
+        PCIBridge
+          PCI 8086:1096
+            Net L#0 "enp4s0f0"
+          PCI 8086:1096
+            Net L#1 "enp4s0f1"
+    PCIBridge
+      PCI 15b3:6274
+        Net L#2 "ib0"
+        OpenFabrics L#3 "mthca0"
+    PCIBridge
+      PCI 1002:515e
+        GPU L#4 "card0"
+        GPU L#5 "renderD128"
+        GPU L#6 "controlD64"
+    PCI 8086:2681
+      Block(Disk) L#7 "sda"
+
+#+end_example
+
+#+attr_latex: :width 500px
+[[./results/graph/latency_full.png]]
+[[./results/graph/latency_start.png]]
+[[./results/graph/bandwidth_full.png]]
+[[./results/graph/bandwidth_start.png]]
+
+Same socket execution will always trump all the others ones. But using another socket is almost as fast most of the time. Operating on different nodes will almost alwyas show a difference except for latency when using very big data sizes. Also when using the same socket cachesizes are important for when cachemisses can happen more often. Experiments were pretty stable as when submitting jobs no other user seems to have used the system. Noticeable with *qstat* and the jobnumbers you are assigned when submitting job. Those were consecutive for most of the measurements.

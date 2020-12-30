@@ -1,0 +1,369 @@
+  Loading openmpi/4.0.3 for compiler gnu-4.8.5
+new test with N=16
+ Data for JOB [48907,1] offset 0 Total slots allocated 16
+
+ Mapper requested: NULL  Last mapper: round_robin  Mapping policy: BYNUMA:NOOVERSUBSCRIBE  Ranking policy: SLOT
+ Binding policy: NONE  Cpu set: NULL  PPR: NULL  Cpus-per-rank: 0
+ 	Num new daemons: 0	New daemon starting vpid INVALID
+ 	Num nodes: 2
+
+ Data for node: n003	State: 3	Flags: 11
+ 	Daemon: [[48907,0],0]	Daemon launched: True
+ 	Num slots: 8	Slots in use: 8	Oversubscribed: FALSE
+ 	Num slots allocated: 8	Max slots: 0
+ 	Num procs: 8	Next node_rank: 8
+ 	Data for proc: [[48907,1],0]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 0
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[48907,1],1]
+ 		Pid: 0	Local rank: 1	Node rank: 1	App rank: 1
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[48907,1],2]
+ 		Pid: 0	Local rank: 2	Node rank: 2	App rank: 2
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[48907,1],3]
+ 		Pid: 0	Local rank: 3	Node rank: 3	App rank: 3
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[48907,1],4]
+ 		Pid: 0	Local rank: 4	Node rank: 4	App rank: 4
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[48907,1],5]
+ 		Pid: 0	Local rank: 5	Node rank: 5	App rank: 5
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[48907,1],6]
+ 		Pid: 0	Local rank: 6	Node rank: 6	App rank: 6
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[48907,1],7]
+ 		Pid: 0	Local rank: 7	Node rank: 7	App rank: 7
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+
+ Data for node: n004	State: 3	Flags: 13
+ 	Daemon: [[48907,0],1]	Daemon launched: True
+ 	Num slots: 8	Slots in use: 8	Oversubscribed: FALSE
+ 	Num slots allocated: 8	Max slots: 0
+ 	Num procs: 8	Next node_rank: 8
+ 	Data for proc: [[48907,1],8]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 8
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[48907,1],9]
+ 		Pid: 0	Local rank: 1	Node rank: 1	App rank: 9
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[48907,1],10]
+ 		Pid: 0	Local rank: 2	Node rank: 2	App rank: 10
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[48907,1],11]
+ 		Pid: 0	Local rank: 3	Node rank: 3	App rank: 11
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[48907,1],12]
+ 		Pid: 0	Local rank: 4	Node rank: 4	App rank: 12
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[48907,1],13]
+ 		Pid: 0	Local rank: 5	Node rank: 5	App rank: 13
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[48907,1],14]
+ 		Pid: 0	Local rank: 6	Node rank: 6	App rank: 14
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[48907,1],15]
+ 		Pid: 0	Local rank: 7	Node rank: 7	App rank: 15
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ Data for JOB [48907,1] offset 0 Total slots allocated 16
+
+ Mapper requested: NULL  Last mapper: round_robin  Mapping policy: BYNUMA:NOOVERSUBSCRIBE  Ranking policy: SLOT
+ Binding policy: NONE  Cpu set: NULL  PPR: NULL  Cpus-per-rank: 0
+ 	Num new daemons: 0	New daemon starting vpid INVALID
+ 	Num nodes: 2
+
+ Data for node: n003	State: 1	Flags: 10
+ 	Daemon: [[48907,0],0]	Daemon launched: False
+ 	Num slots: 8	Slots in use: 0	Oversubscribed: FALSE
+ 	Num slots allocated: 8	Max slots: 0
+ 	Num procs: 8	Next node_rank: 8
+ 	Data for proc: [[48907,1],0]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 0
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[48907,1],1]
+ 		Pid: 0	Local rank: 1	Node rank: 1	App rank: 1
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[48907,1],2]
+ 		Pid: 0	Local rank: 2	Node rank: 2	App rank: 2
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[48907,1],3]
+ 		Pid: 0	Local rank: 3	Node rank: 3	App rank: 3
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[48907,1],4]
+ 		Pid: 0	Local rank: 4	Node rank: 4	App rank: 4
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[48907,1],5]
+ 		Pid: 0	Local rank: 5	Node rank: 5	App rank: 5
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[48907,1],6]
+ 		Pid: 0	Local rank: 6	Node rank: 6	App rank: 6
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[48907,1],7]
+ 		Pid: 0	Local rank: 7	Node rank: 7	App rank: 7
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+
+ Data for node: n004	State: 1	Flags: 10
+ 	Daemon: [[48907,0],1]	Daemon launched: False
+ 	Num slots: 8	Slots in use: 0	Oversubscribed: FALSE
+ 	Num slots allocated: 8	Max slots: 0
+ 	Num procs: 8	Next node_rank: 8
+ 	Data for proc: [[48907,1],8]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 8
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[48907,1],9]
+ 		Pid: 0	Local rank: 1	Node rank: 1	App rank: 9
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[48907,1],10]
+ 		Pid: 0	Local rank: 2	Node rank: 2	App rank: 10
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[48907,1],11]
+ 		Pid: 0	Local rank: 3	Node rank: 3	App rank: 11
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[48907,1],12]
+ 		Pid: 0	Local rank: 4	Node rank: 4	App rank: 12
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[48907,1],13]
+ 		Pid: 0	Local rank: 5	Node rank: 5	App rank: 13
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[48907,1],14]
+ 		Pid: 0	Local rank: 6	Node rank: 6	App rank: 14
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[48907,1],15]
+ 		Pid: 0	Local rank: 7	Node rank: 7	App rank: 15
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+[n004.intern.lcc2:19530] MCW rank 13 is not bound (or bound to all available processors)
+[n004.intern.lcc2:19527] MCW rank 10 is not bound (or bound to all available processors)
+[n004.intern.lcc2:19526] MCW rank 9 is not bound (or bound to all available processors)
+[n004.intern.lcc2:19525] MCW rank 8 is not bound (or bound to all available processors)
+[n004.intern.lcc2:19528] MCW rank 11 is not bound (or bound to all available processors)
+[n004.intern.lcc2:19531] MCW rank 14 is not bound (or bound to all available processors)
+[n004.intern.lcc2:19529] MCW rank 12 is not bound (or bound to all available processors)
+[n004.intern.lcc2:19533] MCW rank 15 is not bound (or bound to all available processors)
+[n003.intern.lcc2:02620] MCW rank 5 is not bound (or bound to all available processors)
+[n003.intern.lcc2:02605] MCW rank 1 is not bound (or bound to all available processors)
+[n003.intern.lcc2:02599] MCW rank 0 is not bound (or bound to all available processors)
+[n003.intern.lcc2:02609] MCW rank 2 is not bound (or bound to all available processors)
+[n003.intern.lcc2:02613] MCW rank 4 is not bound (or bound to all available processors)
+[n003.intern.lcc2:02625] MCW rank 6 is not bound (or bound to all available processors)
+[n003.intern.lcc2:02628] MCW rank 7 is not bound (or bound to all available processors)
+[n003.intern.lcc2:02611] MCW rank 3 is not bound (or bound to all available processors)
+rank=7 with size=16
+Computing heat-distribution for room size N=1024 for T=512000 timesteps
+rank=0 with size=16
+Computing heat-distribution for room size N=1024 for T=512000 timesteps
+Initial:	X                                @                                                                                       X
+rank=5 with size=16
+Computing heat-distribution for room size N=1024 for T=512000 timesteps
+Initial:	X                                @                                                                                       X
+rank=6 with size=16
+Computing heat-distribution for room size N=1024 for T=512000 timesteps
+Initial:	X                                @                                                                                       X
+rank=4 with size=16
+Computing heat-distribution for room size N=1024 for T=512000 timesteps
+Initial:	X                                @                                                                                       X
+Initial:	X                                @                                                                                       X
+rank=1 with size=16
+Computing heat-distribution for room size N=1024 for T=512000 timesteps
+Initial:	X                                @                                                                                       X
+rank=15 with size=16
+Computing heat-distribution for room size N=1024 for T=512000 timesteps
+rank=11 with size=16
+Computing heat-distribution for room size N=1024 for T=512000 timesteps
+Initial:	X                                @                                                                                       X
+rank=8 with size=16
+Computing heat-distribution for room size N=1024 for T=512000 timesteps
+Initial:	X                                @                                                                                       X
+rank=2 with size=16
+Computing heat-distribution for room size N=1024 for T=512000 timesteps
+Initial:	X                                @                                                                                       X
+rank=3 with size=16
+Computing heat-distribution for room size N=1024 for T=512000 timesteps
+Initial:	X                                @                                                                                       X
+rank=9 with size=16
+Computing heat-distribution for room size N=1024 for T=512000 timesteps
+Initial:	X                                @                                                                                       X
+rank=14 with size=16
+Computing heat-distribution for room size N=1024 for T=512000 timesteps
+Initial:	X                                @                                                                                       X
+Initial:	X                                @                                                                                       X
+rank=12 with size=16
+Computing heat-distribution for room size N=1024 for T=512000 timesteps
+Initial:	X                                @                                                                                       X
+rank=10 with size=16
+Computing heat-distribution for room size N=1024 for T=512000 timesteps
+Initial:	X                                @                                                                                       X
+rank=13 with size=16
+Computing heat-distribution for room size N=1024 for T=512000 timesteps
+Initial:	X                                @                                                                                       X
+Final:		X                                @      @@@@@@@@@@                                                                       X
+Verification: OK
+Final:		X                       @@@@@@@@@@                                                                                       X
+Verification: OK
+Final:		X                               @@@@@@@@@@                                                                               X
+Verification: OK
+Final:		X@@@@@@@@@                       @                                                                                       X
+Verification: OK
+Final:		X                                @              @@@@@@@@@@                                                               X
+Verification: OK
+Final:		X       @@@@@@@@@@               @                                                                                       X
+Verification: OK
+Final:		X                                @                      @@@@@@@@@@                                                       X
+Verification: OK
+Final:		X               @@@@@@@@@@       @                                                                                       X
+Verification: OK
+Final:		X                                @                                                                              =========X
+Verification: OK
+Final:		X                                @                                                              *******+++               X
+Verification: OK
+Final:		X                                @                                                                      +++++++++=       X
+Verification: OK
+Final:		X                                @                                              #####XXXXX                               X
+Verification: OK
+Final:		X                                @                                      @@@@%%%%##                                       X
+Verification: OK
+Final:		X                                @                                                      XX^^^^^^**                       X
+Verification: OK
+Final:		X                                @                                                                                      =X
+Verification: OK
+Final:		X                                @                              @@@@@@@@@@                                               X
+Verification: OK
+
+real	0m7.288s
+user	0m49.269s
+sys	0m0.815s
+--------------------
+new test with N=32
+--------------------------------------------------------------------------
+There are not enough slots available in the system to satisfy the 32
+slots that were requested by the application:
+
+  ./heat_stencil_1D_mpi
+
+Either request fewer slots for your application, or make more slots
+available for use.
+
+A "slot" is the Open MPI term for an allocatable unit where we can
+launch a process.  The number of slots available are defined by the
+environment in which Open MPI processes are run:
+
+  1. Hostfile, via "slots=N" clauses (N defaults to number of
+     processor cores if not provided)
+  2. The --host command line parameter, via a ":N" suffix on the
+     hostname (N defaults to 1 if not provided)
+  3. Resource manager (e.g., SLURM, PBS/Torque, LSF, etc.)
+  4. If none of a hostfile, the --host command line parameter, or an
+     RM is present, Open MPI defaults to the number of processor cores
+
+In all the above cases, if you want Open MPI to default to the number
+of hardware threads instead of the number of processor cores, use the
+--use-hwthread-cpus option.
+
+Alternatively, you can use the --oversubscribe option to ignore the
+number of available slots when deciding the number of processes to
+launch.
+--------------------------------------------------------------------------
+
+real	0m0.461s
+user	0m0.045s
+sys	0m0.064s
+--------------------
+new test with N=64
+--------------------------------------------------------------------------
+There are not enough slots available in the system to satisfy the 64
+slots that were requested by the application:
+
+  ./heat_stencil_1D_mpi
+
+Either request fewer slots for your application, or make more slots
+available for use.
+
+A "slot" is the Open MPI term for an allocatable unit where we can
+launch a process.  The number of slots available are defined by the
+environment in which Open MPI processes are run:
+
+  1. Hostfile, via "slots=N" clauses (N defaults to number of
+     processor cores if not provided)
+  2. The --host command line parameter, via a ":N" suffix on the
+     hostname (N defaults to 1 if not provided)
+  3. Resource manager (e.g., SLURM, PBS/Torque, LSF, etc.)
+  4. If none of a hostfile, the --host command line parameter, or an
+     RM is present, Open MPI defaults to the number of processor cores
+
+In all the above cases, if you want Open MPI to default to the number
+of hardware threads instead of the number of processor cores, use the
+--use-hwthread-cpus option.
+
+Alternatively, you can use the --oversubscribe option to ignore the
+number of available slots when deciding the number of processes to
+launch.
+--------------------------------------------------------------------------
+
+real	0m0.376s
+user	0m0.036s
+sys	0m0.056s
+--------------------

@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Execute job in the queue "std.q" unless you have special requirements.
+#$ -q std.q
+
+# The batch system should use the current directory as working directory.
+#$ -cwd
+
+# Name your job. Unless you use the -o and -e options, output will
+# go to a unique file name.ojob_id for each job.
+#$ -N kopp_exercise01
+
+##$ -M markus.kopp@student.uibk.ac.at
+##$ -m e
+
+# Join the error stream to the output stream.
+#$ -j yes
+
+#$ -pe openmpi-2perhost 8
+
+module load openmpi/4.0.3
+mpiexec -n 8 /bin/hostname

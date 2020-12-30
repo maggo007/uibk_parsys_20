@@ -1,0 +1,18 @@
+  Loading openmpi/4.0.3 for compiler gnu-4.8.5
+ Data for JOB [14719,1] offset 0 Total slots allocated 2
+
+ ========================   JOB MAP   ========================
+
+ Data for node: n002	Num slots: 2	Max slots: 0	Num procs: 2
+ 	Process OMPI jobid: [14719,1] App: 0 Process rank: 0 Bound: N/A
+ 	Process OMPI jobid: [14719,1] App: 0 Process rank: 1 Bound: N/A
+
+ =============================================================
+[n002.intern.lcc2:03617] LAUNCH MSG RAW SIZE: 574
+--------------------------------------------------------------------------
+An internal error has occurred in ORTE:
+
+[[14719,0],0] FORCE-TERMINATE AT (null):0 - error base/plm_base_launch_support.c(593)
+
+This is something that should be reported to the developers.
+--------------------------------------------------------------------------

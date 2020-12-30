@@ -1,0 +1,9 @@
+  Loading openmpi/4.0.3 for compiler gnu-4.8.5
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: sockets
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------

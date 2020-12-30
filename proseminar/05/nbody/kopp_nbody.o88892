@@ -1,0 +1,4 @@
+nbody_seq for comparision with N=10000 and T=100
+[ perf record: Woken up 125 times to write data ]
+[ perf record: Captured and wrote 31.184 MB perf.data (817392 samples) ]
+--------------------

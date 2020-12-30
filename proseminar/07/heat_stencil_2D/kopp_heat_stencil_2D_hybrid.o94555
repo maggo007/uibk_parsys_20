@@ -1,0 +1,660 @@
+  Loading openmpi/4.0.3 for compiler gnu-4.8.5
+seq for comparison with N=4000 x 4000 T=100
+Computing heat-distribution for room size N=4000 x 4000 for T=100 timesteps
+Initial:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X               @                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+runtime=21.910391
+Final:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X               @                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+Verification: OK
+
+ Performance counter stats for './heat_stencil_2D_seq 4000 4000 100':
+
+         22,221.74 msec task-clock:u              #    1.000 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            62,893      page-faults:u             #    0.003 M/sec                  
+    54,282,966,526      cycles:u                  #    2.443 GHz                      (25.00%)
+    49,984,429,412      instructions:u            #    0.92  insn per cycle           (37.50%)
+     9,692,236,801      branches:u                #  436.160 M/sec                    (37.50%)
+         1,777,116      branch-misses:u           #    0.02% of all branches          (37.50%)
+     9,683,535,929      L1-dcache-loads:u         #  435.769 M/sec                    (25.00%)
+        42,878,333      L1-dcache-load-misses:u   #    0.44% of all L1-dcache hits    (25.00%)
+       610,113,471      LLC-loads:u               #   27.456 M/sec                    (25.00%)
+         3,282,944      LLC-load-misses:u         #    0.54% of all LL-cache hits     (25.00%)
+
+      22.226096412 seconds time elapsed
+
+      21.988739000 seconds user
+       0.233965000 seconds sys
+
+
+
+real	0m22.252s
+user	0m22.000s
+sys	0m0.247s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=1 and threads=2 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.706s
+user	0m0.042s
+sys	0m0.137s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=1 and threads=4 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.512s
+user	0m0.045s
+sys	0m0.112s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=1 and threads=6 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.672s
+user	0m0.040s
+sys	0m0.108s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=1 and threads=8 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.507s
+user	0m0.052s
+sys	0m0.095s
+--------------------
+heat_stencil_2D_mpi test with MPIrank=1 and threads=8 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.557s
+user	0m0.040s
+sys	0m0.107s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=2 and threads=2 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.503s
+user	0m0.036s
+sys	0m0.111s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=2 and threads=4 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.531s
+user	0m0.048s
+sys	0m0.100s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=2 and threads=6 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.637s
+user	0m0.045s
+sys	0m0.103s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=2 and threads=8 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.587s
+user	0m0.050s
+sys	0m0.096s
+--------------------
+heat_stencil_2D_mpi test with MPIrank=2 and threads=8 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.524s
+user	0m0.040s
+sys	0m0.107s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=3 and threads=2 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.531s
+user	0m0.044s
+sys	0m0.103s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=3 and threads=4 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.655s
+user	0m0.039s
+sys	0m0.110s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=3 and threads=6 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.594s
+user	0m0.039s
+sys	0m0.108s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=3 and threads=8 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.556s
+user	0m0.044s
+sys	0m0.105s
+--------------------
+heat_stencil_2D_mpi test with MPIrank=3 and threads=8 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.571s
+user	0m0.034s
+sys	0m0.114s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=4 and threads=2 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.556s
+user	0m0.051s
+sys	0m0.104s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=4 and threads=4 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.538s
+user	0m0.042s
+sys	0m0.106s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=4 and threads=6 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.529s
+user	0m0.038s
+sys	0m0.109s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=4 and threads=8 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.572s
+user	0m0.043s
+sys	0m0.105s
+--------------------
+heat_stencil_2D_mpi test with MPIrank=4 and threads=8 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.525s
+user	0m0.040s
+sys	0m0.107s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=5 and threads=2 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.537s
+user	0m0.047s
+sys	0m0.101s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=5 and threads=4 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.755s
+user	0m0.039s
+sys	0m0.107s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=5 and threads=6 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.599s
+user	0m0.039s
+sys	0m0.107s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=5 and threads=8 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.570s
+user	0m0.049s
+sys	0m0.104s
+--------------------
+heat_stencil_2D_mpi test with MPIrank=5 and threads=8 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.537s
+user	0m0.044s
+sys	0m0.102s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=6 and threads=2 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.554s
+user	0m0.053s
+sys	0m0.094s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=6 and threads=4 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.499s
+user	0m0.033s
+sys	0m0.114s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=6 and threads=6 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.570s
+user	0m0.048s
+sys	0m0.104s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=6 and threads=8 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.502s
+user	0m0.047s
+sys	0m0.104s
+--------------------
+heat_stencil_2D_mpi test with MPIrank=6 and threads=8 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.497s
+user	0m0.046s
+sys	0m0.100s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=7 and threads=2 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.509s
+user	0m0.043s
+sys	0m0.104s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=7 and threads=4 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.544s
+user	0m0.042s
+sys	0m0.105s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=7 and threads=6 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.551s
+user	0m0.037s
+sys	0m0.110s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=7 and threads=8 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.724s
+user	0m0.051s
+sys	0m0.097s
+--------------------
+heat_stencil_2D_mpi test with MPIrank=7 and threads=8 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.609s
+user	0m0.038s
+sys	0m0.109s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=8 and threads=2 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.558s
+user	0m0.041s
+sys	0m0.106s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=8 and threads=4 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.556s
+user	0m0.037s
+sys	0m0.110s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=8 and threads=6 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.662s
+user	0m0.035s
+sys	0m0.112s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=8 and threads=8 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.639s
+user	0m0.048s
+sys	0m0.107s
+--------------------
+heat_stencil_2D_mpi test with MPIrank=8 and threads=8 and N=4000 T=100
+--------------------------------------------------------------------------
+The specified mapping policy is not recognized:
+
+  Policy: BYBOARD:NOOVERSUBSCRIBE
+
+Please check for a typo or ensure that the option is a supported
+one.
+--------------------------------------------------------------------------
+
+real	0m0.593s
+user	0m0.043s
+sys	0m0.103s
+--------------------

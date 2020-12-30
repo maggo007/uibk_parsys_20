@@ -1,0 +1,49 @@
+  Loading openmpi/4.0.3 for compiler gnu-4.8.5
+ Data for JOB [25649,1] offset 0 Total slots allocated 2
+
+ Mapper requested: NULL  Last mapper: round_robin  Mapping policy: BYSOCKET:NOOVERSUBSCRIBE  Ranking policy: SOCKET
+ Binding policy: CORE  Cpu set: NULL  PPR: NULL  Cpus-per-rank: 0
+ 	Num new daemons: 0	New daemon starting vpid INVALID
+ 	Num nodes: 1
+
+ Data for node: n002	State: 3	Flags: 11
+ 	Daemon: [[25649,0],0]	Daemon launched: True
+ 	Num slots: 2	Slots in use: 2	Oversubscribed: FALSE
+ 	Num slots allocated: 2	Max slots: 0
+ 	Num procs: 2	Next node_rank: 2
+ 	Data for proc: [[25649,1],0]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 0
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  [B/B/B/B][./././.]
+ 		Binding: [B/././.][./././.]
+ 	Data for proc: [[25649,1],1]
+ 		Pid: 0	Local rank: 1	Node rank: 1	App rank: 1
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  [./././.][B/B/B/B]
+ 		Binding: [./././.][B/././.]
+# OSU MPI Latency Test v5.6.2
+# Size          Latency (us)
+0                       0.63
+1                       0.70
+2                       0.71
+4                       0.70
+8                       0.70
+16                      0.82
+32                      0.82
+64                      0.92
+128                     1.19
+256                     1.42
+512                     2.13
+1024                    2.97
+2048                    4.74
+4096                    4.82
+8192                    5.79
+16384                   7.48
+32768                  10.15
+65536                  15.64
+131072                 26.72
+262144                 48.45
+524288                 93.99
+1048576               187.98
+2097152               381.06
+4194304              2584.32

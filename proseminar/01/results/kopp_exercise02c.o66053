@@ -1,0 +1,12 @@
+  Loading openmpi/4.0.3 for compiler gnu-4.8.5
+ Data for JOB [9616,1] offset 0 Total slots allocated 2
+
+ ========================   JOB MAP   ========================
+
+ Data for node: n002	Num slots: 2	Max slots: 0	Num procs: 2
+ 	Process OMPI jobid: [9616,1] App: 0 Process rank: 0 Bound: N/A
+ 	Process OMPI jobid: [9616,1] App: 0 Process rank: 1 Bound: N/A
+
+ =============================================================
+n002.intern.lcc2
+n002.intern.lcc2

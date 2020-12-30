@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Execute job in the queue "std.q" unless you have special requirements.
+#$ -q std.q
+
+# The batch system should use the current directory as working directory.
+#$ -cwd
+
+# Name your job. Unless you use the -o and -e options, output will
+# go to a unique file name.ojob_id for each job.
+#$ -N kopp_heat_3D
+
+##$ -M markus.kopp@student.uibk.ac.at
+##$ -m e
+
+# Join the error stream to the output stream.
+#$ -j yes
+
+#$ -pe openmpi-8perhost 64
+
+module load openmpi/4.0.3
+for SIZE in 16 32 64 128; do
+    for X in 2 4 8 16 32 64; do
+        echo "new test with N=$X"
+        time mpiexec -np $X --report-bindings --display-devel-map ./heat_stencil_3D_mpi $SIZE
+        echo "--------------------"
+    done
+done
+

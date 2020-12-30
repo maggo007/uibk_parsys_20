@@ -1,0 +1,42 @@
+# Ignore all
+*
+# Unignore all with extensions
+!*.*
+# Unignore all dirs
+!*/
+# Unignore Makefile
+!Makefile
+
+# latex
+*.pyc
+*.aux
+*.glo
+*.idx
+*.log
+*.toc
+*.ist
+*.acn
+*.acr
+*.alg
+*.bbl
+*.blg
+*.dvi
+*.glg
+*.gls
+*.ilg
+*.ind
+*.lof
+*.lot
+*.maf
+*.mtc
+*.mtc1
+*.out
+*.snm
+*.nav
+*.vrb
+*.synctex.gz
+*.pdf
+#using org
+*.tex
+
+_minted*

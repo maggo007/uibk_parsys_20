@@ -1,0 +1,1303 @@
+  Loading openmpi/4.0.3 for compiler gnu-4.8.5
+ Data for JOB [10575,1] offset 0 Total slots allocated 40
+
+ Mapper requested: NULL  Last mapper: round_robin  Mapping policy: BYNUMA:NOOVERSUBSCRIBE  Ranking policy: SLOT
+ Binding policy: CORE  Cpu set: NULL  PPR: NULL  Cpus-per-rank: 0
+ 	Num new daemons: 0	New daemon starting vpid INVALID
+ 	Num nodes: 5
+
+ Data for node: n002	State: 3	Flags: 11
+ 	Daemon: [[10575,0],0]	Daemon launched: True
+ 	Num slots: 8	Slots in use: 8	Oversubscribed: FALSE
+ 	Num slots allocated: 8	Max slots: 0
+ 	Num procs: 8	Next node_rank: 8
+ 	Data for proc: [[10575,1],0]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 0
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [B/././.][./././.]
+ 	Data for proc: [[10575,1],1]
+ 		Pid: 0	Local rank: 1	Node rank: 1	App rank: 1
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [./B/./.][./././.]
+ 	Data for proc: [[10575,1],2]
+ 		Pid: 0	Local rank: 2	Node rank: 2	App rank: 2
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [././B/.][./././.]
+ 	Data for proc: [[10575,1],3]
+ 		Pid: 0	Local rank: 3	Node rank: 3	App rank: 3
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [./././B][./././.]
+ 	Data for proc: [[10575,1],4]
+ 		Pid: 0	Local rank: 4	Node rank: 4	App rank: 4
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [./././.][B/././.]
+ 	Data for proc: [[10575,1],5]
+ 		Pid: 0	Local rank: 5	Node rank: 5	App rank: 5
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [./././.][./B/./.]
+ 	Data for proc: [[10575,1],6]
+ 		Pid: 0	Local rank: 6	Node rank: 6	App rank: 6
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [./././.][././B/.]
+ 	Data for proc: [[10575,1],7]
+ 		Pid: 0	Local rank: 7	Node rank: 7	App rank: 7
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [./././.][./././B]
+
+ Data for node: n003	State: 3	Flags: 13
+ 	Daemon: [[10575,0],1]	Daemon launched: True
+ 	Num slots: 8	Slots in use: 8	Oversubscribed: FALSE
+ 	Num slots allocated: 8	Max slots: 0
+ 	Num procs: 8	Next node_rank: 8
+ 	Data for proc: [[10575,1],8]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 8
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],9]
+ 		Pid: 0	Local rank: 1	Node rank: 1	App rank: 9
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],10]
+ 		Pid: 0	Local rank: 2	Node rank: 2	App rank: 10
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],11]
+ 		Pid: 0	Local rank: 3	Node rank: 3	App rank: 11
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],12]
+ 		Pid: 0	Local rank: 4	Node rank: 4	App rank: 12
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],13]
+ 		Pid: 0	Local rank: 5	Node rank: 5	App rank: 13
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],14]
+ 		Pid: 0	Local rank: 6	Node rank: 6	App rank: 14
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],15]
+ 		Pid: 0	Local rank: 7	Node rank: 7	App rank: 15
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+
+ Data for node: n004	State: 3	Flags: 13
+ 	Daemon: [[10575,0],2]	Daemon launched: True
+ 	Num slots: 8	Slots in use: 8	Oversubscribed: FALSE
+ 	Num slots allocated: 8	Max slots: 0
+ 	Num procs: 8	Next node_rank: 8
+ 	Data for proc: [[10575,1],16]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 16
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],17]
+ 		Pid: 0	Local rank: 1	Node rank: 1	App rank: 17
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],18]
+ 		Pid: 0	Local rank: 2	Node rank: 2	App rank: 18
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],19]
+ 		Pid: 0	Local rank: 3	Node rank: 3	App rank: 19
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],20]
+ 		Pid: 0	Local rank: 4	Node rank: 4	App rank: 20
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],21]
+ 		Pid: 0	Local rank: 5	Node rank: 5	App rank: 21
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],22]
+ 		Pid: 0	Local rank: 6	Node rank: 6	App rank: 22
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],23]
+ 		Pid: 0	Local rank: 7	Node rank: 7	App rank: 23
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+
+ Data for node: n006	State: 3	Flags: 13
+ 	Daemon: [[10575,0],3]	Daemon launched: True
+ 	Num slots: 8	Slots in use: 8	Oversubscribed: FALSE
+ 	Num slots allocated: 8	Max slots: 0
+ 	Num procs: 8	Next node_rank: 8
+ 	Data for proc: [[10575,1],24]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 24
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],25]
+ 		Pid: 0	Local rank: 1	Node rank: 1	App rank: 25
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],26]
+ 		Pid: 0	Local rank: 2	Node rank: 2	App rank: 26
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],27]
+ 		Pid: 0	Local rank: 3	Node rank: 3	App rank: 27
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],28]
+ 		Pid: 0	Local rank: 4	Node rank: 4	App rank: 28
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],29]
+ 		Pid: 0	Local rank: 5	Node rank: 5	App rank: 29
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],30]
+ 		Pid: 0	Local rank: 6	Node rank: 6	App rank: 30
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],31]
+ 		Pid: 0	Local rank: 7	Node rank: 7	App rank: 31
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+
+ Data for node: n005	State: 3	Flags: 13
+ 	Daemon: [[10575,0],4]	Daemon launched: True
+ 	Num slots: 8	Slots in use: 8	Oversubscribed: FALSE
+ 	Num slots allocated: 8	Max slots: 0
+ 	Num procs: 8	Next node_rank: 8
+ 	Data for proc: [[10575,1],32]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 32
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],33]
+ 		Pid: 0	Local rank: 1	Node rank: 1	App rank: 33
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],34]
+ 		Pid: 0	Local rank: 2	Node rank: 2	App rank: 34
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],35]
+ 		Pid: 0	Local rank: 3	Node rank: 3	App rank: 35
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],36]
+ 		Pid: 0	Local rank: 4	Node rank: 4	App rank: 36
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],37]
+ 		Pid: 0	Local rank: 5	Node rank: 5	App rank: 37
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],38]
+ 		Pid: 0	Local rank: 6	Node rank: 6	App rank: 38
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],39]
+ 		Pid: 0	Local rank: 7	Node rank: 7	App rank: 39
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ Data for JOB [10575,1] offset 0 Total slots allocated 40
+
+ Mapper requested: NULL  Last mapper: round_robin  Mapping policy: BYNUMA:NOOVERSUBSCRIBE  Ranking policy: SLOT
+ Binding policy: CORE  Cpu set: NULL  PPR: NULL  Cpus-per-rank: 0
+ 	Num new daemons: 0	New daemon starting vpid INVALID
+ 	Num nodes: 5
+
+ Data for node: n002	State: 1	Flags: 10
+ 	Daemon: [[10575,0],0]	Daemon launched: False
+ 	Num slots: 8	Slots in use: 0	Oversubscribed: FALSE
+ 	Num slots allocated: 8	Max slots: 0
+ 	Num procs: 8	Next node_rank: 8
+ 	Data for proc: [[10575,1],0]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 0
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],1]
+ 		Pid: 0	Local rank: 1	Node rank: 1	App rank: 1
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],2]
+ 		Pid: 0	Local rank: 2	Node rank: 2	App rank: 2
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],3]
+ 		Pid: 0	Local rank: 3	Node rank: 3	App rank: 3
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],4]
+ 		Pid: 0	Local rank: 4	Node rank: 4	App rank: 4
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],5]
+ 		Pid: 0	Local rank: 5	Node rank: 5	App rank: 5
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],6]
+ 		Pid: 0	Local rank: 6	Node rank: 6	App rank: 6
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],7]
+ 		Pid: 0	Local rank: 7	Node rank: 7	App rank: 7
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+
+ Data for node: n003	State: 1	Flags: 10
+ 	Daemon: [[10575,0],1]	Daemon launched: False
+ 	Num slots: 8	Slots in use: 0	Oversubscribed: FALSE
+ 	Num slots allocated: 8	Max slots: 0
+ 	Num procs: 8	Next node_rank: 8
+ 	Data for proc: [[10575,1],8]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 8
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [B/././.][./././.]
+ 	Data for proc: [[10575,1],9]
+ 		Pid: 0	Local rank: 1	Node rank: 1	App rank: 9
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [./B/./.][./././.]
+ 	Data for proc: [[10575,1],10]
+ 		Pid: 0	Local rank: 2	Node rank: 2	App rank: 10
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [././B/.][./././.]
+ 	Data for proc: [[10575,1],11]
+ 		Pid: 0	Local rank: 3	Node rank: 3	App rank: 11
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [./././B][./././.]
+ 	Data for proc: [[10575,1],12]
+ 		Pid: 0	Local rank: 4	Node rank: 4	App rank: 12
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [./././.][B/././.]
+ 	Data for proc: [[10575,1],13]
+ 		Pid: 0	Local rank: 5	Node rank: 5	App rank: 13
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [./././.][./B/./.]
+ 	Data for proc: [[10575,1],14]
+ 		Pid: 0	Local rank: 6	Node rank: 6	App rank: 14
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [./././.][././B/.]
+ 	Data for proc: [[10575,1],15]
+ 		Pid: 0	Local rank: 7	Node rank: 7	App rank: 15
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [./././.][./././B]
+
+ Data for node: n004	State: 1	Flags: 10
+ 	Daemon: [[10575,0],2]	Daemon launched: False
+ 	Num slots: 8	Slots in use: 0	Oversubscribed: FALSE
+ 	Num slots allocated: 8	Max slots: 0
+ 	Num procs: 8	Next node_rank: 8
+ 	Data for proc: [[10575,1],16]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 16
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],17]
+ 		Pid: 0	Local rank: 1	Node rank: 1	App rank: 17
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],18]
+ 		Pid: 0	Local rank: 2	Node rank: 2	App rank: 18
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],19]
+ 		Pid: 0	Local rank: 3	Node rank: 3	App rank: 19
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],20]
+ 		Pid: 0	Local rank: 4	Node rank: 4	App rank: 20
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],21]
+ 		Pid: 0	Local rank: 5	Node rank: 5	App rank: 21
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],22]
+ 		Pid: 0	Local rank: 6	Node rank: 6	App rank: 22
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],23]
+ 		Pid: 0	Local rank: 7	Node rank: 7	App rank: 23
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+
+ Data for node: n006	State: 1	Flags: 10
+ 	Daemon: [[10575,0],3]	Daemon launched: False
+ 	Num slots: 8	Slots in use: 0	Oversubscribed: FALSE
+ 	Num slots allocated: 8	Max slots: 0
+ 	Num procs: 8	Next node_rank: 8
+ 	Data for proc: [[10575,1],24]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 24
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],25]
+ 		Pid: 0	Local rank: 1	Node rank: 1	App rank: 25
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],26]
+ 		Pid: 0	Local rank: 2	Node rank: 2	App rank: 26
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],27]
+ 		Pid: 0	Local rank: 3	Node rank: 3	App rank: 27
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],28]
+ 		Pid: 0	Local rank: 4	Node rank: 4	App rank: 28
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],29]
+ 		Pid: 0	Local rank: 5	Node rank: 5	App rank: 29
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],30]
+ 		Pid: 0	Local rank: 6	Node rank: 6	App rank: 30
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],31]
+ 		Pid: 0	Local rank: 7	Node rank: 7	App rank: 31
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+
+ Data for node: n005	State: 1	Flags: 10
+ 	Daemon: [[10575,0],4]	Daemon launched: False
+ 	Num slots: 8	Slots in use: 0	Oversubscribed: FALSE
+ 	Num slots allocated: 8	Max slots: 0
+ 	Num procs: 8	Next node_rank: 8
+ 	Data for proc: [[10575,1],32]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 32
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],33]
+ 		Pid: 0	Local rank: 1	Node rank: 1	App rank: 33
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],34]
+ 		Pid: 0	Local rank: 2	Node rank: 2	App rank: 34
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],35]
+ 		Pid: 0	Local rank: 3	Node rank: 3	App rank: 35
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],36]
+ 		Pid: 0	Local rank: 4	Node rank: 4	App rank: 36
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],37]
+ 		Pid: 0	Local rank: 5	Node rank: 5	App rank: 37
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],38]
+ 		Pid: 0	Local rank: 6	Node rank: 6	App rank: 38
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],39]
+ 		Pid: 0	Local rank: 7	Node rank: 7	App rank: 39
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ Data for JOB [10575,1] offset 0 Total slots allocated 40
+
+ Mapper requested: NULL  Last mapper: round_robin  Mapping policy: BYNUMA:NOOVERSUBSCRIBE  Ranking policy: SLOT
+ Binding policy: CORE  Cpu set: NULL  PPR: NULL  Cpus-per-rank: 0
+ 	Num new daemons: 0	New daemon starting vpid INVALID
+ 	Num nodes: 5
+
+ Data for node: n002	State: 1	Flags: 10
+ 	Daemon: [[10575,0],0]	Daemon launched: False
+ 	Num slots: 8	Slots in use: 0	Oversubscribed: FALSE
+ 	Num slots allocated: 8	Max slots: 0
+ 	Num procs: 8	Next node_rank: 8
+ 	Data for proc: [[10575,1],0]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 0
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],1]
+ 		Pid: 0	Local rank: 1	Node rank: 1	App rank: 1
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],2]
+ 		Pid: 0	Local rank: 2	Node rank: 2	App rank: 2
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],3]
+ 		Pid: 0	Local rank: 3	Node rank: 3	App rank: 3
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],4]
+ 		Pid: 0	Local rank: 4	Node rank: 4	App rank: 4
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],5]
+ 		Pid: 0	Local rank: 5	Node rank: 5	App rank: 5
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],6]
+ 		Pid: 0	Local rank: 6	Node rank: 6	App rank: 6
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],7]
+ 		Pid: 0	Local rank: 7	Node rank: 7	App rank: 7
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+
+ Data for node: n003	State: 1	Flags: 10
+ 	Daemon: [[10575,0],1]	Daemon launched: False
+ 	Num slots: 8	Slots in use: 0	Oversubscribed: FALSE
+ 	Num slots allocated: 8	Max slots: 0
+ 	Num procs: 8	Next node_rank: 8
+ 	Data for proc: [[10575,1],8]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 8
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],9]
+ 		Pid: 0	Local rank: 1	Node rank: 1	App rank: 9
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],10]
+ 		Pid: 0	Local rank: 2	Node rank: 2	App rank: 10
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],11]
+ 		Pid: 0	Local rank: 3	Node rank: 3	App rank: 11
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],12]
+ 		Pid: 0	Local rank: 4	Node rank: 4	App rank: 12
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],13]
+ 		Pid: 0	Local rank: 5	Node rank: 5	App rank: 13
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],14]
+ 		Pid: 0	Local rank: 6	Node rank: 6	App rank: 14
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],15]
+ 		Pid: 0	Local rank: 7	Node rank: 7	App rank: 15
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+
+ Data for node: n004	State: 1	Flags: 10
+ 	Daemon: [[10575,0],2]	Daemon launched: False
+ 	Num slots: 8	Slots in use: 0	Oversubscribed: FALSE
+ 	Num slots allocated: 8	Max slots: 0
+ 	Num procs: 8	Next node_rank: 8
+ 	Data for proc: [[10575,1],16]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 16
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],17]
+ 		Pid: 0	Local rank: 1	Node rank: 1	App rank: 17
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],18]
+ 		Pid: 0	Local rank: 2	Node rank: 2	App rank: 18
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],19]
+ 		Pid: 0	Local rank: 3	Node rank: 3	App rank: 19
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],20]
+ 		Pid: 0	Local rank: 4	Node rank: 4	App rank: 20
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],21]
+ 		Pid: 0	Local rank: 5	Node rank: 5	App rank: 21
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],22]
+ 		Pid: 0	Local rank: 6	Node rank: 6	App rank: 22
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],23]
+ 		Pid: 0	Local rank: 7	Node rank: 7	App rank: 23
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+
+ Data for node: n006	State: 1	Flags: 10
+ 	Daemon: [[10575,0],3]	Daemon launched: False
+ 	Num slots: 8	Slots in use: 0	Oversubscribed: FALSE
+ 	Num slots allocated: 8	Max slots: 0
+ 	Num procs: 8	Next node_rank: 8
+ 	Data for proc: [[10575,1],24]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 24
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [B/././.][./././.]
+ 	Data for proc: [[10575,1],25]
+ 		Pid: 0	Local rank: 1	Node rank: 1	App rank: 25
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [./B/./.][./././.]
+ 	Data for proc: [[10575,1],26]
+ 		Pid: 0	Local rank: 2	Node rank: 2	App rank: 26
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [././B/.][./././.]
+ 	Data for proc: [[10575,1],27]
+ 		Pid: 0	Local rank: 3	Node rank: 3	App rank: 27
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [./././B][./././.]
+ 	Data for proc: [[10575,1],28]
+ 		Pid: 0	Local rank: 4	Node rank: 4	App rank: 28
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [./././.][B/././.]
+ 	Data for proc: [[10575,1],29]
+ 		Pid: 0	Local rank: 5	Node rank: 5	App rank: 29
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [./././.][./B/./.]
+ 	Data for proc: [[10575,1],30]
+ 		Pid: 0	Local rank: 6	Node rank: 6	App rank: 30
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [./././.][././B/.]
+ 	Data for proc: [[10575,1],31]
+ 		Pid: 0	Local rank: 7	Node rank: 7	App rank: 31
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [./././.][./././B]
+
+ Data for node: n005	State: 1	Flags: 10
+ 	Daemon: [[10575,0],4]	Daemon launched: False
+ 	Num slots: 8	Slots in use: 0	Oversubscribed: FALSE
+ 	Num slots allocated: 8	Max slots: 0
+ 	Num procs: 8	Next node_rank: 8
+ 	Data for proc: [[10575,1],32]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 32
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],33]
+ 		Pid: 0	Local rank: 1	Node rank: 1	App rank: 33
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],34]
+ 		Pid: 0	Local rank: 2	Node rank: 2	App rank: 34
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],35]
+ 		Pid: 0	Local rank: 3	Node rank: 3	App rank: 35
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],36]
+ 		Pid: 0	Local rank: 4	Node rank: 4	App rank: 36
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],37]
+ 		Pid: 0	Local rank: 5	Node rank: 5	App rank: 37
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],38]
+ 		Pid: 0	Local rank: 6	Node rank: 6	App rank: 38
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],39]
+ 		Pid: 0	Local rank: 7	Node rank: 7	App rank: 39
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ Data for JOB [10575,1] offset 0 Total slots allocated 40
+
+ Mapper requested: NULL  Last mapper: round_robin  Mapping policy: BYNUMA:NOOVERSUBSCRIBE  Ranking policy: SLOT
+ Binding policy: CORE  Cpu set: NULL  PPR: NULL  Cpus-per-rank: 0
+ 	Num new daemons: 0	New daemon starting vpid INVALID
+ 	Num nodes: 5
+
+ Data for node: n002	State: 1	Flags: 10
+ 	Daemon: [[10575,0],0]	Daemon launched: False
+ 	Num slots: 8	Slots in use: 0	Oversubscribed: FALSE
+ 	Num slots allocated: 8	Max slots: 0
+ 	Num procs: 8	Next node_rank: 8
+ 	Data for proc: [[10575,1],0]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 0
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],1]
+ 		Pid: 0	Local rank: 1	Node rank: 1	App rank: 1
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],2]
+ 		Pid: 0	Local rank: 2	Node rank: 2	App rank: 2
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],3]
+ 		Pid: 0	Local rank: 3	Node rank: 3	App rank: 3
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],4]
+ 		Pid: 0	Local rank: 4	Node rank: 4	App rank: 4
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],5]
+ 		Pid: 0	Local rank: 5	Node rank: 5	App rank: 5
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],6]
+ 		Pid: 0	Local rank: 6	Node rank: 6	App rank: 6
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],7]
+ 		Pid: 0	Local rank: 7	Node rank: 7	App rank: 7
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+
+ Data for node: n003	State: 1	Flags: 10
+ 	Daemon: [[10575,0],1]	Daemon launched: False
+ 	Num slots: 8	Slots in use: 0	Oversubscribed: FALSE
+ 	Num slots allocated: 8	Max slots: 0
+ 	Num procs: 8	Next node_rank: 8
+ 	Data for proc: [[10575,1],8]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 8
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],9]
+ 		Pid: 0	Local rank: 1	Node rank: 1	App rank: 9
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],10]
+ 		Pid: 0	Local rank: 2	Node rank: 2	App rank: 10
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],11]
+ 		Pid: 0	Local rank: 3	Node rank: 3	App rank: 11
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],12]
+ 		Pid: 0	Local rank: 4	Node rank: 4	App rank: 12
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],13]
+ 		Pid: 0	Local rank: 5	Node rank: 5	App rank: 13
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],14]
+ 		Pid: 0	Local rank: 6	Node rank: 6	App rank: 14
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],15]
+ 		Pid: 0	Local rank: 7	Node rank: 7	App rank: 15
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+
+ Data for node: n004	State: 1	Flags: 10
+ 	Daemon: [[10575,0],2]	Daemon launched: False
+ 	Num slots: 8	Slots in use: 0	Oversubscribed: FALSE
+ 	Num slots allocated: 8	Max slots: 0
+ 	Num procs: 8	Next node_rank: 8
+ 	Data for proc: [[10575,1],16]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 16
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [B/././.][./././.]
+ 	Data for proc: [[10575,1],17]
+ 		Pid: 0	Local rank: 1	Node rank: 1	App rank: 17
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [./B/./.][./././.]
+ 	Data for proc: [[10575,1],18]
+ 		Pid: 0	Local rank: 2	Node rank: 2	App rank: 18
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [././B/.][./././.]
+ 	Data for proc: [[10575,1],19]
+ 		Pid: 0	Local rank: 3	Node rank: 3	App rank: 19
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [./././B][./././.]
+ 	Data for proc: [[10575,1],20]
+ 		Pid: 0	Local rank: 4	Node rank: 4	App rank: 20
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [./././.][B/././.]
+ 	Data for proc: [[10575,1],21]
+ 		Pid: 0	Local rank: 5	Node rank: 5	App rank: 21
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [./././.][./B/./.]
+ 	Data for proc: [[10575,1],22]
+ 		Pid: 0	Local rank: 6	Node rank: 6	App rank: 22
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [./././.][././B/.]
+ 	Data for proc: [[10575,1],23]
+ 		Pid: 0	Local rank: 7	Node rank: 7	App rank: 23
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [./././.][./././B]
+
+ Data for node: n006	State: 1	Flags: 10
+ 	Daemon: [[10575,0],3]	Daemon launched: False
+ 	Num slots: 8	Slots in use: 0	Oversubscribed: FALSE
+ 	Num slots allocated: 8	Max slots: 0
+ 	Num procs: 8	Next node_rank: 8
+ 	Data for proc: [[10575,1],24]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 24
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],25]
+ 		Pid: 0	Local rank: 1	Node rank: 1	App rank: 25
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],26]
+ 		Pid: 0	Local rank: 2	Node rank: 2	App rank: 26
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],27]
+ 		Pid: 0	Local rank: 3	Node rank: 3	App rank: 27
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],28]
+ 		Pid: 0	Local rank: 4	Node rank: 4	App rank: 28
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],29]
+ 		Pid: 0	Local rank: 5	Node rank: 5	App rank: 29
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],30]
+ 		Pid: 0	Local rank: 6	Node rank: 6	App rank: 30
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],31]
+ 		Pid: 0	Local rank: 7	Node rank: 7	App rank: 31
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+
+ Data for node: n005	State: 1	Flags: 10
+ 	Daemon: [[10575,0],4]	Daemon launched: False
+ 	Num slots: 8	Slots in use: 0	Oversubscribed: FALSE
+ 	Num slots allocated: 8	Max slots: 0
+ 	Num procs: 8	Next node_rank: 8
+ 	Data for proc: [[10575,1],32]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 32
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],33]
+ 		Pid: 0	Local rank: 1	Node rank: 1	App rank: 33
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],34]
+ 		Pid: 0	Local rank: 2	Node rank: 2	App rank: 34
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],35]
+ 		Pid: 0	Local rank: 3	Node rank: 3	App rank: 35
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],36]
+ 		Pid: 0	Local rank: 4	Node rank: 4	App rank: 36
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],37]
+ 		Pid: 0	Local rank: 5	Node rank: 5	App rank: 37
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],38]
+ 		Pid: 0	Local rank: 6	Node rank: 6	App rank: 38
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],39]
+ 		Pid: 0	Local rank: 7	Node rank: 7	App rank: 39
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ Data for JOB [10575,1] offset 0 Total slots allocated 40
+
+ Mapper requested: NULL  Last mapper: round_robin  Mapping policy: BYNUMA:NOOVERSUBSCRIBE  Ranking policy: SLOT
+ Binding policy: CORE  Cpu set: NULL  PPR: NULL  Cpus-per-rank: 0
+ 	Num new daemons: 0	New daemon starting vpid INVALID
+ 	Num nodes: 5
+
+ Data for node: n002	State: 1	Flags: 10
+ 	Daemon: [[10575,0],0]	Daemon launched: False
+ 	Num slots: 8	Slots in use: 0	Oversubscribed: FALSE
+ 	Num slots allocated: 8	Max slots: 0
+ 	Num procs: 8	Next node_rank: 8
+ 	Data for proc: [[10575,1],0]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 0
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],1]
+ 		Pid: 0	Local rank: 1	Node rank: 1	App rank: 1
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],2]
+ 		Pid: 0	Local rank: 2	Node rank: 2	App rank: 2
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],3]
+ 		Pid: 0	Local rank: 3	Node rank: 3	App rank: 3
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],4]
+ 		Pid: 0	Local rank: 4	Node rank: 4	App rank: 4
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],5]
+ 		Pid: 0	Local rank: 5	Node rank: 5	App rank: 5
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],6]
+ 		Pid: 0	Local rank: 6	Node rank: 6	App rank: 6
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],7]
+ 		Pid: 0	Local rank: 7	Node rank: 7	App rank: 7
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+
+ Data for node: n003	State: 1	Flags: 10
+ 	Daemon: [[10575,0],1]	Daemon launched: False
+ 	Num slots: 8	Slots in use: 0	Oversubscribed: FALSE
+ 	Num slots allocated: 8	Max slots: 0
+ 	Num procs: 8	Next node_rank: 8
+ 	Data for proc: [[10575,1],8]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 8
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],9]
+ 		Pid: 0	Local rank: 1	Node rank: 1	App rank: 9
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],10]
+ 		Pid: 0	Local rank: 2	Node rank: 2	App rank: 10
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],11]
+ 		Pid: 0	Local rank: 3	Node rank: 3	App rank: 11
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],12]
+ 		Pid: 0	Local rank: 4	Node rank: 4	App rank: 12
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],13]
+ 		Pid: 0	Local rank: 5	Node rank: 5	App rank: 13
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],14]
+ 		Pid: 0	Local rank: 6	Node rank: 6	App rank: 14
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],15]
+ 		Pid: 0	Local rank: 7	Node rank: 7	App rank: 15
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+
+ Data for node: n004	State: 1	Flags: 10
+ 	Daemon: [[10575,0],2]	Daemon launched: False
+ 	Num slots: 8	Slots in use: 0	Oversubscribed: FALSE
+ 	Num slots allocated: 8	Max slots: 0
+ 	Num procs: 8	Next node_rank: 8
+ 	Data for proc: [[10575,1],16]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 16
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],17]
+ 		Pid: 0	Local rank: 1	Node rank: 1	App rank: 17
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],18]
+ 		Pid: 0	Local rank: 2	Node rank: 2	App rank: 18
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],19]
+ 		Pid: 0	Local rank: 3	Node rank: 3	App rank: 19
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],20]
+ 		Pid: 0	Local rank: 4	Node rank: 4	App rank: 20
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],21]
+ 		Pid: 0	Local rank: 5	Node rank: 5	App rank: 21
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],22]
+ 		Pid: 0	Local rank: 6	Node rank: 6	App rank: 22
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],23]
+ 		Pid: 0	Local rank: 7	Node rank: 7	App rank: 23
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+
+ Data for node: n006	State: 1	Flags: 10
+ 	Daemon: [[10575,0],3]	Daemon launched: False
+ 	Num slots: 8	Slots in use: 0	Oversubscribed: FALSE
+ 	Num slots allocated: 8	Max slots: 0
+ 	Num procs: 8	Next node_rank: 8
+ 	Data for proc: [[10575,1],24]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 24
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],25]
+ 		Pid: 0	Local rank: 1	Node rank: 1	App rank: 25
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],26]
+ 		Pid: 0	Local rank: 2	Node rank: 2	App rank: 26
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],27]
+ 		Pid: 0	Local rank: 3	Node rank: 3	App rank: 27
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],28]
+ 		Pid: 0	Local rank: 4	Node rank: 4	App rank: 28
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],29]
+ 		Pid: 0	Local rank: 5	Node rank: 5	App rank: 29
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],30]
+ 		Pid: 0	Local rank: 6	Node rank: 6	App rank: 30
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+ 	Data for proc: [[10575,1],31]
+ 		Pid: 0	Local rank: 7	Node rank: 7	App rank: 31
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: UNBOUND
+
+ Data for node: n005	State: 1	Flags: 10
+ 	Daemon: [[10575,0],4]	Daemon launched: False
+ 	Num slots: 8	Slots in use: 0	Oversubscribed: FALSE
+ 	Num slots allocated: 8	Max slots: 0
+ 	Num procs: 8	Next node_rank: 8
+ 	Data for proc: [[10575,1],32]
+ 		Pid: 0	Local rank: 0	Node rank: 0	App rank: 32
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [B/././.][./././.]
+ 	Data for proc: [[10575,1],33]
+ 		Pid: 0	Local rank: 1	Node rank: 1	App rank: 33
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [./B/./.][./././.]
+ 	Data for proc: [[10575,1],34]
+ 		Pid: 0	Local rank: 2	Node rank: 2	App rank: 34
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [././B/.][./././.]
+ 	Data for proc: [[10575,1],35]
+ 		Pid: 0	Local rank: 3	Node rank: 3	App rank: 35
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [./././B][./././.]
+ 	Data for proc: [[10575,1],36]
+ 		Pid: 0	Local rank: 4	Node rank: 4	App rank: 36
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [./././.][B/././.]
+ 	Data for proc: [[10575,1],37]
+ 		Pid: 0	Local rank: 5	Node rank: 5	App rank: 37
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [./././.][./B/./.]
+ 	Data for proc: [[10575,1],38]
+ 		Pid: 0	Local rank: 6	Node rank: 6	App rank: 38
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [./././.][././B/.]
+ 	Data for proc: [[10575,1],39]
+ 		Pid: 0	Local rank: 7	Node rank: 7	App rank: 39
+ 		State: INITIALIZED	App_context: 0
+ 		Locale:  NODE
+ 		Binding: [./././.][./././B]
+[n002.intern.lcc2:07697] MCW rank 0 bound to socket 0[core 0[hwt 0]]: [B/././.][./././.]
+[n002.intern.lcc2:07697] MCW rank 1 bound to socket 0[core 1[hwt 0]]: [./B/./.][./././.]
+[n002.intern.lcc2:07697] MCW rank 2 bound to socket 0[core 2[hwt 0]]: [././B/.][./././.]
+[n002.intern.lcc2:07697] MCW rank 3 bound to socket 0[core 3[hwt 0]]: [./././B][./././.]
+[n002.intern.lcc2:07697] MCW rank 4 bound to socket 1[core 4[hwt 0]]: [./././.][B/././.]
+[n002.intern.lcc2:07697] MCW rank 5 bound to socket 1[core 5[hwt 0]]: [./././.][./B/./.]
+[n002.intern.lcc2:07697] MCW rank 6 bound to socket 1[core 6[hwt 0]]: [./././.][././B/.]
+[n002.intern.lcc2:07697] MCW rank 7 bound to socket 1[core 7[hwt 0]]: [./././.][./././B]
+[n006.intern.lcc2:15873] MCW rank 24 bound to socket 0[core 0[hwt 0]]: [B/././.][./././.]
+[n004.intern.lcc2:29064] MCW rank 16 bound to socket 0[core 0[hwt 0]]: [B/././.][./././.]
+[n006.intern.lcc2:15873] MCW rank 25 bound to socket 0[core 1[hwt 0]]: [./B/./.][./././.]
+[n006.intern.lcc2:15873] MCW rank 26 bound to socket 0[core 2[hwt 0]]: [././B/.][./././.]
+[n004.intern.lcc2:29064] MCW rank 17 bound to socket 0[core 1[hwt 0]]: [./B/./.][./././.]
+[n006.intern.lcc2:15873] MCW rank 27 bound to socket 0[core 3[hwt 0]]: [./././B][./././.]
+[n004.intern.lcc2:29064] MCW rank 18 bound to socket 0[core 2[hwt 0]]: [././B/.][./././.]
+[n006.intern.lcc2:15873] MCW rank 28 bound to socket 1[core 4[hwt 0]]: [./././.][B/././.]
+[n004.intern.lcc2:29064] MCW rank 19 bound to socket 0[core 3[hwt 0]]: [./././B][./././.]
+[n006.intern.lcc2:15873] MCW rank 29 bound to socket 1[core 5[hwt 0]]: [./././.][./B/./.]
+[n004.intern.lcc2:29064] MCW rank 20 bound to socket 1[core 4[hwt 0]]: [./././.][B/././.]
+[n006.intern.lcc2:15873] MCW rank 30 bound to socket 1[core 6[hwt 0]]: [./././.][././B/.]
+[n004.intern.lcc2:29064] MCW rank 21 bound to socket 1[core 5[hwt 0]]: [./././.][./B/./.]
+[n005.intern.lcc2:26285] MCW rank 32 bound to socket 0[core 0[hwt 0]]: [B/././.][./././.]
+[n006.intern.lcc2:15873] MCW rank 31 bound to socket 1[core 7[hwt 0]]: [./././.][./././B]
+[n004.intern.lcc2:29064] MCW rank 22 bound to socket 1[core 6[hwt 0]]: [./././.][././B/.]
+[n005.intern.lcc2:26285] MCW rank 33 bound to socket 0[core 1[hwt 0]]: [./B/./.][./././.]
+[n004.intern.lcc2:29064] MCW rank 23 bound to socket 1[core 7[hwt 0]]: [./././.][./././B]
+[n005.intern.lcc2:26285] MCW rank 34 bound to socket 0[core 2[hwt 0]]: [././B/.][./././.]
+[n005.intern.lcc2:26285] MCW rank 35 bound to socket 0[core 3[hwt 0]]: [./././B][./././.]
+[n005.intern.lcc2:26285] MCW rank 36 bound to socket 1[core 4[hwt 0]]: [./././.][B/././.]
+[n005.intern.lcc2:26285] MCW rank 37 bound to socket 1[core 5[hwt 0]]: [./././.][./B/./.]
+[n005.intern.lcc2:26285] MCW rank 38 bound to socket 1[core 6[hwt 0]]: [./././.][././B/.]
+[n005.intern.lcc2:26285] MCW rank 39 bound to socket 1[core 7[hwt 0]]: [./././.][./././B]
+[n003.intern.lcc2:03655] MCW rank 8 bound to socket 0[core 0[hwt 0]]: [B/././.][./././.]
+[n003.intern.lcc2:03655] MCW rank 9 bound to socket 0[core 1[hwt 0]]: [./B/./.][./././.]
+[n003.intern.lcc2:03655] MCW rank 10 bound to socket 0[core 2[hwt 0]]: [././B/.][./././.]
+[n003.intern.lcc2:03655] MCW rank 11 bound to socket 0[core 3[hwt 0]]: [./././B][./././.]
+[n003.intern.lcc2:03655] MCW rank 12 bound to socket 1[core 4[hwt 0]]: [./././.][B/././.]
+[n003.intern.lcc2:03655] MCW rank 13 bound to socket 1[core 5[hwt 0]]: [./././.][./B/./.]
+[n003.intern.lcc2:03655] MCW rank 14 bound to socket 1[core 6[hwt 0]]: [./././.][././B/.]
+[n003.intern.lcc2:03655] MCW rank 15 bound to socket 1[core 7[hwt 0]]: [./././.][./././B]
+inside=15722 outside=4278 total=20000 
+inside=15699 outside=4301 total=20000 
+3.139800
+inside=15629 outside=4371 total=20000 
+3.125800
+inside=15684 outside=4316 total=20000 
+3.136800
+inside=15711 outside=4289 total=20000 
+3.142200
+inside=15725 outside=4275 total=20000 
+3.145000
+inside=15673 outside=4327 total=20000 
+3.134600
+inside=15628 outside=4372 total=20000 
+3.125600
+inside=15651 outside=4349 total=20000 
+3.130200
+inside=15670 outside=4330 total=20000 
+3.134000
+inside=15760 outside=4240 total=20000 
+3.152000
+inside=15725 outside=4275 total=20000 
+3.145000
+inside=15787 outside=4213 total=20000 
+3.157400
+inside=15686 outside=4314 total=20000 
+3.137200
+inside=15689 outside=4311 total=20000 
+3.137800
+inside=15759 outside=4241 total=20000 
+3.151800
+inside=15679 outside=4321 total=20000 
+3.135800
+inside=15833 outside=4167 total=20000 
+3.166600
+inside=15706 outside=4294 total=20000 
+3.141200
+inside=15744 outside=4256 total=20000 
+3.148800
+inside=15679 outside=4321 total=20000 
+3.135800
+inside=15749 outside=4251 total=20000 
+3.149800
+inside=15647 outside=4353 total=20000 
+3.129400
+inside=15703 outside=4297 total=20000 
+3.140600
+inside=15726 outside=4274 total=20000 
+3.145200
+inside=15723 outside=4277 total=20000 
+3.144600
+inside=15585 outside=4415 total=20000 
+3.117000
+inside=15734 outside=4266 total=20000 
+3.146800
+inside=15795 outside=4205 total=20000 
+3.159000
+inside=15681 outside=4319 total=20000 
+3.136200
+inside=15657 outside=4343 total=20000 
+3.131400
+inside=15684 outside=4316 total=20000 
+3.136800
+inside=15685 outside=4315 total=20000 
+3.137000
+inside=15661 outside=4339 total=20000 
+3.132200
+inside=15776 outside=4224 total=20000 
+3.155200
+inside=15730 outside=4270 total=20000 
+3.146000
+inside=15735 outside=4265 total=20000 
+3.147000
+inside=15754 outside=4246 total=20000 
+3.150800
+inside=15691 outside=4309 total=20000 
+3.138200
+inside=15620 outside=4380 total=20000 
+3.124000
+3.144400
+final inside=628175 outside=171825 total=800000 
+3.140875

@@ -1,0 +1,822 @@
+#+options: ':nil *:t -:t ::t <:t H:3 \n:t ^:nil arch:headline
+#+options: author:t broken-links:nil c:nil creator:nil
+#+options: d:(not "LOGBOOK") date:t e:t email:t f:t inline:t num:t
+#+options: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+options: timestamp:t title:t toc:t todo:t |:t
+#+options: center:nil
+#+title: Assignment 06
+#+author: Markus Kopp
+#+email: markus.kopp@student.uibk.ac.at
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 28.0.50 (Org mode 9.4)
+
+#+latex_class: scrartcl
+#+latex_class_options:
+#+latex_header: \usepackage[margin=0.5in]{geometry}
+#+latex_header_extra:
+#+description:
+#+keywords:
+#+subtitle:
+#+latex_compiler: pdflatex
+#+date: \today
+* Exercise 1
+When running the sequential solution from the last exercise the straight forward way to implement a parallel solution with openMP is by using *#pragm omp parallel for* for all the for loops used. Two implementations were used. Because the sequential version already used the optimized version with the inner loop skipping the already updates articles by partially doing the force update not only on the index *i* but also on *j*. For comparison also the sequential version is looked at here.
+** nbody_seq
+What is not changing are the functions for calculating, updating and moving the particles.
+#+begin_src C :eval never-export
+  #include <math.h>
+  #include <stdio.h>
+  #include <stdlib.h>
+
+  const int DEBUGPRINT = 0;
+  const float G = 1.0f;
+  const float EPS = 0.0001f;
+
+  struct body {
+    float pos[2];
+    float vel[2];
+    float mass;
+  };
+
+  void printbody(struct body *a) {
+    printf("pos=(%f, %f) vel=(%f, %f) mass=%f\n", a->pos[0], a->pos[1], a->vel[0],
+           a->vel[1], a->mass);
+  }
+
+  // random float between low and high
+  float randomfloat(unsigned int *seed, float low, float high) {
+    return (float)rand_r(seed) / (float)RAND_MAX * (high - low) + low;
+  }
+
+  void randomize_body(struct body *a, unsigned int *seed) {
+    a->pos[0] = randomfloat(seed, -1000.0f, 1000.0f);
+    a->pos[1] = randomfloat(seed, -1000.0f, 1000.0f);
+    a->vel[0] = randomfloat(seed, -1.0f, 1.0f);
+    a->vel[1] = randomfloat(seed, -1.0f, 1.0f);
+    a->mass = randomfloat(seed, 1.0f, 1000.0f);
+  }
+
+  void calculate_force_float(struct body *a, struct body *b, float *returnvalue) {
+    float distancex = b->pos[0] - a->pos[0];
+    float signx = (distancex < 0.0f) ? -1.0f : 1.0f;
+    float distancey = b->pos[1] - a->pos[0];
+    float signy = (distancey < 0.0f) ? -1.0f : 1.0f;
+    float distancesquared = distancex * distancex + distancey * distancey;
+    float forcediag =
+        G * a->mass * b->mass / powf((distancesquared / 4.0f + EPS), 3.0f/ 2.0f);
+    returnvalue[0] =
+        forcediag * signx * (distancex * distancex) / distancesquared;
+    returnvalue[1] =
+        forcediag * signy * (distancey * distancey) / distancesquared;
+  }
+
+  void updateforce_float(struct body *a, float forcex, float forcey, int dt) {
+    a->vel[0] += forcex / a->mass * dt;
+    a->vel[1] += forcey / a->mass * dt;
+  }
+
+  void updateforce_float2(struct body *a, float *force, int dt) {
+    a->vel[0] += force[0] / a->mass * dt;
+    a->vel[1] += force[1] / a->mass * dt;
+  }
+
+  void movebody(struct body *a, int dt) {
+    a->pos[0] += a->vel[0] * dt;
+    a->pos[1] += a->vel[1] * dt;
+  }
+
+  int main(int argc, char *argv[]) {
+    int N = 10000;
+    int T = 100;
+    if (argc == 3) {
+      N = atoi(argv[1]); // number of particles
+      T = atoi(argv[2]); // number of timesteps
+    }
+    srand(1);
+    struct body *bodyarray = malloc(sizeof(struct body) * N);
+    unsigned int seed = 1;
+    for (int i = 0; i < N; ++i) {
+      seed = i;
+      randomize_body(&bodyarray[i], &seed);
+      if (DEBUGPRINT)
+        printbody(&bodyarray[i]);
+    }
+
+    float forceupdate[2];
+    float forceupdatesum[2];
+    for (int t = 0; t < T; ++t) {
+      for (int i = 0; i < N; ++i) {
+        forceupdatesum[0] = 0.0f;
+        forceupdatesum[1] = 0.0f;
+        for (int j = i + 1; j < N; ++j) {
+          calculate_force_float(&bodyarray[i], &bodyarray[j], forceupdate);
+          if (DEBUGPRINT)
+            printf("force=(%f, %f)\n", forceupdate[0], forceupdate[1]);
+          //updateforce_float2(&bodyarray[i], forceupdate, 1);
+          forceupdatesum[0] += forceupdate[0];
+          forceupdatesum[1] += forceupdate[1];
+          forceupdate[0] *= -1.0f;
+          forceupdate[1] *= -1.0f;
+          updateforce_float2(&bodyarray[j], forceupdate, 1);
+        }
+        updateforce_float2(&bodyarray[i], forceupdatesum, 1);
+      }
+      for (int i = 0; i < N; ++i) {
+        movebody(&bodyarray[i], 1);
+      }
+    }
+    if (DEBUGPRINT) {
+      printf("****************\n");
+      for (int i = 0; i < N; ++i) {
+        printbody(&bodyarray[i]);
+      }
+    }
+
+    free(bodyarray);
+    return 0;
+  }
+
+#+end_src
+** nbody_omp
+The naive omp version does go through both loops for particles with only updating the particles with index *i*. Three parallel sections are used for every outer for loop (excluding the time step loop). So parallel randomization, calculation and moving of the particles.
+#+begin_src C :eval never-export
+  #include <math.h>
+  #include <omp.h>
+  #include <stdio.h>
+  #include <stdlib.h>
+
+  const int DEBUGPRINT = 0;
+  const float G = 1.0f;
+  const float EPS = 0.0001f;
+
+  struct body {
+    float pos[2];
+    float vel[2];
+    float mass;
+  };
+
+  void printbody(struct body *a) {
+    printf("pos=(%f, %f) vel=(%f, %f) mass=%f\n", a->pos[0], a->pos[1], a->vel[0],
+           a->vel[1], a->mass);
+  }
+
+  // random float between low and high
+  float randomfloat(unsigned int *seed, float low, float high) {
+    return (float)rand_r(seed) / (float)RAND_MAX * (high - low) + low;
+  }
+
+  void randomize_body(struct body *a, unsigned int *seed) {
+    a->pos[0] = randomfloat(seed, -1000.0f, 1000.0f);
+    a->pos[1] = randomfloat(seed, -1000.0f, 1000.0f);
+    a->vel[0] = randomfloat(seed, -1.0f, 1.0f);
+    a->vel[1] = randomfloat(seed, -1.0f, 1.0f);
+    a->mass = randomfloat(seed, 1.0f, 1000.0f);
+  }
+
+  void calculate_force_float(struct body *a, struct body *b, float *returnvalue) {
+    float distancex = b->pos[0] - a->pos[0];
+    float signx = (distancex < 0.0f) ? -1.0f : 1.0f;
+    float distancey = b->pos[1] - a->pos[0];
+    float signy = (distancey < 0.0f) ? -1.0f : 1.0f;
+    float distancesquared = distancex * distancex + distancey * distancey;
+    float forcediag =
+        G * a->mass * b->mass / powf((distancesquared / 4.0f + EPS), 3.0f / 2.0f);
+    returnvalue[0] =
+        forcediag * signx * (distancex * distancex) / distancesquared;
+    returnvalue[1] =
+        forcediag * signy * (distancey * distancey) / distancesquared;
+  }
+
+  void updateforce_float(struct body *a, float forcex, float forcey, int dt) {
+    a->vel[0] += forcex / a->mass * dt;
+    a->vel[1] += forcey / a->mass * dt;
+  }
+
+  void updateforce_float2(struct body *a, float *force, int dt) {
+    a->vel[0] += force[0] / a->mass * dt;
+    a->vel[1] += force[1] / a->mass * dt;
+  }
+
+  void movebody(struct body *a, int dt) {
+    a->pos[0] += a->vel[0] * dt;
+    a->pos[1] += a->vel[1] * dt;
+  }
+
+  int main(int argc, char *argv[]) {
+    int N = 10000;
+    int T = 100;
+    if (argc == 3) {
+      N = atoi(argv[1]); // number of particles
+      T = atoi(argv[2]); // number of timesteps
+    }
+    srand(1);
+    struct body *bodyarray = malloc(sizeof(struct body) * N);
+  #pragma omp parallel
+    {
+      printf("number of threads =%d\n", omp_get_num_threads());
+      unsigned int seed = omp_get_thread_num();
+  #pragma omp for
+      for (int i = 0; i < N; ++i) {
+        randomize_body(&bodyarray[i], &seed);
+        if (DEBUGPRINT)
+          printbody(&bodyarray[i]);
+      }
+    }
+
+    float forceupdate[2];
+    for (int t = 0; t < T; ++t) {
+  #pragma omp parallel for
+      for (int i = 0; i < N; ++i) {
+        for (int j = 0; j < N; ++j) {
+          calculate_force_float(&bodyarray[i], &bodyarray[j], forceupdate);
+          if (DEBUGPRINT)
+            printf("force=(%f, %f)\n", forceupdate[0], forceupdate[1]);
+          updateforce_float2(&bodyarray[i], forceupdate, 1);
+        }
+      }
+  #pragma omp parallel for
+      for (int i = 0; i < N; ++i) {
+        movebody(&bodyarray[i], 1);
+      }
+    }
+    if (DEBUGPRINT) {
+      printf("****************\n");
+      for (int i = 0; i < N; ++i) {
+        printbody(&bodyarray[i]);
+      }
+    }
+
+    free(bodyarray);
+    return 0;
+  }
+
+#+end_src
+** nbody_omp_race
+When preparing a parallel solution that is identical to the sequential version you can run into a race condition because while the *i* index is not overlapping for the threads the partial update on index *j* can happen for two different threads at the same time. This solution does not mitigate this problem because *spoiler* it is already slower then the sequential version [[*nbody_seq]].
+#+begin_src C :eval never-export
+  #include <math.h>
+  #include <omp.h>
+  #include <stdio.h>
+  #include <stdlib.h>
+
+  const int DEBUGPRINT = 0;
+  const float G = 1.0f;
+  const float EPS = 0.0001f;
+
+  struct body {
+    float pos[2];
+    float vel[2];
+    float mass;
+  };
+
+  void printbody(struct body *a) {
+    printf("pos=(%f, %f) vel=(%f, %f) mass=%f\n", a->pos[0], a->pos[1], a->vel[0],
+           a->vel[1], a->mass);
+  }
+
+  // random float between low and high
+  float randomfloat(unsigned int *seed, float low, float high) {
+    return (float)rand_r(seed) / (float)RAND_MAX * (high - low) + low;
+  }
+
+  void randomize_body(struct body *a, unsigned int *seed) {
+    a->pos[0] = randomfloat(seed, -1000.0f, 1000.0f);
+    a->pos[1] = randomfloat(seed, -1000.0f, 1000.0f);
+    a->vel[0] = randomfloat(seed, -1.0f, 1.0f);
+    a->vel[1] = randomfloat(seed, -1.0f, 1.0f);
+    a->mass = randomfloat(seed, 1.0f, 1000.0f);
+  }
+
+  void calculate_force_float(struct body *a, struct body *b, float *returnvalue) {
+    float distancex = b->pos[0] - a->pos[0];
+    float signx = (distancex < 0.0f) ? -1.0f : 1.0f;
+    float distancey = b->pos[1] - a->pos[0];
+    float signy = (distancey < 0.0f) ? -1.0f : 1.0f;
+    float distancesquared = distancex * distancex + distancey * distancey;
+    float forcediag =
+        G * a->mass * b->mass / powf((distancesquared / 4.0f + EPS), 3.0f / 2.0f);
+    returnvalue[0] =
+        forcediag * signx * (distancex * distancex) / distancesquared;
+    returnvalue[1] =
+        forcediag * signy * (distancey * distancey) / distancesquared;
+  }
+
+  void updateforce_float(struct body *a, float forcex, float forcey, int dt) {
+    a->vel[0] += forcex / a->mass * dt;
+    a->vel[1] += forcey / a->mass * dt;
+  }
+
+  void updateforce_float2(struct body *a, float *force, int dt) {
+    a->vel[0] += force[0] / a->mass * dt;
+    a->vel[1] += force[1] / a->mass * dt;
+  }
+
+  void movebody(struct body *a, int dt) {
+    a->pos[0] += a->vel[0] * dt;
+    a->pos[1] += a->vel[1] * dt;
+  }
+
+  int main(int argc, char *argv[]) {
+    int N = 10000;
+    int T = 100;
+    if (argc == 3) {
+      N = atoi(argv[1]); // number of particles
+      T = atoi(argv[2]); // number of timesteps
+    }
+    srand(1);
+    struct body *bodyarray = malloc(sizeof(struct body) * N);
+  #pragma omp parallel
+    {
+      printf("number of threads =%d\n", omp_get_num_threads());
+      unsigned int seed = omp_get_thread_num();
+  #pragma omp for
+      for (int i = 0; i < N; ++i) {
+        randomize_body(&bodyarray[i], &seed);
+        if (DEBUGPRINT)
+          printbody(&bodyarray[i]);
+      }
+    }
+
+    float forceupdate[2];
+    for (int t = 0; t < T; ++t) {
+  #pragma omp parallel for
+      for (int i = 0; i < N; ++i) {
+        for (int j = i + 1; j < N; ++j) {
+          calculate_force_float(&bodyarray[i], &bodyarray[j], forceupdate);
+          if (DEBUGPRINT)
+            printf("force=(%f, %f)\n", forceupdate[0], forceupdate[1]);
+          updateforce_float2(&bodyarray[i], forceupdate, 1);
+          forceupdate[0] *= -1.0f;
+          forceupdate[1] *= -1.0f;
+          updateforce_float2(&bodyarray[j], forceupdate, 1);  //race condition possible
+        }
+      }
+  #pragma omp parallel for
+      for (int i = 0; i < N; ++i) {
+        movebody(&bodyarray[i], 1);
+      }
+    }
+    if (DEBUGPRINT) {
+      printf("****************\n");
+      for (int i = 0; i < N; ++i) {
+        printbody(&bodyarray[i]);
+      }
+    }
+
+    free(bodyarray);
+    return 0;
+  }
+
+#+end_src
+** Makefile
+All solutions were compiled with *-ffast-math* and *O2*.
+#+begin_src makefile :eval never-export
+  CC=gcc	
+  CC_FLAGS=-O2 -std=gnu99 -Wall -Wextra -pedantic -lm -g -ffast-math
+
+  .PHONEY: all
+  all: nbody_seq nbody_omp nbody_omp_race nbody_bhut
+
+  nbody_seq: nbody_seq.c
+    @$(CC) $(CC_FLAGS) $< -o nbody_seq
+
+  nbody_omp: nbody_omp.c
+    @$(CC) $(CC_FLAGS) $< -o nbody_omp -fopenmp
+
+  nbody_omp_race: nbody_omp_race.c
+    @$(CC) $(CC_FLAGS) $< -o nbody_omp_race -fopenmp
+
+  nbody_bhut: nbody_bhut.c
+    @$(CC) $(CC_FLAGS) $< -o nbody_bhut
+
+  .PHONEY: clean
+  clean:
+    @rm nbody_seq
+    @rm nbody_omp
+    @rm nbody_omp_race
+    @rm nbody_bhut
+
+  .PHONEY: run
+  run: all
+    @echo "seq:"
+    @./nbody_seq
+    @echo
+
+#+end_src
+** nbody.script
+Different problem sizes and timesteps were used to measure the wall time. The nbody_omp2 time are not displayed here because it is a solution for Exercise [[*Exercise 2]] and was renamed to nbody_bhut later.
+#+begin_src bash :eval never-export
+#!/bin/bash
+
+# Execute job in the queue "std.q" unless you have special requirements.
+#$ -q std.q
+
+# The batch system should use the current directory as working directory.
+#$ -cwd
+
+# Name your job. Unless you use the -o and -e options, output will
+# go to a unique file name.ojob_id for each job.
+#$ -N kopp_nbody_comparison
+
+##$ -M markus.kopp@student.uibk.ac.at
+##$ -m e
+
+# Join the error stream to the output stream.
+#$ -j yes
+
+#$ -pe openmp 8
+
+##module load openmpi/4.0.3
+
+N=10000
+T=1000
+for XN in 100, 500, 1000, 2000, 5000, 10000
+do
+    for XT in 1, 2, 5, 10, 20, 40, 50, 100
+    do
+        echo "nbody_seq with N=$XN and T=$XT"
+        perf stat -B -d ./nbody_seq $XN $XT
+        echo "--------------------"
+        for FILES in nbody_omp nbody_omp2 nbody_omp_race
+        do
+            for THREADS in {2..8..2};
+            do
+                echo "$FILES with N=$XN and T=$XT and THREADS=$THREADS"
+                OMP_NUM_THREADS=$THREADS perf stat -B -d ./$FILES $XN $XT
+                echo "--------------------"               
+            done
+        done
+    done
+done
+
+
+#+end_src
+** Results
+For almost every parallel solution and problem size the sequential version is still faster or as fast. The only solution I saw was that the sequential version is already reading from memory almost no cache misses and that's why it is always faster. This problem is memory bound and more threads can't bring any speedup.
+
+Here the output of the sequential program with almost zero cache misses.
+#+begin_example
+Performance counter stats for './nbody_seq 10000 100':
+
+        255,096.09 msec task-clock:u              #    1.000 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               193      page-faults:u             #    0.001 K/sec                  
+   630,024,700,370      cycles:u                  #    2.470 GHz                      (25.00%)
+   347,235,246,985      instructions:u            #    0.55  insn per cycle           (37.50%)
+    24,983,428,429      branches:u                #   97.937 M/sec                    (37.50%)
+     2,307,536,560      branch-misses:u           #    9.24% of all branches          (37.50%)
+   132,648,157,215      L1-dcache-loads:u         #  519.993 M/sec                    (25.00%)
+        53,081,260      L1-dcache-load-misses:u   #    0.04% of all L1-dcache hits    (25.00%)
+     1,525,468,746      LLC-loads:u               #    5.980 M/sec                    (25.00%)
+                56      LLC-load-misses:u         #    0.00% of all LL-cache hits     (25.00%)
+
+     255.099598575 seconds time elapsed
+
+     255.094559000 seconds user
+       0.003015000 seconds sys
+#+end_example
+
+For comparison the same problem size with the parallel programm with 8 Threads. Every speedup we could gain from the threads is lost by fetching floats from main memory and not from cache.
+#+begin_example
+Performance counter stats for './nbody_omp_race 10000 100':
+
+      3,383,660.69 msec task-clock:u              #    5.725 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               303      page-faults:u             #    0.000 K/sec                  
+ 8,344,206,543,553      cycles:u                  #    2.466 GHz                      (25.00%)
+   338,742,804,261      instructions:u            #    0.04  insn per cycle           (37.50%)
+    25,511,151,542      branches:u                #    7.540 M/sec                    (37.50%)
+     2,426,288,639      branch-misses:u           #    9.51% of all branches          (37.50%)
+   216,679,208,031      L1-dcache-loads:u         #   64.037 M/sec                    (25.00%)
+    10,690,414,335      L1-dcache-load-misses:u   #    4.93% of all L1-dcache hits    (25.00%)
+     4,959,291,735      LLC-loads:u               #    1.466 M/sec                    (25.00%)
+     2,064,375,602      LLC-load-misses:u         #   41.63% of all LL-cache hits     (25.00%)
+
+     591.045384257 seconds time elapsed
+
+    3383.548909000 seconds user
+       0.161963000 seconds sys
+#+end_example
+
+#+ATTR_LATEX: :width \textwidth :caption Execution time on lcc2 in seconds N=100
+| Timest. |   seq | omp 2thr. | omp 4thr. | omp 6thr. | omp 8thr. | race 2thr. | race 4thr. | race 6thr. | race 8thr. |
+|---------+-------+-----------+-----------+-----------+-----------+------------+------------+------------+------------|
+|       1 | 0.015 |     0.022 |     0.004 |     0.004 |     0.004 |      0.021 |      0.004 |      0.004 |      0.005 |
+|       2 | 0.003 |     0.005 |     0.005 |     0.005 |     0.021 |      0.004 |      0.004 |      0.005 |      0.006 |
+|       5 | 0.003 |     0.005 |     0.006 |     0.007 |     0.009 |      0.005 |      0.006 |      0.007 |      0.009 |
+|      10 | 0.005 |     0.007 |     0.013 |     0.010 |     0.017 |      0.007 |      0.008 |      0.011 |      0.014 |
+|      20 | 0.007 |     0.011 |     0.013 |     0.016 |     0.020 |      0.011 |      0.013 |      0.016 |      0.019 |
+|      40 | 0.012 |     0.019 |     0.022 |     0.028 |     0.031 |      0.016 |      0.022 |      0.027 |      0.039 |
+|      50 | 0.015 |     0.022 |     0.029 |     0.031 |     0.073 |      0.019 |      0.033 |      0.033 |      0.047 |
+|     100 | 0.027 |     0.044 |     0.049 |     0.071 |     0.068 |      0.033 |      0.051 |      0.064 |      0.081 |
+
+#+ATTR_LATEX: :width \textwidth :caption Execution time on lcc2 in seconds N=1000
+| Timest. |   seq | omp 2thr. | omp 4thr. | omp 6thr. | omp 8thr. | race 2thr. | race 4thr. | race 6thr. | race 8thr. |
+|---------+-------+-----------+-----------+-----------+-----------+------------+------------+------------+------------|
+|       1 | 0.027 |     0.089 |     0.043 |     0.070 |     0.109 |      0.030 |      0.052 |      0.046 |      0.053 |
+|       2 | 0.051 |     0.173 |     0.096 |     0.227 |     0.115 |      0.057 |      0.076 |      0.088 |      0.100 |
+|       5 | 0.123 |     0.174 |     0.233 |     0.240 |     0.297 |      0.185 |      0.176 |      0.287 |      0.241 |
+|      10 | 0.245 |     0.383 |     0.396 |     0.544 |     0.554 |      0.296 |      0.491 |      0.420 |      0.516 |
+|      20 | 0.492 |     0.764 |     0.791 |     1.202 |     1.091 |      0.534 |      0.963 |      0.839 |      1.259 |
+|      40 | 0.999 |     3.399 |     3.458 |     2.451 |     2.175 |      1.445 |      1.462 |      1.659 |      2.007 |
+|      50 | 1.255 |     3.690 |     2.319 |     3.274 |     2.922 |      1.327 |      1.727 |      2.723 |      2.357 |
+|     100 | 2.546 |     3.418 |     4.979 |     5.966 |     5.364 |      3.776 |      4.802 |      4.059 |      4.711 |
+
+#+ATTR_LATEX: :width \textwidth :caption Execution time on lcc2 in seconds N=10000
+| Timest. |     seq | omp 2thr. | omp 4thr. | omp 6thr. | omp 8thr. | race 2thr. | race 4thr. | race 6thr. | race 8thr. |
+|---------+---------+-----------+-----------+-----------+-----------+------------+------------+------------+------------|
+|       1 |   2.385 |     3.393 |     4.626 |     6.716 |    10.251 |      2.602 |      4.682 |      5.250 |      5.772 |
+|       2 |   4.788 |     7.537 |     9.243 |    10.452 |    10.755 |      5.202 |      6.625 |      7.915 |      9.748 |
+|       5 |  12.053 |    36.521 |    19.399 |    34.558 |    28.211 |     17.825 |     17.434 |     21.420 |     22.024 |
+|      10 |  24.471 |    37.563 |    39.313 |    54.086 |    99.233 |     26.257 |     32.838 |     39.752 |     58.938 |
+|      20 |  49.843 |    67.501 |    92.264 |   105.922 |   114.798 |     53.261 |     95.229 |     74.181 |     86.403 |
+|      40 | 101.018 |   150.239 |   185.173 |   185.894 |   231.193 |    103.566 |    193.323 |    154.762 |    179.734 |
+|      50 | 126.671 |   191.958 |   240.186 |   268.065 |   267.060 |    125.044 |    242.336 |    270.068 |    229.251 |
+|     100 | 255.100 |   382.308 |   391.895 |   542.655 |   571.806 |    266.299 |    356.710 |    387.136 |    591.045 |
+
+[[./graphs/n100nbody.png]]
+[[./graphs/n1000nbody.png]]
+[[./graphs/n10000nbody.png]]
+* Exercise 2
+I thought about combining stars for reducing the computational load. In my version there are no spatial patches or a tree like in Barnes Hut algorithm. It calculate a sum of all particles. The position is divided by the number of particles and mass is just summed up. So when calculating a particle force the particle itself is subtracted from the sum particle. With the position divided by number of particles and mass is just subtracted. This is then used to calculate the force. This is an approximation that diverges from the true nbody calculation. It is a reduction to complexity to O(n). This is only a sequential version that will have the same problems as the ones from the previous exercise that they will introduce cache misses.
+** nbody_bhut
+#+begin_src C :eval never-export
+  #include <math.h>
+  #include <omp.h>
+  #include <stdio.h>
+  #include <stdlib.h>
+
+  const int DEBUGPRINT = 0;
+  const float G = 1.0f;
+  const float EPS = 0.0001f;
+
+  struct body {
+    float pos[2];
+    float vel[2];
+    float mass;
+  };
+
+  void printbody(struct body *a) {
+    printf("pos=(%f, %f) vel=(%f, %f) mass=%f\n", a->pos[0], a->pos[1], a->vel[0],
+           a->vel[1], a->mass);
+  }
+
+  // random float between low and high
+  float randomfloat(unsigned int *seed, float low, float high) {
+    return (float)rand_r(seed) / (float)RAND_MAX * (high - low) + low;
+  }
+
+  void randomize_body(struct body *a, unsigned int *seed) {
+    a->pos[0] = randomfloat(seed, -1000.0f, 1000.0f);
+    a->pos[1] = randomfloat(seed, -1000.0f, 1000.0f);
+    a->vel[0] = randomfloat(seed, -1.0f, 1.0f);
+    a->vel[1] = randomfloat(seed, -1.0f, 1.0f);
+    a->mass = randomfloat(seed, 1.0f, 1000.0f);
+  }
+
+  void calculate_force_float(struct body *a, struct body *b, float *returnvalue) {
+    float distancex = b->pos[0] - a->pos[0];
+    float signx = (distancex < 0.0f) ? -1.0f : 1.0f;
+    float distancey = b->pos[1] - a->pos[0];
+    float signy = (distancey < 0.0f) ? -1.0f : 1.0f;
+    float distancesquared = distancex * distancex + distancey * distancey;
+    float forcediag =
+        G * a->mass * b->mass / powf((distancesquared / 4.0f + EPS), 3.0f / 2.0f);
+    returnvalue[0] =
+        forcediag * signx * (distancex * distancex) / distancesquared;
+    returnvalue[1] =
+        forcediag * signy * (distancey * distancey) / distancesquared;
+  }
+
+  void updateforce_float2(struct body *a, float *force, int dt) {
+    a->vel[0] += force[0] / a->mass * dt;
+    a->vel[1] += force[1] / a->mass * dt;
+  }
+
+  void movebody(struct body *a, int dt) {
+    a->pos[0] += a->vel[0] * dt;
+    a->pos[1] += a->vel[1] * dt;
+  }
+
+  int main(int argc, char *argv[]) {
+    int N = 10000;
+    int T = 100;
+    if (argc == 3) {
+      N = atoi(argv[1]); // number of particles
+      T = atoi(argv[2]); // number of timesteps
+    }
+    srand(1);
+    struct body *bodyarray = malloc(sizeof(struct body) * N);
+    {
+      unsigned int seed = 1;
+      for (int i = 0; i < N; ++i) {
+        randomize_body(&bodyarray[i], &seed);
+        if (DEBUGPRINT)
+          printbody(&bodyarray[i]);
+      }
+    }
+
+    struct body sum = {{0.0f, 0.0f}, {0.0f, 0.0f}, 0.0f};
+    for (int i = 0; i < N; ++i) {
+      sum.pos[0] += bodyarray[i].pos[0];
+      sum.pos[1] += bodyarray[i].pos[1];
+      sum.mass += bodyarray[i].mass;
+    }
+    sum.pos[0] = sum.pos[0] / N;
+    sum.pos[1] = sum.pos[1] / N;
+
+    float forceupdate[2];
+    for (int t = 0; t < T; ++t) {
+      for (int i = 0; i < N; ++i) {
+        struct body comparison;
+        comparison.pos[0] = sum.pos[0] - bodyarray[i].pos[0] / N;
+        comparison.pos[1] = sum.pos[1] - bodyarray[i].pos[1] / N;
+        comparison.mass = sum.mass - bodyarray[i].mass;
+        calculate_force_float(&bodyarray[i], &comparison, forceupdate);
+        if (DEBUGPRINT)
+          printf("force=(%f, %f)\n", forceupdate[0], forceupdate[1]);
+      }
+      sum.pos[0] = 0.0f;
+      sum.pos[1] = 0.0f;
+      for (int i = 0; i < N; ++i) {
+        movebody(&bodyarray[i], 1);
+        sum.pos[0] += bodyarray[i].pos[0];
+        sum.pos[1] += bodyarray[i].pos[1];
+      }
+      sum.pos[0] = sum.pos[0] / N;
+      sum.pos[1] = sum.pos[1] / N;
+    }
+    if (DEBUGPRINT) {
+      printf("****************\n");
+      for (int i = 0; i < N; ++i) {
+        printbody(&bodyarray[i]);
+      }
+    }
+
+    free(bodyarray);
+    return 0;
+  }
+
+#+end_src
+** Drifting
+When comparing the old version that calculates without the use of a sum particle we can see that the difference when staying below a certain number of timesteps in negligible. The comparison is done with only 10 particles and different timesteps. The approcimation is ok for the 100 timesteps we use in the benchmark but starts to drift very strongly at increasing timesteps.
+#+ATTR_LATEX: :width \textwidth :caption nbody\_omp 10 100 Timesteps
+| Position                        | Velocity                   | Mass            |
+|---------------------------------+----------------------------+-----------------|
+| pos=(-932.086548, 520.446655)   | vel=(0.670146, -0.785674)  | mass=763.442322 |
+| pos=(369.133911, *-110.031548*) | vel=(1.000914, 0.341277)   | mass=334.314575 |
+| pos=(-549.063416, 85.276955)    | vel=(-0.508456, -0.325991) | mass=543.801086 |
+| pos=(-608.744385, 204.031876)   | vel=(-0.525432, 0.993484)  | mass=435.926666 |
+| pos=(118.472481, -441.524170)   | vel=(-0.138003, 0.093368)  | mass=418.660217 |
+| pos=(754.914001, *527.992371*)  | vel=(-0.545447, -0.585708) | mass=666.526672 |
+| pos=(-85.641548, -311.977356)   | vel=(0.273600, 0.760150)   | mass=107.434914 |
+| pos=(68.991287, -773.740601)    | vel=(0.726101, -0.149335)  | mass=502.517578 |
+| pos=(239.546631, -828.228149)   | vel=(-0.923988, 0.542450)  | mass=779.919250 |
+| pos=(-181.578644, *893.947144*) | vel=(-0.410527, -0.396910) | mass=586.863220 |
+
+#+ATTR_LATEX: :width \textwidth :caption nbody\_bhut 10 100 Timesteps
+| Position                        | Velocity                   | Mass            |
+|---------------------------------+----------------------------+-----------------|
+| pos=(-932.138123, 520.426270)   | vel=(0.669218, -0.786158)  | mass=763.442322 |
+| pos=(369.104614, *-109.863098*) | vel=(0.999536, 0.344266)   | mass=334.314575 |
+| pos=(-549.304749, 85.113251)    | vel=(-0.512970, -0.329170) | mass=543.801086 |
+| pos=(-608.936646, 203.898926)   | vel=(-0.529057, 0.990903)  | mass=435.926666 |
+| pos=(118.460144, -441.111816)   | vel=(-0.138658, 0.100928)  | mass=418.660217 |
+| pos=(754.956177, *530.371460*)  | vel=(-0.544551, -0.538760) | mass=666.526672 |
+| pos=(-85.640350, -311.550293)   | vel=(0.273645, 0.768941)   | mass=107.434914 |
+| pos=(68.891602, -773.431702)    | vel=(0.724127, -0.143387)  | mass=502.517578 |
+| pos=(239.510712, -828.074646)   | vel=(-0.924629, 0.546003)  | mass=779.919250 |
+| pos=(-181.654358, *894.440674*) | vel=(-0.413089, -0.385748) | mass=586.863220 |
+
+
+#+ATTR_LATEX: :width \textwidth :caption nbody\_omp 10 200 Timesteps
+| Position                          | Velocity                   | Mass            |
+|-----------------------------------+----------------------------+-----------------|
+| pos=(-865.036682, 441.945221)     | vel=(0.671151, -0.784692)  | mass=763.442322 |
+| pos=(469.796661, -76.011108)      | vel=(1.017737, 0.339325)   | mass=334.314575 |
+| pos=(-599.723022, 52.822430)      | vel=(-0.504875, -0.323176) | mass=543.801086 |
+| pos=(-661.122192, 303.485992)     | vel=(-0.522289, 0.995577)  | mass=435.926666 |
+| pos=(104.756264, -432.433777)     | vel=(-0.136352, 0.088644)  | mass=418.660217 |
+| pos=(700.311829, 467.150574)      | vel=(-0.546489, -0.629984) | mass=666.526672 |
+| pos=(-58.297916, -236.923096)     | vel=(0.273572, 0.742570)   | mass=107.434914 |
+| pos=(141.717194, -788.955750)     | vel=(0.728072, -0.154260)  | mass=502.517578 |
+| pos=(147.220139, -774.223572)     | vel=(-0.922389, 0.537779)  | mass=779.919250 |
+| pos=(*-221.811844*, *853.770935*) | vel=(-0.391568, -0.404283) | mass=586.863220 |
+
+#+ATTR_LATEX: :width \textwidth :caption nbody\_bhut 10 200 Timesteps
+| Position                          | Velocity                   | Mass            |
+|-----------------------------------+----------------------------+-----------------|
+| pos=(-865.219177, 441.810242)     | vel=(0.669218, -0.786158)  | mass=763.442322 |
+| pos=(469.058838, -75.436218)      | vel=(0.999536, 0.344266)   | mass=334.314575 |
+| pos=(-600.604797, 52.196228)      | vel=(-0.512970, -0.329170) | mass=543.801086 |
+| pos=(-661.841919, 302.989502)     | vel=(-0.529057, 0.990903)  | mass=435.926666 |
+| pos=(104.594482, -431.019653)     | vel=(-0.138658, 0.100928)  | mass=418.660217 |
+| pos=(700.500610, 476.495728)      | vel=(-0.544551, -0.538760) | mass=666.526672 |
+| pos=(-58.276001, -234.655579)     | vel=(0.273645, 0.768941)   | mass=107.434914 |
+| pos=(141.304337, -787.768860)     | vel=(0.724127, -0.143387)  | mass=502.517578 |
+| pos=(147.047028, -773.472595)     | vel=(-0.924629, 0.546003)  | mass=779.919250 |
+| pos=(*-222.962952*, *855.866455*) | vel=(-0.413089, -0.385748) | mass=586.863220 |
+
+
+#+ATTR_LATEX: :width \textwidth :caption nbody\_omp 10 400 Timesteps
+| Position                          | Velocity                   | Mass            |
+|-----------------------------------+----------------------------+-----------------|
+| pos=(-730.363586, 284.946655)     | vel=(0.675194, -0.783667)  | mass=763.442322 |
+| pos=(681.533447, -14.651668)      | vel=(1.069980, 0.270262)   | mass=334.314575 |
+| pos=(*-700.039001*, *-11.273724*) | vel=(-0.498425, -0.317969) | mass=543.801086 |
+| pos=(-764.939880, 502.847809)     | vel=(-0.516566, 0.998490)  | mass=435.926666 |
+| pos=(77.702080, -415.809814)      | vel=(-0.135491, 0.075116)  | mass=418.660217 |
+| pos=(590.789490, 333.376678)      | vel=(-0.548765, -0.705179) | mass=666.526672 |
+| pos=(-3.894115, -95.044853)       | vel=(0.272082, 0.634897)   | mass=107.434914 |
+| pos=(288.046661, -820.360413)     | vel=(0.739105, -0.159330)  | mass=502.517578 |
+| pos=(-37.014954, -668.862610)     | vel=(-0.916952, 0.470268)  | mass=779.919250 |
+| pos=(*-297.668121*, *772.726929*) | vel=(-0.371405, -0.405765) | mass=586.863220 |
+
+
+#+ATTR_LATEX: :width \textwidth :caption nbody\_bhut 10 400 Timesteps
+| Position                          | Velocity                   | Mass            |
+|-----------------------------------+----------------------------+-----------------|
+| pos=(-731.381287, 284.577576)     | vel=(0.669218, -0.786158)  | mass=763.442322 |
+| pos=(668.962463, -6.582981)       | vel=(0.999536, 0.344266)   | mass=334.314575 |
+| pos=(*-703.204895*, *-13.637823*) | vel=(-0.512970, -0.329170) | mass=543.801086 |
+| pos=(-767.652466, 501.170654)     | vel=(-0.529057, 0.990903)  | mass=435.926666 |
+| pos=(76.863159, -410.835327)      | vel=(-0.138658, 0.100928)  | mass=418.660217 |
+| pos=(591.589478, 368.744263)      | vel=(-0.544551, -0.538760) | mass=666.526672 |
+| pos=(-3.547104, -80.867874)       | vel=(0.273645, 0.768941)   | mass=107.434914 |
+| pos=(286.128571, -816.443176)     | vel=(0.724127, -0.143387)  | mass=502.517578 |
+| pos=(-37.878971, -664.268494)     | vel=(-0.924629, 0.546003)  | mass=779.919250 |
+| pos=(*-305.580139*, *778.718018*) | vel=(-0.413089, -0.385748) | mass=586.863220 |
+
+#+ATTR_LATEX: :width \textwidth :caption nbody\_omp 10 800 Timesteps
+| Position                       | Velocity                   | Mass            |
+|--------------------------------+----------------------------+-----------------|
+| pos=(*-449.928436*, -26.479549) | vel=(0.850296, -0.789761)  | mass=763.442322 |
+| pos=(1109.265503, 90.064415)   | vel=(1.067583, 0.256813)   | mass=334.314575 |
+| pos=(-897.055786, -136.710571) | vel=(-0.487452, -0.308940) | mass=543.801086 |
+| pos=(-970.556580, 903.565735)  | vel=(-0.509689, 1.006397)  | mass=435.926666 |
+| pos=(33.372654, -484.790588)   | vel=(-0.000018, -0.489371) | mass=418.660217 |
+| pos=(370.356018, 30.635359)    | vel=(-0.553577, -0.796892) | mass=666.526672 |
+| pos=(110.556030, -28.445343)   | vel=(0.302157, -0.137609)  | mass=107.434914 |
+| pos=(*600.550537*, -898.118896) | vel=(0.790322, -0.223260)  | mass=502.517578 |
+| pos=(*-357.075592*, -505.042175) | vel=(-0.780320, 0.317961)  | mass=779.919250 |
+| pos=(*-433.126434*, 599.829468) | vel=(-0.204167, -0.551751) | mass=586.863220 |
+
+#+ATTR_LATEX: :width \textwidth :caption nbody\_bhut 10 800 Timesteps
+| Position                        | Velocity                   | Mass            |
+|---------------------------------+----------------------------+-----------------|
+| pos=(*-463.703278*, -29.886560) | vel=(0.669218, -0.786158)  | mass=763.442322 |
+| pos=(1068.767212, 131.123901)  | vel=(0.999536, 0.344266)   | mass=334.314575 |
+| pos=(-908.405090, -145.306320) | vel=(-0.512970, -0.329170) | mass=543.801086 |
+| pos=(-979.273560, 897.532959)  | vel=(-0.529057, 0.990903)  | mass=435.926666 |
+| pos=(21.400513, -370.466675)   | vel=(-0.138658, 0.100928)  | mass=418.660217 |
+| pos=(373.767212, 153.241333)   | vel=(-0.544551, -0.538760) | mass=666.526672 |
+| pos=(105.910538, 226.708176)   | vel=(0.273645, 0.768941)   | mass=107.434914 |
+| pos=(*575.777039*, -873.791809) | vel=(0.724127, -0.143387)  | mass=502.517578 |
+| pos=(*-407.730469*, -445.864014) | vel=(-0.924629, 0.546003)  | mass=779.919250 |
+| pos=(*-470.814514*, 624.421143) | vel=(-0.413089, -0.385748) | mass=586.863220 |
+** Results
+The wall time is so good that I didn't consider putting it into the online document for comparison. It's almost like a bit to much cheating
+
+#+ATTR_LATEX: :width \textwidth :caption Execution time on lcc2 in seconds N=100
+| Timesteps | nbody_seq | nbody_bhut |
+|-----------+-----------+------------|
+|         1 |     0.015 |      0.024 |
+|         2 |     0.003 |      0.003 |
+|         5 |     0.003 |      0.003 |
+|        10 |     0.005 |      0.004 |
+|        20 |     0.007 |      0.004 |
+|        40 |     0.012 |      0.004 |
+|        50 |     0.015 |      0.005 |
+|       100 |     0.027 |      0.005 |
+
+#+ATTR_LATEX: :width \textwidth :caption Execution time on lcc2 in seconds N=1000
+| Timesteps | nbody_seq | nbody_bhut |
+|-----------+-----------+------------|
+|         1 |     0.027 |      0.004 |
+|         2 |     0.051 |      0.004 |
+|         5 |     0.123 |      0.005 |
+|        10 |     0.245 |      0.004 |
+|        20 |     0.492 |      0.005 |
+|        40 |     0.999 |      0.008 |
+|        50 |     1.255 |      0.010 |
+|       100 |     2.546 |      0.015 |
+
+#+ATTR_LATEX: :width \textwidth :caption Execution time on lcc2 in seconds N=10000
+| Timesteps | nbody_seq | nbody_bhut |
+|-----------+-----------+------------|
+|         1 |     2.385 |      0.006 |
+|         2 |     4.788 |      0.007 |
+|         5 |    12.053 |      0.010 |
+|        10 |    24.471 |      0.009 |
+|        20 |    49.843 |      0.028 |
+|        40 |   101.018 |      0.048 |
+|        50 |   126.671 |      0.024 |
+|       100 |   255.100 |      0.116 |
+
+[[./graphs/N100bhut.png]]
+[[./graphs/N1000bhut.png]]
+[[./graphs/N10000bhut.png]]

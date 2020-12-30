@@ -1,0 +1,795 @@
+#+options: ':nil *:t -:t ::t <:t H:3 \n:t ^:nil arch:headline
+#+options: author:t broken-links:nil c:nil creator:nil
+#+options: d:(not "LOGBOOK") date:t e:t email:t f:t inline:t num:t
+#+options: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+options: timestamp:t title:t toc:t todo:t |:t
+#+options: center:nil
+#+title: Assignment 4
+#+author: Markus Kopp
+#+email: markus.kopp@student.uibk.ac.at
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 28.0.50 (Org mode 9.4)
+
+#+latex_class: scrartcl
+#+latex_class_options:
+#+latex_header: \usepackage[margin=0.5in]{geometry}
+#+latex_header_extra:
+#+description:
+#+keywords:
+#+subtitle:
+#+latex_compiler: pdflatex
+#+date: \today
+
+* Exercise 01
+OpenMP implementation was used with different #pragma commands and also with once accumulating the final int value with points inside the circle and once with calculating the mean value of pi that every thread calculated. Changes from the old version were that the random number generator had to be changed to *rand_r* to make it work with multiple threads and have a speedup. For splitting up the for part when there is a remainder it is mentioned but no action is taken.
+
+** pi_omp_atomic
+using the atomic pragma to sum up the localin int values. the for loop was split up by number of threads
+#+begin_src C :eval never-export
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <omp.h>
+  #include <time.h>
+
+  //random float between -1 and +1
+  float RandomNumber(unsigned int* seed)
+  {
+    return (float)rand_r(seed)/(float)RAND_MAX * 2.0f - 1.0;
+  }
+
+  int main(int argc, char *argv[])
+  {
+    // 'parsing' optional input parameter = problem size
+    long SIZE = 20000;
+    if (argc > 1) {
+      SIZE = atol(argv[1]);
+    }
+    long in = 0;
+    long out = 0;
+    long numthreads;
+  #pragma omp parallel
+    {
+      long localin = 0;
+      long localout = 0;
+      numthreads = omp_get_num_threads();
+      long chunk = SIZE/numthreads;
+      unsigned int seed = omp_get_thread_num();
+      srand(time(NULL)+omp_get_thread_num());
+      for (long i = 0; i < chunk; ++i) {
+        float x = RandomNumber(&seed);
+        float y = RandomNumber(&seed);
+        ((x * x + y * y) < 1.0f) ? localin++ : localout++;
+      }
+  #pragma omp atomic
+      in +=localin;
+  #pragma omp atomic
+      out +=localout;
+    }
+
+    printf("inside=%ld outside=%ld total=%ld numberofthreads=%ld\n", in ,out, SIZE, numthreads);
+    printf("%f\n", (double)in/(double)(SIZE)*4.0);
+    if (in + out != SIZE){
+      printf("sum of in and out not adding up to SIZE\n");
+    }
+    return EXIT_SUCCESS;
+  }
+
+#+end_src
+
+** pi_omp_atomic_float
+Also using the atomic pragma but each thread calculates a local pi that is averaged at the end.
+#+begin_src C :eval never-export
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <omp.h>
+  #include <time.h>
+
+  //random float between -1 and +1
+  float RandomNumber(unsigned int* seed)
+  {
+    return (float)rand_r(seed)/(float)RAND_MAX * 2.0f - 1.0;
+  }
+
+  int main(int argc, char *argv[])
+  {
+    // 'parsing' optional input parameter = problem size
+    long SIZE = 20000;
+    if (argc > 1) {
+      SIZE = atol(argv[1]);
+    }
+    float pi = 0;
+    long numthreads;
+  #pragma omp parallel
+    {
+      long localin = 0;
+      long localout = 0;
+      float localpi = 0;
+      numthreads = omp_get_num_threads();
+      long chunk = SIZE/numthreads;
+      srand(time(NULL)+omp_get_thread_num());
+      unsigned int seed = omp_get_thread_num();
+      for (long i = 0; i < chunk; ++i) {
+        float x = RandomNumber(&seed);
+        float y = RandomNumber(&seed);
+        ((x * x + y * y) < 1.0f) ? localin++ : localout++;
+      }
+      localpi = (float)localin/(float)chunk*4.0;
+  #pragma omp atomic
+      pi +=localpi/numthreads;
+    }
+
+    printf("numberofthreads=%ld\n", numthreads);
+    printf("%f\n", pi);
+    return EXIT_SUCCESS;
+  }
+
+#+end_src
+
+** pi_omp_critical
+Implement a critical region that does the summing up part.
+#+begin_src C :eval never-export
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <omp.h>
+  #include <time.h>
+
+  //random float between -1 and +1
+  float RandomNumber(unsigned int* seed)
+  {
+    return (float)rand_r(seed)/(float)RAND_MAX * 2.0f - 1.0;
+  }
+
+  int main(int argc, char *argv[])
+  {
+    // 'parsing' optional input parameter = problem size
+    long SIZE = 20000;
+    if (argc > 1) {
+      SIZE = atol(argv[1]);
+    }
+    long in = 0;
+    long out = 0;
+    long numthreads;
+  #pragma omp parallel
+    {
+      long localin = 0;
+      long localout = 0;
+      numthreads = omp_get_num_threads();
+      long chunk = SIZE/numthreads;
+      srand(time(NULL)+omp_get_thread_num());
+      unsigned int seed = omp_get_thread_num();
+      for (long i = 0; i < chunk; ++i) {
+        float x = RandomNumber(&seed);
+        float y = RandomNumber(&seed);
+        ((x * x + y * y) < 1.0f) ? localin++ : localout++;
+      }
+      #pragma omp critical
+      {
+      in +=localin;
+      out +=localout;
+      }
+    }
+
+    printf("inside=%ld outside=%ld total=%ld numberofthreads=%ld\n", in ,out, SIZE, numthreads);
+    printf("%f\n", (double)in/(double)(SIZE)*4.0);
+    if (in + out != SIZE){
+      printf("sum of in and out not adding up to SIZE\n");
+    }
+    return EXIT_SUCCESS;
+  }
+
+#+end_src
+
+** pi_omp_critical_float
+Same as before but with a critical region for the average pi.
+#+begin_src C :eval never-export
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <omp.h>
+  #include <time.h>
+
+  //random float between -1 and +1
+  float RandomNumber(unsigned int* seed)
+  {
+    return (float)rand_r(seed)/(float)RAND_MAX * 2.0f - 1.0;
+  }
+
+  int main(int argc, char *argv[])
+  {
+    // 'parsing' optional input parameter = problem size
+    long SIZE = 20000;
+    if (argc > 1) {
+      SIZE = atol(argv[1]);
+    }
+    float pi = 0;
+    long numthreads;
+  #pragma omp parallel
+    {
+      long localin = 0;
+      long localout = 0;
+      float localpi = 0;
+      numthreads = omp_get_num_threads();
+      long chunk = SIZE/numthreads;
+      srand(time(NULL)+omp_get_thread_num());
+      unsigned int seed = omp_get_thread_num();
+      for (long i = 0; i < chunk; ++i) {
+        float x = RandomNumber(&seed);
+        float y = RandomNumber(&seed);
+        ((x * x + y * y) < 1.0f) ? localin++ : localout++;
+      }
+      localpi = (float)localin/(float)chunk*4.0;
+  #pragma omp critical
+      {
+      pi +=localpi/numthreads;
+      }
+    }
+
+    printf("numberofthreads=%ld\n", numthreads);
+    printf("%f\n", pi);
+    return EXIT_SUCCESS;
+  }
+
+#+end_src
+
+** pi_omp_reduction
+A reduction is done in the parallel part that also splits up the for loop for the umber of threads. Here no remainder is happening because openMP is handling it.
+#+begin_src C :eval never-export
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <omp.h>
+  #include <time.h>
+
+  //random float between -1 and +1
+  float RandomNumber(unsigned int* seed)
+  {
+    return (float)rand_r(seed)/(float)RAND_MAX * 2.0f - 1.0;
+  }
+
+  int main(int argc, char *argv[])
+  {
+    // 'parsing' optional input parameter = problem size
+    long SIZE = 20000;
+    if (argc > 1) {
+      SIZE = atol(argv[1]);
+    }
+    long in = 0;
+    long out = 0;
+  #pragma omp parallel for reduction(+:in,out)
+    for (long i = 0; i < SIZE; ++i) {
+      unsigned int seed = omp_get_thread_num();
+      float x = RandomNumber(&seed);
+      float y = RandomNumber(&seed);
+      ((x * x + y * y) < 1.0f) ? in++ : out++;
+    }
+
+    printf("inside=%ld outside=%ld total=%ld\n", in ,out, SIZE);
+    printf("%f\n", (double)in/(double)(SIZE)*4.0);
+    if (in + out != SIZE){
+      printf("sum of in and out not adding up to SIZE\n");
+    }
+    return EXIT_SUCCESS;
+  }
+
+#+end_src
+
+** pi_omp_reduction_float
+localin is used again to calculate localpi and reduce on pi at the end.
+#+begin_src C :eval never-export
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <omp.h>
+  #include <time.h>
+
+  //random float between -1 and +1
+  float RandomNumber(unsigned int* seed)
+  {
+    return (float)rand_r(seed)/(float)RAND_MAX * 2.0f - 1.0;
+  }
+
+  int main(int argc, char *argv[])
+  {
+    // 'parsing' optional input parameter = problem size
+    long SIZE = 20000;
+    if (argc > 1) {
+      SIZE = atol(argv[1]);
+    }
+    long numthreads;
+    float pi = 0;
+  #pragma omp parallel reduction(+:pi)
+    {
+      long localin = 0;
+      long localout = 0;
+      float localpi;
+      numthreads = omp_get_num_threads();
+      srand(time(NULL)+omp_get_thread_num());
+      #pragma omp for
+      for (long i = 0; i < SIZE; ++i) {
+        unsigned int seed = omp_get_thread_num()+i*i;
+        float x = RandomNumber(&seed);
+        float y = RandomNumber(&seed);
+        ((x * x + y * y) < 1.0f) ? localin++ : localout++;
+      }
+      localpi = (float)localin/(float)(SIZE/numthreads)*4.0;
+      printf("localpi %f\n", localpi);
+      pi+=localpi/numthreads;
+    }
+
+    printf("numberofthreads=%ld\n", numthreads);
+    printf("%f\n", pi);
+    return EXIT_SUCCESS;
+  }
+
+#+end_src
+
+** pi_omp_reduction2
+A different version without using the *for* pragma.
+#+begin_src C :eval never-export
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <omp.h>
+  #include <time.h>
+
+  //random float between -1 and +1
+  float RandomNumber(unsigned int* seed)
+  {
+    return (float)rand_r(seed)/(float)RAND_MAX * 2.0f - 1.0;
+  }
+
+  int main(int argc, char *argv[])
+  {
+    // 'parsing' optional input parameter = problem size
+    long SIZE = 20000;
+    if (argc > 1) {
+      SIZE = atol(argv[1]);
+    }
+    long in = 0;
+    long out = 0;
+    long numthreads;
+  #pragma omp parallel reduction(+:in,out)
+    {
+      long localin = 0;
+      long localout = 0;
+      numthreads = omp_get_num_threads();
+      long chunk = SIZE/numthreads;
+      srand(time(NULL)+omp_get_thread_num());
+      unsigned int seed = omp_get_thread_num();
+      float x,y;
+      for (long i = 0; i < chunk; ++i) {
+        x = RandomNumber(&seed);
+        y = RandomNumber(&seed);
+        ((x * x + y * y) < 1.0f) ? localin++ : localout++;
+      }
+      in +=localin;
+      out +=localout;
+    }
+
+    printf("inside=%ld outside=%ld total=%ld numberofthreads=%ld\n", in ,out, SIZE, numthreads);
+    printf("%f\n", (double)in/(double)(SIZE)*4.0);
+    if (in + out != SIZE){
+      printf("sum of in and out not adding up to SIZE\n");
+    }
+    return EXIT_SUCCESS;
+  }
+
+#+end_src
+
+
+** pi_omp_reduction2_float
+Also without *for* pragma but done with intermediate float pi values.
+#+begin_src C :eval never-export
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <omp.h>
+  #include <time.h>
+
+  //random float between -1 and +1
+  float RandomNumber(unsigned int* seed)
+  {
+    return (float)rand_r(seed)/(float)RAND_MAX * 2.0f - 1.0;
+  }
+
+  int main(int argc, char *argv[])
+  {
+    // 'parsing' optional input parameter = problem size
+    long SIZE = 20000;
+    if (argc > 1) {
+      SIZE = atol(argv[1]);
+    }
+    long numthreads;
+    float pi = 0;
+  #pragma omp parallel reduction(+:pi)
+    {
+      long localin = 0;
+      long localout = 0;
+      float localpi;
+      numthreads = omp_get_num_threads();
+      long chunk = SIZE/numthreads;
+      srand(time(NULL)+omp_get_thread_num());
+      unsigned int seed = omp_get_thread_num();
+      for (long i = 0; i < chunk; ++i) {
+        float x = RandomNumber(&seed);
+        float y = RandomNumber(&seed);
+        ((x * x + y * y) < 1.0f) ? localin++ : localout++;
+      }
+      localpi = (float)localin/(float)chunk*4.0;
+      printf("localpi %f\n", localpi);
+      pi+=localpi/numthreads;
+    }
+
+    printf("numberofthreads=%ld\n", numthreads);
+    printf("%f\n", pi);
+    return EXIT_SUCCESS;
+  }
+
+#+end_src
+
+** pi.script
+running all the programs with a fixed 10^8 samples.
+#+begin_src bash :eval never-export
+  #!/bin/bash
+
+  # Execute job in the queue "std.q" unless you have special requirements.
+  #$ -q std.q
+
+  # The batch system should use the current directory as working directory.
+  #$ -cwd
+
+  # Name your job. Unless you use the -o and -e options, output will
+  # go to a unique file name.ojob_id for each job.
+  #$ -N kopp_pi
+
+  ##$ -M markus.kopp@student.uibk.ac.at
+  ##$ -m e
+
+  # Join the error stream to the output stream.
+  #$ -j yes
+
+  #$ -pe openmp 8
+
+  ##module load openmpi/4.0.3
+
+  N=100000000
+  echo "pi_seq for comparision with N=$N"
+  time ./pi_seq $N
+  echo "--------------------"
+  for FILE in pi_omp_atomic pi_omp_atomic_float pi_omp_critical pi_omp_critical_float pi_omp_reduction pi_omp_reduction_float pi_omp_reduction2 pi_omp_reduction2_float 
+  do
+      for X in {1..8}; do
+          echo "$FILE test with threads=$X and N=$N"
+          time OMP_NUM_THREADS=$X ./$FILE $N
+          echo "--------------------"
+      done
+  done
+
+#+end_src
+
+** Results
+=*= is uses as placeholder for left name in column
+#+ATTR_LATEX: :width \textwidth :caption Execution time
+| Threads | atomic | *_float | critical | *_float | reduction | *_float | reduction2 | *_float | pi_seq |
+|---------+--------+---------+----------+---------+-----------+---------+------------+---------+--------|
+|       1 |  2.167 |   1.615 |     2.17 |   1.629 |     2.308 |   1.841 |       2.18 |   1.608 |  3.059 |
+|       2 |  1.082 |   0.802 |    1.082 |   0.802 |     1.142 |   0.917 |      1.081 |   0.801 |  3.059 |
+|       3 |  0.722 |   0.536 |    0.723 |   0.535 |     0.762 |   0.611 |      0.723 |   0.535 |  3.059 |
+|       4 |  0.542 |   0.403 |    0.542 |   0.402 |     0.572 |    0.46 |      0.543 |   0.402 |  3.059 |
+|       5 |  0.435 |   0.323 |    0.435 |   0.323 |     0.459 |   0.368 |      0.435 |   0.323 |  3.059 |
+|       6 |  0.363 |    0.27 |    0.364 |   0.269 |     0.383 |   0.308 |      0.363 |    0.27 |  3.059 |
+|       7 |  0.313 |   0.232 |    0.313 |   0.233 |      0.33 |   0.265 |      0.313 |   0.232 |  3.059 |
+|       8 |   0.28 |   0.219 |    0.292 |   0.205 |     0.289 |   0.232 |      0.282 |   0.205 |  3.059 |
+
+#+ATTR_LATEX: :width \textwidth :caption Speedup
+| Threads | atomic | *_float | critical | *_float | reduction | *_float | reduction2 | *_float | pi_seq |
+|---------+--------+---------+----------+---------+-----------+---------+------------+---------+--------|
+|       1 |  1.412 |   1.894 |    1.410 |   1.878 |     1.325 |   1.662 |      1.403 |   1.902 |  1.000 |
+|       2 |  2.827 |   3.814 |    2.827 |   3.814 |     2.679 |   3.336 |      2.830 |   3.819 |  1.000 |
+|       3 |  4.237 |   5.707 |    4.231 |   5.718 |     4.014 |   5.007 |      4.231 |   5.718 |  1.000 |
+|       4 |  5.644 |   7.591 |    5.644 |   7.609 |     5.348 |   6.650 |      5.634 |   7.609 |  1.000 |
+|       5 |  7.032 |   9.471 |    7.032 |   9.471 |     6.664 |   8.313 |      7.032 |   9.471 |  1.000 |
+|       6 |  8.427 |  11.330 |    8.404 |  11.372 |     7.987 |   9.932 |      8.427 |  11.330 |  1.000 |
+|       7 |  9.773 |  13.185 |    9.773 |  13.129 |     9.270 |  11.543 |      9.773 |  13.185 |  1.000 |
+|       8 | 10.925 |  13.968 |   10.476 |  14.922 |    10.585 |  13.185 |     10.848 |  14.922 |  1.000 |
+
+#+ATTR_LATEX: :width \textwidth :caption Efficiency
+| Threads | atomic | *_float | critical | *_float | reduction | *_float | reduction2 | *_float | pi_seq |
+|---------+--------+---------+----------+---------+-----------+---------+------------+---------+--------|
+|       1 |  1.412 |   1.894 |    1.410 |   1.878 |     1.325 |   1.662 |      1.403 |   1.902 |  1.000 |
+|       2 |  1.414 |   1.907 |    1.414 |   1.907 |     1.339 |   1.668 |      1.415 |   1.909 |  1.000 |
+|       3 |  1.412 |   1.902 |    1.410 |   1.906 |     1.338 |   1.669 |      1.410 |   1.906 |  1.000 |
+|       4 |  1.411 |   1.898 |    1.411 |   1.902 |     1.337 |   1.663 |      1.408 |   1.902 |  1.000 |
+|       5 |  1.406 |   1.894 |    1.406 |   1.894 |     1.333 |   1.663 |      1.406 |   1.894 |  1.000 |
+|       6 |  1.404 |   1.888 |    1.401 |   1.895 |     1.331 |   1.655 |      1.404 |   1.888 |  1.000 |
+|       7 |  1.396 |   1.884 |    1.396 |   1.876 |     1.324 |   1.649 |      1.396 |   1.884 |  1.000 |
+|       8 |  1.366 |   1.746 |    1.310 |   1.865 |     1.323 |   1.648 |      1.356 |   1.865 |  1.000 |
+
+[[./graph/pi_time.png]]
+[[./graph/pi_speedup.png]]
+[[./graph/pi_efficiency.png]]
+
+* Exercise 02
+The for loop was extended with the omp pragma for the for loop. Time measurement was changed to calls in the code itself. As there is no need to have atomic operations or a critical part in the code only one solution was tested.
+
+** heat_stencil_omp
+#+begin_src C :eval never-export
+  //some parts are copied from our old solutions in parallel openCL course https://git.uibk.ac.at/csat2062/parallel_local
+
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <time.h>
+
+  typedef double value_t;
+
+  #define RESOLUTION 120
+
+  // -- vector utilities --
+
+  typedef value_t *Vector;
+
+  Vector createVector(int N, int M);
+
+  void releaseVector(Vector m);
+
+  void printTemperature(Vector m, int N, int M);
+
+  // -- simulation code ---
+
+  int main(int argc, char **argv) {
+    // 'parsing' optional input parameter = problem size
+    int N = 1000;
+    int M = 1000;
+    if (argc == 3) {
+      N = atoi(argv[1]);
+      M = atoi(argv[2]);
+    }
+    int T = 100;
+    printf("Computing heat-distribution for room size N=%d x %d for T=%d timesteps\n", N,M, T);
+
+    // ---------- setup ----------
+
+    // create a buffer for storing temperature fields
+    Vector A = createVector(N,M);
+
+    // set up initial conditions in A
+    for (int y = 0; y < M; ++y) {
+      for (int x = 0; x < N; ++x) {
+        A[x + y*N] = 273; // temperature is 0° C everywhere (273 K)
+      }
+    }
+
+    // and there is a heat source in one corner
+    int source_x = N / 4;
+    int source_y = M / 4;
+    A[source_y * N + source_x] = 273 + 60;
+
+    printf("Initial:\n");
+    printTemperature(A, N, M);
+    printf("\n");
+
+    // ---------- compute ----------
+
+    // create a second buffer for the computation
+    Vector B = createVector(N,M);
+    struct timespec begin,end;
+    clock_gettime(CLOCK_REALTIME, &begin);
+    // for each time step ..
+    for (int t = 0; t < T; t++) {
+      // .. we propagate the temperature
+  #pragma omp parallel for collapse(2)
+      for (int y = 0; y < M; y++) {
+        for (int x = 0; x < N; x++) {
+          // center stays constant (the heat is still on)
+          if (x == source_x && y == source_y) {
+            B[y*N+x] = A[y*N+x];
+            continue;
+          }
+
+          // get current temperature at (x,y)
+          value_t tc = A[y*N+x];
+
+          // get temperatures left/right and up/down
+          value_t tl = ( x !=  0  ) ? A[y*N+(x-1)] : tc;
+          value_t tr = ( x != N-1 ) ? A[y*N+(x+1)] : tc;
+          value_t tu = ( y !=  0  ) ? A[(y-1)*N+x] : tc;
+          value_t td = ( y != M-1 ) ? A[(y+1)*N+x] : tc;
+
+          // update temperature at current point
+          B[y*N+x] = tc + 1.0/5 * (tl + tr + tu + td + (-4*tc));
+
+        }
+      }
+
+      // swap matrices (just pointers, not content)
+      Vector H = A;
+      A = B;
+      B = H;
+
+      // show intermediate step
+      if (!(t % 1000) && 0) {
+        printf("Step t=%d:\n", t);
+        printTemperature(A, N, M);
+        printf("\n");
+      }
+    }
+    clock_gettime(CLOCK_REALTIME, &end);
+    long seconds = end.tv_sec - begin.tv_sec;
+    long nanoseconds = end.tv_nsec - begin.tv_nsec;
+    double elapsed = seconds + nanoseconds*1e-9;
+    printf("runtime=%f\n", elapsed);
+    releaseVector(B);
+
+    // ---------- check ----------
+
+    printf("Final:\n");
+    printTemperature(A, N, M);
+    printf("\n");
+
+    int success = 1;
+    for(int y = 0; y<M; y++) {
+      for(int x = 0; x<N; x++) {
+        value_t temp = A[y*N+x];
+        if (273 <= temp && temp <= 273+60) continue;
+        success = 0;
+        break;
+      }
+    }
+
+
+    printf("Verification: %s\n", (success) ? "OK" : "FAILED");
+
+    // ---------- cleanup ----------
+
+    releaseVector(A);
+
+    // done
+    return (success) ? EXIT_SUCCESS : EXIT_FAILURE;
+  }
+
+  Vector createVector(int N, int M) {
+    // create data and index vector
+    return malloc(sizeof(value_t) * N * M);
+  }
+
+  void releaseVector(Vector m) { free(m); }
+
+
+  //taken from old parallel course https://git.uibk.ac.at/csat2062/parallel_local
+  void printTemperature(Vector m, int N, int M) {
+      const char* colors = " .-:=+*#%@";
+      const int numColors = 10;
+
+      // boundaries for temperature (for simplicity hard-coded)
+      const value_t max = 273 + 30;
+      const value_t min = 273 + 0;
+
+      // set the 'render' resolution
+      int H = 30;
+      int W = 60;
+
+      // step size in each dimension
+      int sH = M/H;
+      int sW = N/W;
+
+
+      // upper wall
+      for(int i=0; i<W+2; i++) {
+          printf("X");
+      }
+      printf("\n");
+
+      // room
+      for(int i=0; i<H; i++) {
+          // left wall
+          printf("X");
+          // actual room
+          for(int j=0; j<W; j++) {
+
+              // get max temperature in this tile
+              value_t max_t = 0;
+              for(int x=sH*i; x<sH*i+sH; x++) {
+                  for(int y=sW*j; y<sW*j+sW; y++) {
+                      max_t = (max_t < m[x*N+y]) ? m[x*N+y] : max_t;
+                  }
+              }
+              value_t temp = max_t;
+
+              // pick the 'color'
+              int c = ((temp - min) / (max - min)) * numColors;
+              c = (c >= numColors) ? numColors-1 : ((c < 0) ? 0 : c);
+
+              // print the average temperature
+              printf("%c",colors[c]);
+          }
+          // right wall
+          printf("X\n");
+      }
+
+      // lower wall
+      for(int i=0; i<W+2; i++) {
+          printf("X");
+      }
+      printf("\n");
+
+  }
+
+#+end_src
+
+** heat.script
+#+begin_src bash :eval never-export
+  #!/bin/bash
+
+  # Execute job in the queue "std.q" unless you have special requirements.
+  #$ -q std.q
+
+  # The batch system should use the current directory as working directory.
+  #$ -cwd
+
+  # Name your job. Unless you use the -o and -e options, output will
+  # go to a unique file name.ojob_id for each job.
+  #$ -N kopp_heat_stencil_2D
+
+  ##$ -M markus.kopp@student.uibk.ac.at
+  ##$ -m e
+
+  # Join the error stream to the output stream.
+  #$ -j yes
+
+  #$ -pe openmp 8
+
+  ##module load openmpi/4.0.3
+
+  N=4000
+  echo "seq for comparison with N=$N x $N"
+  ./heat_stencil_2D_seq $N $N
+  echo "--------------------"
+  for FILE in heat_stencil_2D_omp 
+  do
+      for X in {1..8}; do
+          echo "$FILE test with threads=$X and N=$Nx$N"
+          time OMP_NUM_THREADS=$X ./$FILE $N $N
+          echo "--------------------"
+      done
+  done
+
+#+end_src
+
+** Results
+#+ATTR_LATEX: :width \textwidth :caption Execution time
+| Threads | heat_stencil_omp |    seq |
+|---------+------------------+--------|
+|       1 |           21.764 | 21.659 |
+|       2 |           10.967 | 21.659 |
+|       3 |             7.33 | 21.659 |
+|       4 |            5.526 | 21.659 |
+|       5 |            5.875 | 21.659 |
+|       6 |            5.101 | 21.659 |
+|       7 |            5.299 | 21.659 |
+|       8 |            4.456 | 21.659 |
+
+
+#+ATTR_LATEX: :width \textwidth :caption Speedup
+| Threads | heat_stencil_omp | seq |
+|---------+------------------+-----|
+|       1 |            0.995 |   1 |
+|       2 |            1.975 |   1 |
+|       3 |            2.955 |   1 |
+|       4 |            3.920 |   1 |
+|       5 |            3.687 |   1 |
+|       6 |            4.246 |   1 |
+|       7 |            4.087 |   1 |
+|       8 |            4.861 |   1 |
+
+#+ATTR_LATEX: :width \textwidth :caption Efficiency
+| Threads | heat_stencil_omp | seq |
+|---------+------------------+-----|
+|       1 |            0.995 |   1 |
+|       2 |            0.987 |   1 |
+|       3 |            0.985 |   1 |
+|       4 |            0.980 |   1 |
+|       5 |            0.737 |   1 |
+|       6 |            0.708 |   1 |
+|       7 |            0.584 |   1 |
+|       8 |            0.608 |   1 |
+
+[[./graph/heat_time.png]]
+[[./graph/heat_speedup.png]]
+[[./graph/heat_efficiency.png]]

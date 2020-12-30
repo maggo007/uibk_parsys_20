@@ -1,0 +1,6 @@
+nbody_seq for comparision with N=10000 and T=100
+
+real	3m14.734s
+user	3m14.729s
+sys	0m0.002s
+--------------------

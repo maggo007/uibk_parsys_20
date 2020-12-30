@@ -1,0 +1,192 @@
+nbody_seq for comparision with N=10, and T=1,
+
+real	0m0.003s
+user	0m0.000s
+sys	0m0.002s
+--------------------
+nbody_seq for comparision with N=10, and T=2,
+
+real	0m0.002s
+user	0m0.001s
+sys	0m0.000s
+--------------------
+nbody_seq for comparision with N=10, and T=5,
+
+real	0m0.002s
+user	0m0.000s
+sys	0m0.002s
+--------------------
+nbody_seq for comparision with N=10, and T=10,
+
+real	0m0.002s
+user	0m0.000s
+sys	0m0.001s
+--------------------
+nbody_seq for comparision with N=10, and T=20,
+
+real	0m0.002s
+user	0m0.001s
+sys	0m0.001s
+--------------------
+nbody_seq for comparision with N=10, and T=40,
+
+real	0m0.002s
+user	0m0.000s
+sys	0m0.002s
+--------------------
+nbody_seq for comparision with N=10, and T=50,
+
+real	0m0.002s
+user	0m0.001s
+sys	0m0.000s
+--------------------
+nbody_seq for comparision with N=10, and T=100
+
+real	0m0.002s
+user	0m0.000s
+sys	0m0.002s
+--------------------
+nbody_seq for comparision with N=100, and T=1,
+
+real	0m0.002s
+user	0m0.000s
+sys	0m0.002s
+--------------------
+nbody_seq for comparision with N=100, and T=2,
+
+real	0m0.002s
+user	0m0.000s
+sys	0m0.002s
+--------------------
+nbody_seq for comparision with N=100, and T=5,
+
+real	0m0.003s
+user	0m0.002s
+sys	0m0.000s
+--------------------
+nbody_seq for comparision with N=100, and T=10,
+
+real	0m0.004s
+user	0m0.004s
+sys	0m0.000s
+--------------------
+nbody_seq for comparision with N=100, and T=20,
+
+real	0m0.007s
+user	0m0.005s
+sys	0m0.001s
+--------------------
+nbody_seq for comparision with N=100, and T=40,
+
+real	0m0.012s
+user	0m0.008s
+sys	0m0.003s
+--------------------
+nbody_seq for comparision with N=100, and T=50,
+
+real	0m0.014s
+user	0m0.011s
+sys	0m0.002s
+--------------------
+nbody_seq for comparision with N=100, and T=100
+
+real	0m0.027s
+user	0m0.024s
+sys	0m0.002s
+--------------------
+nbody_seq for comparision with N=1000, and T=1,
+
+real	0m0.026s
+user	0m0.024s
+sys	0m0.001s
+--------------------
+nbody_seq for comparision with N=1000, and T=2,
+
+real	0m0.049s
+user	0m0.047s
+sys	0m0.001s
+--------------------
+nbody_seq for comparision with N=1000, and T=5,
+
+real	0m0.120s
+user	0m0.118s
+sys	0m0.001s
+--------------------
+nbody_seq for comparision with N=1000, and T=10,
+
+real	0m0.240s
+user	0m0.239s
+sys	0m0.000s
+--------------------
+nbody_seq for comparision with N=1000, and T=20,
+
+real	0m0.484s
+user	0m0.481s
+sys	0m0.002s
+--------------------
+nbody_seq for comparision with N=1000, and T=40,
+
+real	0m0.990s
+user	0m0.989s
+sys	0m0.000s
+--------------------
+nbody_seq for comparision with N=1000, and T=50,
+
+real	0m1.247s
+user	0m1.244s
+sys	0m0.002s
+--------------------
+nbody_seq for comparision with N=1000, and T=100
+
+real	0m2.541s
+user	0m2.539s
+sys	0m0.001s
+--------------------
+nbody_seq for comparision with N=10000 and T=1,
+
+real	0m2.332s
+user	0m2.330s
+sys	0m0.001s
+--------------------
+nbody_seq for comparision with N=10000 and T=2,
+
+real	0m4.674s
+user	0m4.672s
+sys	0m0.001s
+--------------------
+nbody_seq for comparision with N=10000 and T=5,
+
+real	0m11.864s
+user	0m11.862s
+sys	0m0.001s
+--------------------
+nbody_seq for comparision with N=10000 and T=10,
+
+real	0m24.254s
+user	0m24.252s
+sys	0m0.002s
+--------------------
+nbody_seq for comparision with N=10000 and T=20,
+
+real	0m49.682s
+user	0m49.679s
+sys	0m0.002s
+--------------------
+nbody_seq for comparision with N=10000 and T=40,
+
+real	1m41.149s
+user	1m41.147s
+sys	0m0.001s
+--------------------
+nbody_seq for comparision with N=10000 and T=50,
+
+real	2m6.965s
+user	2m6.962s
+sys	0m0.002s
+--------------------
+nbody_seq for comparision with N=10000 and T=100
+
+real	4m16.303s
+user	4m16.300s
+sys	0m0.002s
+--------------------

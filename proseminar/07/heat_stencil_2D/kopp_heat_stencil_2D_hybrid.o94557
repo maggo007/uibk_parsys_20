@@ -1,0 +1,855 @@
+  Loading openmpi/4.0.3 for compiler gnu-4.8.5
+seq for comparison with N=4000 x 4000 T=100
+Computing heat-distribution for room size N=4000 x 4000 for T=100 timesteps
+Initial:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X               @                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+runtime=21.954899
+Final:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X               @                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+Verification: OK
+
+ Performance counter stats for './heat_stencil_2D_seq 4000 4000 100':
+
+         22,263.71 msec task-clock:u              #    1.000 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            62,893      page-faults:u             #    0.003 M/sec                  
+    54,335,356,517      cycles:u                  #    2.441 GHz                      (25.01%)
+    49,943,738,379      instructions:u            #    0.92  insn per cycle           (37.50%)
+     9,694,144,690      branches:u                #  435.424 M/sec                    (37.50%)
+         1,753,891      branch-misses:u           #    0.02% of all branches          (37.50%)
+     9,688,520,111      L1-dcache-loads:u         #  435.171 M/sec                    (25.00%)
+        43,561,176      L1-dcache-load-misses:u   #    0.45% of all L1-dcache hits    (25.00%)
+       609,731,768      LLC-loads:u               #   27.387 M/sec                    (25.00%)
+         3,282,258      LLC-load-misses:u         #    0.54% of all LL-cache hits     (25.00%)
+
+      22.269497441 seconds time elapsed
+
+      22.045529000 seconds user
+       0.218995000 seconds sys
+
+
+
+real	0m22.294s
+user	0m22.054s
+sys	0m0.234s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=1 and threads=2 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+
+real	0m0.659s
+user	0m0.034s
+sys	0m0.129s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=1 and threads=4 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+
+real	0m0.654s
+user	0m0.048s
+sys	0m0.092s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=1 and threads=6 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+
+real	0m0.511s
+user	0m0.056s
+sys	0m0.099s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=1 and threads=8 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+
+real	0m0.488s
+user	0m0.044s
+sys	0m0.095s
+--------------------
+heat_stencil_2D_mpi test with MPIrank=1 and threads=8 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+
+real	0m0.695s
+user	0m0.044s
+sys	0m0.096s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=2 and threads=2 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+2 total processes failed to start
+
+real	0m0.743s
+user	0m0.038s
+sys	0m0.101s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=2 and threads=4 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+2 total processes failed to start
+
+real	0m0.579s
+user	0m0.035s
+sys	0m0.105s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=2 and threads=6 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+2 total processes failed to start
+
+real	0m0.531s
+user	0m0.034s
+sys	0m0.105s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=2 and threads=8 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+2 total processes failed to start
+
+real	0m0.617s
+user	0m0.049s
+sys	0m0.093s
+--------------------
+heat_stencil_2D_mpi test with MPIrank=2 and threads=8 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+2 total processes failed to start
+
+real	0m0.700s
+user	0m0.040s
+sys	0m0.101s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=3 and threads=2 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+3 total processes failed to start
+
+real	0m0.594s
+user	0m0.043s
+sys	0m0.096s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=3 and threads=4 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+3 total processes failed to start
+
+real	0m0.682s
+user	0m0.044s
+sys	0m0.095s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=3 and threads=6 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+3 total processes failed to start
+
+real	0m0.589s
+user	0m0.037s
+sys	0m0.102s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=3 and threads=8 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+3 total processes failed to start
+
+real	0m0.764s
+user	0m0.046s
+sys	0m0.095s
+--------------------
+heat_stencil_2D_mpi test with MPIrank=3 and threads=8 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+3 total processes failed to start
+
+real	0m0.534s
+user	0m0.037s
+sys	0m0.103s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=4 and threads=2 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+4 total processes failed to start
+
+real	0m0.525s
+user	0m0.041s
+sys	0m0.099s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=4 and threads=4 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+4 total processes failed to start
+
+real	0m0.559s
+user	0m0.048s
+sys	0m0.095s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=4 and threads=6 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+4 total processes failed to start
+
+real	0m0.575s
+user	0m0.039s
+sys	0m0.101s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=4 and threads=8 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+4 total processes failed to start
+
+real	0m0.550s
+user	0m0.036s
+sys	0m0.103s
+--------------------
+heat_stencil_2D_mpi test with MPIrank=4 and threads=8 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+4 total processes failed to start
+
+real	0m0.554s
+user	0m0.042s
+sys	0m0.098s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=5 and threads=2 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+5 total processes failed to start
+
+real	0m0.516s
+user	0m0.044s
+sys	0m0.095s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=5 and threads=4 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+5 total processes failed to start
+
+real	0m0.555s
+user	0m0.051s
+sys	0m0.090s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=5 and threads=6 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+5 total processes failed to start
+
+real	0m0.520s
+user	0m0.045s
+sys	0m0.095s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=5 and threads=8 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+5 total processes failed to start
+
+real	0m0.613s
+user	0m0.036s
+sys	0m0.103s
+--------------------
+heat_stencil_2D_mpi test with MPIrank=5 and threads=8 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+5 total processes failed to start
+
+real	0m0.502s
+user	0m0.045s
+sys	0m0.096s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=6 and threads=2 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+6 total processes failed to start
+
+real	0m0.552s
+user	0m0.048s
+sys	0m0.092s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=6 and threads=4 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+6 total processes failed to start
+
+real	0m0.542s
+user	0m0.052s
+sys	0m0.097s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=6 and threads=6 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+6 total processes failed to start
+
+real	0m0.565s
+user	0m0.037s
+sys	0m0.104s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=6 and threads=8 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+6 total processes failed to start
+
+real	0m0.520s
+user	0m0.044s
+sys	0m0.095s
+--------------------
+heat_stencil_2D_mpi test with MPIrank=6 and threads=8 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+6 total processes failed to start
+
+real	0m0.559s
+user	0m0.046s
+sys	0m0.093s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=7 and threads=2 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+7 total processes failed to start
+
+real	0m0.555s
+user	0m0.044s
+sys	0m0.095s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=7 and threads=4 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+7 total processes failed to start
+
+real	0m0.741s
+user	0m0.046s
+sys	0m0.095s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=7 and threads=6 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+7 total processes failed to start
+
+real	0m0.590s
+user	0m0.045s
+sys	0m0.096s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=7 and threads=8 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+7 total processes failed to start
+
+real	0m0.601s
+user	0m0.036s
+sys	0m0.104s
+--------------------
+heat_stencil_2D_mpi test with MPIrank=7 and threads=8 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+7 total processes failed to start
+
+real	0m0.649s
+user	0m0.047s
+sys	0m0.094s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=8 and threads=2 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+8 total processes failed to start
+
+real	0m0.717s
+user	0m0.043s
+sys	0m0.098s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=8 and threads=4 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+8 total processes failed to start
+
+real	0m0.712s
+user	0m0.035s
+sys	0m0.106s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=8 and threads=6 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+8 total processes failed to start
+
+real	0m0.607s
+user	0m0.048s
+sys	0m0.093s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=8 and threads=8 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+8 total processes failed to start
+
+real	0m0.578s
+user	0m0.049s
+sys	0m0.090s
+--------------------
+heat_stencil_2D_mpi test with MPIrank=8 and threads=8 and N=4000 T=100
+--------------------------------------------------------------------------
+mpiexec was unable to find the specified executable file, and therefore
+did not launch the job.  This error was first reported for process
+rank 0; it may have occurred for other processes as well.
+
+NOTE: A common cause for this error is misspelling a mpiexec command
+      line parameter option (remember that mpiexec interprets the first
+      unrecognized command line token as the executable).
+
+Node:       n002
+Executable: node
+--------------------------------------------------------------------------
+8 total processes failed to start
+
+real	0m0.591s
+user	0m0.041s
+sys	0m0.100s
+--------------------

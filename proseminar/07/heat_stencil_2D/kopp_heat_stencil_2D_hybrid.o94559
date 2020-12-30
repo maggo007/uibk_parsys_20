@@ -1,0 +1,420 @@
+  Loading openmpi/4.0.3 for compiler gnu-4.8.5
+seq for comparison with N=4000 x 4000 T=100
+Computing heat-distribution for room size N=4000 x 4000 for T=100 timesteps
+Initial:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X               @                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+runtime=21.881409
+Final:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X               @                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+Verification: OK
+
+ Performance counter stats for './heat_stencil_2D_seq 4000 4000 100':
+
+         22,187.20 msec task-clock:u              #    1.000 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            62,893      page-faults:u             #    0.003 M/sec                  
+    54,223,848,784      cycles:u                  #    2.444 GHz                      (25.00%)
+    49,961,221,631      instructions:u            #    0.92  insn per cycle           (37.50%)
+     9,695,325,686      branches:u                #  436.978 M/sec                    (37.50%)
+         1,793,953      branch-misses:u           #    0.02% of all branches          (37.50%)
+     9,684,238,330      L1-dcache-loads:u         #  436.479 M/sec                    (25.00%)
+        42,873,129      L1-dcache-load-misses:u   #    0.44% of all L1-dcache hits    (25.00%)
+       609,519,339      LLC-loads:u               #   27.472 M/sec                    (25.00%)
+         3,277,311      LLC-load-misses:u         #    0.54% of all LL-cache hits     (25.00%)
+
+      22.192310348 seconds time elapsed
+
+      21.961123000 seconds user
+       0.226970000 seconds sys
+
+
+
+real	0m22.212s
+user	0m21.972s
+sys	0m0.234s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=1 and threads=2 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.061s
+user	0m0.003s
+sys	0m0.013s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=1 and threads=4 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.011s
+user	0m0.002s
+sys	0m0.006s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=1 and threads=6 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.010s
+user	0m0.002s
+sys	0m0.006s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=1 and threads=8 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.009s
+user	0m0.005s
+sys	0m0.002s
+--------------------
+heat_stencil_2D_mpi test with MPIrank=1 and threads=8 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.009s
+user	0m0.004s
+sys	0m0.003s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=2 and threads=2 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.009s
+user	0m0.003s
+sys	0m0.004s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=2 and threads=4 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.010s
+user	0m0.002s
+sys	0m0.006s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=2 and threads=6 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.009s
+user	0m0.003s
+sys	0m0.005s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=2 and threads=8 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.009s
+user	0m0.003s
+sys	0m0.005s
+--------------------
+heat_stencil_2D_mpi test with MPIrank=2 and threads=8 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.009s
+user	0m0.004s
+sys	0m0.003s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=3 and threads=2 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.010s
+user	0m0.001s
+sys	0m0.006s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=3 and threads=4 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.009s
+user	0m0.002s
+sys	0m0.005s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=3 and threads=6 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.009s
+user	0m0.003s
+sys	0m0.005s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=3 and threads=8 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.009s
+user	0m0.003s
+sys	0m0.004s
+--------------------
+heat_stencil_2D_mpi test with MPIrank=3 and threads=8 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.009s
+user	0m0.003s
+sys	0m0.005s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=4 and threads=2 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.009s
+user	0m0.002s
+sys	0m0.005s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=4 and threads=4 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.011s
+user	0m0.003s
+sys	0m0.004s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=4 and threads=6 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.009s
+user	0m0.004s
+sys	0m0.003s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=4 and threads=8 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.011s
+user	0m0.003s
+sys	0m0.005s
+--------------------
+heat_stencil_2D_mpi test with MPIrank=4 and threads=8 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.010s
+user	0m0.002s
+sys	0m0.005s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=5 and threads=2 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.009s
+user	0m0.003s
+sys	0m0.005s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=5 and threads=4 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.010s
+user	0m0.003s
+sys	0m0.004s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=5 and threads=6 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.009s
+user	0m0.003s
+sys	0m0.005s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=5 and threads=8 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.009s
+user	0m0.002s
+sys	0m0.005s
+--------------------
+heat_stencil_2D_mpi test with MPIrank=5 and threads=8 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.009s
+user	0m0.003s
+sys	0m0.004s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=6 and threads=2 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.009s
+user	0m0.002s
+sys	0m0.005s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=6 and threads=4 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.009s
+user	0m0.003s
+sys	0m0.004s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=6 and threads=6 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.009s
+user	0m0.003s
+sys	0m0.004s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=6 and threads=8 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.010s
+user	0m0.002s
+sys	0m0.006s
+--------------------
+heat_stencil_2D_mpi test with MPIrank=6 and threads=8 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.009s
+user	0m0.002s
+sys	0m0.006s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=7 and threads=2 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.009s
+user	0m0.002s
+sys	0m0.006s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=7 and threads=4 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.009s
+user	0m0.003s
+sys	0m0.004s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=7 and threads=6 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.009s
+user	0m0.004s
+sys	0m0.004s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=7 and threads=8 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.009s
+user	0m0.002s
+sys	0m0.005s
+--------------------
+heat_stencil_2D_mpi test with MPIrank=7 and threads=8 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.009s
+user	0m0.003s
+sys	0m0.004s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=8 and threads=2 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.009s
+user	0m0.002s
+sys	0m0.005s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=8 and threads=4 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.009s
+user	0m0.002s
+sys	0m0.005s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=8 and threads=6 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.009s
+user	0m0.004s
+sys	0m0.003s
+--------------------
+heat_stencil_2D_mpi_hybrid test with MPIrank=8 and threads=8 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.009s
+user	0m0.004s
+sys	0m0.003s
+--------------------
+heat_stencil_2D_mpi test with MPIrank=8 and threads=8 and N=4000 T=100
+mpiexec: Error: unknown option "--bind-by"
+Type 'mpiexec --help' for usage.
+
+real	0m0.009s
+user	0m0.001s
+sys	0m0.006s
+--------------------

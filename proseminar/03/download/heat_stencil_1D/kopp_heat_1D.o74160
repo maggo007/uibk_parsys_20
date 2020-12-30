@@ -1,0 +1,3 @@
+  Loading openmpi/4.0.3 for compiler gnu-4.8.5
+/usr/sge/lcc2/spool/n002/job_scripts/74160: line 25: syntax error near unexpected token `fi'
+/usr/sge/lcc2/spool/n002/job_scripts/74160: line 25: `    fi'

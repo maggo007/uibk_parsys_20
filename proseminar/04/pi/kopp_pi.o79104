@@ -1,0 +1,601 @@
+pi_seq for comparision with N=100000000
+inside=78541472 outside=21458528 total=100000000 
+3.141659
+
+real	0m3.051s
+user	0m3.048s
+sys	0m0.001s
+--------------------
+pi_omp_atomic test with threads=1 and N=100000000
+inside=78540775 outside=21459225 total=100000000 numberofthreads=1
+3.141631
+
+real	0m3.389s
+user	0m3.368s
+sys	0m0.002s
+--------------------
+pi_omp_atomic test with threads=2 and N=100000000
+inside=78541701 outside=21458299 total=100000000 numberofthreads=2
+3.141668
+
+real	3m16.770s
+user	2m11.089s
+sys	4m22.325s
+--------------------
+pi_omp_atomic test with threads=3 and N=100000000
+inside=78545780 outside=21454219 total=100000000 numberofthreads=3
+3.141831
+sum of in and out not adding up to SIZE
+
+real	0m51.654s
+user	0m49.171s
+sys	1m20.733s
+--------------------
+pi_omp_atomic test with threads=4 and N=100000000
+inside=78537115 outside=21462885 total=100000000 numberofthreads=4
+3.141485
+
+real	0m59.936s
+user	1m2.398s
+sys	2m12.914s
+--------------------
+pi_omp_atomic test with threads=5 and N=100000000
+inside=78541666 outside=21458334 total=100000000 numberofthreads=5
+3.141667
+
+real	1m53.967s
+user	2m0.310s
+sys	5m36.690s
+--------------------
+pi_omp_atomic test with threads=6 and N=100000000
+inside=78541989 outside=21458007 total=100000000 numberofthreads=6
+3.141680
+sum of in and out not adding up to SIZE
+
+real	2m9.009s
+user	2m11.051s
+sys	8m1.745s
+--------------------
+pi_omp_atomic test with threads=7 and N=100000000
+inside=78539367 outside=21460631 total=100000000 numberofthreads=7
+3.141575
+sum of in and out not adding up to SIZE
+
+real	1m59.301s
+user	2m4.081s
+sys	8m51.683s
+--------------------
+pi_omp_atomic test with threads=8 and N=100000000
+inside=78539108 outside=21460892 total=100000000 numberofthreads=8
+3.141564
+
+real	1m47.652s
+user	1m48.867s
+sys	9m11.027s
+--------------------
+pi_omp_atomic_float test with threads=1 and N=100000000
+numberofthreads=1
+3.141348
+
+real	0m2.533s
+user	0m2.516s
+sys	0m0.001s
+--------------------
+pi_omp_atomic_float test with threads=2 and N=100000000
+numberofthreads=2
+3.141492
+
+real	2m59.268s
+user	2m23.405s
+sys	3m33.806s
+--------------------
+pi_omp_atomic_float test with threads=3 and N=100000000
+numberofthreads=3
+3.141433
+
+real	0m58.812s
+user	0m54.593s
+sys	1m25.233s
+--------------------
+pi_omp_atomic_float test with threads=4 and N=100000000
+numberofthreads=4
+3.141605
+
+real	0m57.348s
+user	1m0.864s
+sys	2m9.159s
+--------------------
+pi_omp_atomic_float test with threads=5 and N=100000000
+numberofthreads=5
+3.141384
+
+real	1m53.067s
+user	1m57.628s
+sys	5m35.648s
+--------------------
+pi_omp_atomic_float test with threads=6 and N=100000000
+numberofthreads=6
+3.141695
+
+real	2m9.903s
+user	2m17.447s
+sys	8m2.175s
+--------------------
+pi_omp_atomic_float test with threads=7 and N=100000000
+numberofthreads=7
+3.141851
+
+real	1m58.261s
+user	2m2.445s
+sys	8m47.436s
+--------------------
+pi_omp_atomic_float test with threads=8 and N=100000000
+numberofthreads=8
+3.141336
+
+real	1m57.567s
+user	2m1.161s
+sys	9m56.187s
+--------------------
+pi_omp_critical test with threads=1 and N=100000000
+inside=78542021 outside=21457979 total=100000000 numberofthreads=1
+3.141681
+
+real	0m3.070s
+user	0m3.055s
+sys	0m0.002s
+--------------------
+pi_omp_critical test with threads=2 and N=100000000
+inside=78545912 outside=21454088 total=100000000 numberofthreads=2
+3.141836
+
+real	2m39.254s
+user	2m8.080s
+sys	3m7.944s
+--------------------
+pi_omp_critical test with threads=3 and N=100000000
+inside=78537338 outside=21462661 total=100000000 numberofthreads=3
+3.141494
+sum of in and out not adding up to SIZE
+
+real	0m41.588s
+user	0m42.228s
+sys	1m7.295s
+--------------------
+pi_omp_critical test with threads=4 and N=100000000
+inside=78538580 outside=21461420 total=100000000 numberofthreads=4
+3.141543
+
+real	1m8.828s
+user	1m8.638s
+sys	2m24.024s
+--------------------
+pi_omp_critical test with threads=5 and N=100000000
+inside=78535481 outside=21464519 total=100000000 numberofthreads=5
+3.141419
+
+real	1m59.484s
+user	2m6.431s
+sys	5m53.648s
+--------------------
+pi_omp_critical test with threads=6 and N=100000000
+inside=78530066 outside=21469930 total=100000000 numberofthreads=6
+3.141203
+sum of in and out not adding up to SIZE
+
+real	2m7.508s
+user	2m15.466s
+sys	7m51.803s
+--------------------
+pi_omp_critical test with threads=7 and N=100000000
+inside=78534897 outside=21465101 total=100000000 numberofthreads=7
+3.141396
+sum of in and out not adding up to SIZE
+
+real	1m59.795s
+user	2m4.819s
+sys	8m53.127s
+--------------------
+pi_omp_critical test with threads=8 and N=100000000
+inside=78542740 outside=21457260 total=100000000 numberofthreads=8
+3.141710
+
+real	1m48.454s
+user	1m49.777s
+sys	9m15.298s
+--------------------
+pi_omp_critical_float test with threads=1 and N=100000000
+numberofthreads=1
+3.141688
+
+real	0m2.534s
+user	0m2.517s
+sys	0m0.002s
+--------------------
+pi_omp_critical_float test with threads=2 and N=100000000
+numberofthreads=2
+3.141436
+
+real	2m57.997s
+user	2m5.531s
+sys	3m49.573s
+--------------------
+pi_omp_critical_float test with threads=3 and N=100000000
+numberofthreads=3
+3.141544
+
+real	0m45.821s
+user	0m45.679s
+sys	1m12.580s
+--------------------
+pi_omp_critical_float test with threads=4 and N=100000000
+numberofthreads=4
+3.141296
+
+real	0m56.107s
+user	0m58.810s
+sys	2m6.830s
+--------------------
+pi_omp_critical_float test with threads=5 and N=100000000
+numberofthreads=5
+3.141769
+
+real	1m52.852s
+user	1m58.993s
+sys	5m32.169s
+--------------------
+pi_omp_critical_float test with threads=6 and N=100000000
+numberofthreads=6
+3.141571
+
+real	2m6.232s
+user	2m13.233s
+sys	7m46.344s
+--------------------
+pi_omp_critical_float test with threads=7 and N=100000000
+numberofthreads=7
+3.141721
+
+real	1m57.744s
+user	2m2.114s
+sys	8m50.984s
+--------------------
+pi_omp_critical_float test with threads=8 and N=100000000
+numberofthreads=8
+3.141217
+
+real	1m46.102s
+user	1m46.829s
+sys	8m59.473s
+--------------------
+pi_omp_reduction test with threads=1 and N=100000000
+inside=78543617 outside=21456383 total=100000000
+3.141745
+
+real	0m3.181s
+user	0m3.162s
+sys	0m0.003s
+--------------------
+pi_omp_reduction test with threads=2 and N=100000000
+inside=78543544 outside=21456456 total=100000000
+3.141742
+
+real	2m59.818s
+user	2m18.812s
+sys	3m39.939s
+--------------------
+pi_omp_reduction test with threads=3 and N=100000000
+inside=78546251 outside=21453749 total=100000000
+3.141850
+
+real	0m42.866s
+user	0m43.231s
+sys	1m10.869s
+--------------------
+pi_omp_reduction test with threads=4 and N=100000000
+inside=78541801 outside=21458199 total=100000000
+3.141672
+
+real	0m58.847s
+user	1m0.800s
+sys	2m10.300s
+--------------------
+pi_omp_reduction test with threads=5 and N=100000000
+inside=78545265 outside=21454735 total=100000000
+3.141811
+
+real	1m57.419s
+user	2m3.533s
+sys	5m48.580s
+--------------------
+pi_omp_reduction test with threads=6 and N=100000000
+inside=78542647 outside=21457353 total=100000000
+3.141706
+
+real	2m10.459s
+user	2m16.602s
+sys	8m3.200s
+--------------------
+pi_omp_reduction test with threads=7 and N=100000000
+inside=78545296 outside=21454704 total=100000000
+3.141812
+
+real	1m59.814s
+user	2m5.170s
+sys	8m56.906s
+--------------------
+pi_omp_reduction test with threads=8 and N=100000000
+inside=78542518 outside=21457482 total=100000000
+3.141701
+
+real	1m48.887s
+user	1m50.006s
+sys	9m11.657s
+--------------------
+pi_omp_reduction_float test with threads=1 and N=100000000
+localpi 3.141841
+numberofthreads=1
+3.141841
+
+real	0m2.561s
+user	0m2.516s
+sys	0m0.003s
+--------------------
+pi_omp_reduction_float test with threads=2 and N=100000000
+localpi 3.141648
+localpi 3.141473
+numberofthreads=2
+3.141561
+
+real	2m59.699s
+user	2m7.574s
+sys	3m51.141s
+--------------------
+pi_omp_reduction_float test with threads=3 and N=100000000
+localpi 3.142150
+localpi 3.141662
+localpi 3.142002
+numberofthreads=3
+3.141938
+
+real	1m7.095s
+user	1m4.723s
+sys	1m31.581s
+--------------------
+pi_omp_reduction_float test with threads=4 and N=100000000
+localpi 3.142324
+localpi 3.141677
+localpi 3.141709
+localpi 3.141285
+numberofthreads=4
+3.141749
+
+real	0m55.540s
+user	0m58.030s
+sys	2m2.783s
+--------------------
+pi_omp_reduction_float test with threads=5 and N=100000000
+localpi 3.141554
+localpi 3.142016
+localpi 3.141745
+localpi 3.141308
+localpi 3.141813
+numberofthreads=5
+3.141687
+
+real	1m55.560s
+user	2m1.877s
+sys	5m43.358s
+--------------------
+pi_omp_reduction_float test with threads=6 and N=100000000
+localpi 3.141766
+localpi 3.140838
+localpi 3.141473
+localpi 3.141185
+localpi 3.141680
+localpi 3.141915
+numberofthreads=6
+3.141476
+
+real	2m7.518s
+user	2m13.979s
+sys	7m53.979s
+--------------------
+pi_omp_reduction_float test with threads=7 and N=100000000
+localpi 3.141178
+localpi 3.142232
+localpi 3.141014
+localpi 3.141074
+localpi 3.141846
+localpi 3.141455
+localpi 3.142071
+numberofthreads=7
+3.141553
+
+real	1m55.800s
+user	2m0.466s
+sys	8m33.109s
+--------------------
+pi_omp_reduction_float test with threads=8 and N=100000000
+localpi 3.141644
+localpi 3.141312
+localpi 3.141306
+localpi 3.141842
+localpi 3.141439
+localpi 3.141829
+localpi 3.142124
+localpi 3.141918
+numberofthreads=8
+3.141677
+
+real	1m44.990s
+user	1m45.328s
+sys	9m0.008s
+--------------------
+pi_omp_reduction2 test with threads=1 and N=100000000
+inside=78537186 outside=21462814 total=100000000 numberofthreads=1
+3.141487
+
+real	0m3.067s
+user	0m3.048s
+sys	0m0.002s
+--------------------
+pi_omp_reduction2 test with threads=2 and N=100000000
+inside=78539289 outside=21460711 total=100000000 numberofthreads=2
+3.141572
+
+real	3m9.060s
+user	2m10.122s
+sys	4m7.901s
+--------------------
+pi_omp_reduction2 test with threads=3 and N=100000000
+inside=78542169 outside=21457830 total=100000000 numberofthreads=3
+3.141687
+sum of in and out not adding up to SIZE
+
+real	0m50.040s
+user	0m45.622s
+sys	1m18.321s
+--------------------
+pi_omp_reduction2 test with threads=4 and N=100000000
+inside=78537921 outside=21462079 total=100000000 numberofthreads=4
+3.141517
+
+real	0m59.209s
+user	1m2.666s
+sys	2m12.959s
+--------------------
+pi_omp_reduction2 test with threads=5 and N=100000000
+inside=78542270 outside=21457730 total=100000000 numberofthreads=5
+3.141691
+
+real	1m57.860s
+user	2m4.547s
+sys	5m49.344s
+--------------------
+pi_omp_reduction2 test with threads=6 and N=100000000
+inside=78540448 outside=21459548 total=100000000 numberofthreads=6
+3.141618
+sum of in and out not adding up to SIZE
+
+real	2m12.836s
+user	2m21.712s
+sys	8m14.541s
+--------------------
+pi_omp_reduction2 test with threads=7 and N=100000000
+inside=78535566 outside=21464432 total=100000000 numberofthreads=7
+3.141423
+sum of in and out not adding up to SIZE
+
+real	1m58.278s
+user	2m3.627s
+sys	8m46.176s
+--------------------
+pi_omp_reduction2 test with threads=8 and N=100000000
+inside=78542571 outside=21457429 total=100000000 numberofthreads=8
+3.141703
+
+real	1m44.114s
+user	1m39.355s
+sys	8m55.844s
+--------------------
+pi_omp_reduction2_float test with threads=1 and N=100000000
+localpi 3.141713
+numberofthreads=1
+3.141713
+
+real	0m2.529s
+user	0m2.508s
+sys	0m0.003s
+--------------------
+pi_omp_reduction2_float test with threads=2 and N=100000000
+localpi 3.141983
+localpi 3.141222
+numberofthreads=2
+3.141603
+
+real	3m6.351s
+user	2m9.265s
+sys	4m3.175s
+--------------------
+pi_omp_reduction2_float test with threads=3 and N=100000000
+localpi 3.141891
+localpi 3.141689
+localpi 3.140899
+numberofthreads=3
+3.141493
+
+real	0m48.695s
+user	0m47.667s
+sys	1m14.440s
+--------------------
+pi_omp_reduction2_float test with threads=4 and N=100000000
+localpi 3.141676
+localpi 3.141470
+localpi 3.141716
+localpi 3.141841
+numberofthreads=4
+3.141676
+
+real	1m3.135s
+user	1m6.302s
+sys	2m25.186s
+--------------------
+pi_omp_reduction2_float test with threads=5 and N=100000000
+localpi 3.141515
+localpi 3.141456
+localpi 3.141606
+localpi 3.141433
+localpi 3.141363
+numberofthreads=5
+3.141474
+
+real	1m56.388s
+user	2m4.165s
+sys	5m44.077s
+--------------------
+pi_omp_reduction2_float test with threads=6 and N=100000000
+localpi 3.141225
+localpi 3.142225
+localpi 3.142157
+localpi 3.141354
+localpi 3.141735
+localpi 3.141472
+numberofthreads=6
+3.141695
+
+real	2m7.577s
+user	2m9.165s
+sys	8m0.275s
+--------------------
+pi_omp_reduction2_float test with threads=7 and N=100000000
+localpi 3.141684
+localpi 3.141489
+localpi 3.141474
+localpi 3.141615
+localpi 3.141501
+localpi 3.141418
+localpi 3.141533
+numberofthreads=7
+3.141530
+
+real	1m56.792s
+user	2m0.544s
+sys	8m47.342s
+--------------------
+pi_omp_reduction2_float test with threads=8 and N=100000000
+localpi 3.141697
+localpi 3.140861
+localpi 3.141046
+localpi 3.141475
+localpi 3.141794
+localpi 3.141757
+localpi 3.142010
+localpi 3.141534
+numberofthreads=8
+3.141522
+
+real	1m45.747s
+user	1m46.762s
+sys	8m54.779s
+--------------------

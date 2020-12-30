@@ -1,0 +1,283 @@
+#+options: ':nil *:t -:t ::t <:t H:3 \n:t ^:nil arch:headline
+#+options: author:t broken-links:nil c:nil creator:nil
+#+options: d:(not "LOGBOOK") date:t e:t email:t f:t inline:t num:t
+#+options: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+options: timestamp:t title:t toc:t todo:t |:t
+#+options: center:nil
+#+title: Assignment 05
+#+author: Markus Kopp
+#+email: markus.kopp@student.uibk.ac.at
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 28.0.50 (Org mode 9.4)
+
+#+latex_class: scrartcl
+#+latex_class_options:
+#+latex_header: \usepackage[margin=0.5in]{geometry}
+#+latex_header_extra:
+#+description:
+#+keywords:
+#+subtitle:
+#+latex_compiler: pdflatex
+#+date: \today
+
+* Exercise 01
+Implementing a nbody simulation with gravity follows the principle that every body needs to calculate its forces with every other body. So its a O(n^2) problem when you make two loops where the outer on is the body you want to update the velocity and the inner loop is going over every other body. You can speed it up a bit by updating the velocity not only on the body of the outer loop but also do a partial update on the body of the inner loop by flipping the force in x and y direction. This way you can skip one body in the inner loop for every other completed one. This implementation is only done for a 2D nbody simulation.
+
+** nbody_seq
+The program implemented different functions for calculating the force, updating the position and randomizing bodies. For randomizing you have arguments for the low and high values of the float range. The body itself is a struct of five float values. For position x, position y, velocity x, velocity y, and mass. There are traces from an old implementation in there where a struct of two float values was used as a return value. This was changed to only change values to a provided float pointer array for speeding up the calculation. The formula for calculating the force was given to us. The only update done by me was that when calculating the distance between two bodies *sqrt()* is not used and the squared length is used in all following calculations. For this to work the delta x and delta y distances between the points also get squared so its losing the sign if it was minus. So this is saved and applied after it is squared.
+After the tow loops with updating the velocities is finished I loop over all the bodies again and move them according to their velocities. This is done for every timestep that is simulated.
+#+begin_src C :eval never-export
+  #include <math.h>
+  #include <stdio.h>
+  #include <stdlib.h>
+
+  const int DEBUGPRINT = 0;
+  const float G = 1.0f;
+  const float EPS = 0.0001f;
+
+  struct f_touple
+  {
+    float x;
+    float y;
+  };
+
+  struct body
+  {
+    float pos[2];
+    float vel[2];
+    float mass;
+  };
+
+  void printbody(struct body *a)
+  {
+    printf("pos=(%f, %f) vel=(%f, %f) mass=%f\n", a->pos[0], a->pos[1], a->vel[0],
+           a->vel[1], a->mass);
+  }
+
+  // random float between low and high
+  float randomfloat(unsigned int *seed, float low, float high)
+  {
+    return (float)rand_r(seed) / (float)RAND_MAX * (high - low) + low;
+  }
+
+  void randomize_body(struct body *a, unsigned int *seed)
+  {
+    a->pos[0] = randomfloat(seed, -1000.0, 1000.0);
+    a->pos[1] = randomfloat(seed, -1000.0, 1000.0);
+    a->vel[0] = randomfloat(seed, -1.0, 1.0);
+    a->vel[1] = randomfloat(seed, -1.0, 1.0);
+    a->mass = randomfloat(seed, 0.0, 1000.0);
+  }
+
+  struct f_touple calculate_force(struct body *a, struct body *b)
+  {
+    float distancex = b->pos[0] - a->pos[0];
+    float signx = (distancex < 0.0) ? -1.0 : 1.0;
+    float distancey = b->pos[1] - a->pos[1];
+    float signy = (distancey < 0.0) ? -1.0 : 1.0;
+    float distancesquared = distancex * distancex + distancey * distancey;
+    struct f_touple force;
+    float forcediag = G * a->mass * b->mass /
+                      powf((distancesquared / 4.0 + EPS), 3.0 / 2.0);
+    force.x = forcediag * signx * (distancex * distancex) / distancesquared;
+    force.y = forcediag * signy * (distancey * distancey) / distancesquared;
+    return force;
+  }
+
+  void calculate_force_float(struct body *a, struct body *b, float *returnvalue)
+  {
+    float distancex = b->pos[0] - a->pos[0];
+    float signx = (distancex < 0.0) ? -1.0 : 1.0;
+    float distancey = b->pos[1] - a->pos[0];
+    float signy = (distancey < 0.0) ? -1.0 : 1.0;
+    float distancesquared = distancex * distancex + distancey * distancey;
+    float forcediag = G * a->mass * b->mass /
+                      powf((distancesquared / 4.0 + EPS), 3.0 / 2.0);
+    returnvalue[0] = forcediag * signx * (distancex * distancex) / distancesquared;
+    returnvalue[1] = forcediag * signy * (distancey * distancey) / distancesquared;
+  }
+
+  void updateforce(struct body *a, struct f_touple force, int dt)
+  {
+    a->vel[0] += force.x / a->mass * dt;
+    a->vel[1] += force.y / a->mass * dt;
+  }
+
+  void updateforce_float(struct body *a, float forcex, float forcey, int dt)
+  {
+    a->vel[0] += forcex / a->mass * dt;
+    a->vel[1] += forcey / a->mass * dt;
+  }
+
+  void movebody(struct body *a, int dt)
+  {
+    a->pos[0] += a->vel[0] * dt;
+    a->pos[1] += a->vel[1] * dt;
+  }
+
+  int main(int argc, char *argv[])
+  {
+    int N = 10000;
+    int T = 100;
+    if (argc == 3)
+    {
+      N = atoi(argv[1]);
+      T = atoi(argv[2]);
+    }
+    srand(1);
+    struct body *test = malloc(sizeof(struct body) * N);
+    unsigned int seed = 1;
+    for (int i = 0; i < N; ++i)
+    {
+      seed = i;
+      randomize_body(&test[i], &seed);
+      if (DEBUGPRINT)
+        printbody(&test[i]);
+    }
+    //struct f_touple force;
+    float forceupdate[2];
+    for (int t = 0; t < T; ++t)
+    {
+
+      for (int i = 0; i < N; ++i)
+      {
+        for (int j = i + 1; j < N; ++j)
+        {
+          //force = calculate_force(&test[i], &test[j]);
+          calculate_force_float(&test[i], &test[j], forceupdate);
+          if (DEBUGPRINT)
+            printf("force=(%f, %f)\n", forceupdate[0], forceupdate[1]);
+          //updateforce(&test[i], force, 1);
+          updateforce_float(&test[i], forceupdate[0], forceupdate[1], 1);
+          //force.x *= -1.0;
+          forceupdate[0] *= -1.0;
+          //force.y *= -1.0;
+          forceupdate[1] *= -1.0;
+          //updateforce(&test[j], force, 1);
+          updateforce_float(&test[j], forceupdate[0], forceupdate[1], 1);
+        }
+      }
+      for (int i = 0; i < N; ++i)
+      {
+        movebody(&test[i], 1);
+      }
+    }
+    if (DEBUGPRINT)
+    {
+      printf("****************\n");
+      for (int i = 0; i < N; ++i)
+      {
+        printbody(&test[i]);
+      }
+    }
+
+    free(test);
+    return 0;
+  }
+#+end_src
+
+** bash script
+This bash script was used to run on different problem sizes
+#+begin_src bash :eval never-export
+  #!/bin/bash
+
+  # Execute job in the queue "std.q" unless you have special requirements.
+  #$ -q std.q
+
+  # The batch system should use the current directory as working directory.
+  #$ -cwd
+
+  # Name your job. Unless you use the -o and -e options, output will
+  # go to a unique file name.ojob_id for each job.
+  #$ -N kopp_nbody_seq
+
+  ##$ -M markus.kopp@student.uibk.ac.at
+  ##$ -m e
+
+  # Join the error stream to the output stream.
+  #$ -j yes
+
+  #$ -pe openmp 8
+
+  ##module load openmpi/4.0.3
+
+  N=10000
+  T=1000
+  for XN in 10, 100, 1000, 10000
+  do
+    for XT in 1, 2, 5, 10, 20, 40, 50, 100
+    do
+      echo "nbody_seq for comparision with N=$XN and T=$XT"
+    time ./nbody_seq $XN $XT
+    echo "--------------------"
+    done
+  done
+#+end_src
+
+** Makefile
+An optimization was used with -ffast-math to speed up the *pow()* call in the gravity formula.
+#+begin_src makefile :eval never-export
+  CC=	gcc
+  CC_FLAGS=-O2 -std=gnu99 -Wall -Wextra -pedantic -lm -ffast-math
+
+  .PHONEY: all
+  all: nbody_seq nbody_omp
+
+  nbody_seq: nbody_seq.c
+    @$(CC) $(CC_FLAGS) $< -o nbody_seq
+
+  nbody_omp: nbody_omp.c
+    @$(CC) $(CC_FLAGS) $< -o nbody_omp -fopenmp
+
+  .PHONEY: clean
+  clean:
+    @rm nbody_seq
+    @rm nbody_omp
+
+  .PHONEY: run
+  run: all
+    @echo "seq:"
+    @./nbody_seq
+    @echo
+#+end_src
+
+
+** results
+As expected when increasing the problem size in N we increase the factor^2 because of O(n^2). Increasing the timesteps will have an effect with O(n).
+With my makefile the execution on lcc2 took longer than on my laptop which is a AMD A8 PRO-7150B R5 that runs on max 1.9Ghz. So this was a bit confusing for me. I thought that maybe the gcc on lcc2 was older and did not do as much optimization as my local version with *O2*.
+#+ATTR_LATEX: :width \textwidth :caption Execution time on lcc2 in seconds
+|       |  N=10 | N=100 | N=1000 | N=10000 |
+|-------+-------+-------+--------+---------|
+| T=1   | 0.003 | 0.002 |  0.026 |   2.332 |
+| T=2   | 0.002 | 0.002 |  0.049 |   4.674 |
+| T=5   | 0.002 | 0.003 |   0.12 |  11.864 |
+| T=10  | 0.002 | 0.004 |   0.24 |  24.254 |
+| T=20  | 0.002 | 0.007 |  0.484 |  49.682 |
+| T=40  | 0.002 | 0.012 |   0.99 | 101.849 |
+| T=50  | 0.002 | 0.014 |  1.247 | 126.965 |
+| T=100 | 0.002 | 0.027 |  2.541 | 256.303 |
+
+#+ATTR_LATEX: :width \textwidth :caption Execution time on laptop in seconds
+|       |  N=10 | N=100 | N=1000 | N=10000 |
+|-------+-------+-------+--------+---------|
+| T=1   | 0.003 | 0.002 |  0.036 |   1.847 |
+| T=2   | 0.001 | 0.002 |  0.051 |    3.68 |
+| T=5   | 0.001 | 0.003 |  0.092 |   9.361 |
+| T=10  | 0.001 | 0.004 |  0.165 |  20.222 |
+| T=20  | 0.001 | 0.007 |  0.299 |  43.333 |
+| T=40  | 0.001 | 0.008 |  0.653 |  81.374 |
+| T=50  | 0.001 | 0.008 |  0.759 | 104.442 |
+| T=100 | 0.002 | 0.018 |  1.596 | 217.273 |
+
+[[./graphs/nbody_lcc2.png]]
+[[./graphs/nbody_laptop.png]]
+
+
+* Exercise 02
+
+Optimizing Exercise 1 was already talked about in the previous chapter by making the inner loop smaller with each step of the outer loop. The update of the positions could also be optimized of you check if the force is so small that maybe skipping the update operation is possible. This was not implemented my version.
+
+For optimizing a parallel solution one could probably undo the optimization with the inner loop getting shorter and partial updates on the nbodies so only one slot/thread writes the update on the body with the index on the outer loop while only reading from the ones in the inner loop. So you can avoid race conditions. It has to be tested if this is faster than just implementing an atomic operation or using a critical area.
+Another thing I can try is by having position, velocity and mass in different arrays so they are in memory without needing to stride over the unused values. When calculating the force you only need position and mass. Maybe even write the intermediate update to a different array and only update at the end. It could also be possible that you sub up all the positions and create a new pseudo point in space that acts like a single body.

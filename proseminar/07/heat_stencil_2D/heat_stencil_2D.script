@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# Execute job in the queue "std.q" unless you have special requirements.
+#$ -q std.q
+
+# The batch system should use the current directory as working directory.
+#$ -cwd
+
+# Name your job. Unless you use the -o and -e options, output will
+# go to a unique file name.ojob_id for each job.
+#$ -N kopp_heat_stencil_2D_hybrid
+
+##$ -M markus.kopp@student.uibk.ac.at
+##$ -m e
+
+# Join the error stream to the output stream.
+#$ -j yes
+
+#$ -pe openmpi-8perhost 64
+
+module load openmpi/4.0.3
+
+N=6000
+T=100
+echo "seq for comparison with N=$N x $N T=$T"
+time perf stat -d ./heat_stencil_2D_seq $N $N $T
+echo "--------------------"
+for FILE in heat_stencil_2D_mpi_hybrid
+do
+    for XN in {1..8}; do
+        for X in {2..8..2}; do
+            echo "$FILE test with MPIrank=$XN and threads=$X and N=$Nx$N T=$T"
+            time OMP_NUM_THREADS=$X mpiexec -n $XN --report-bindings --display-devel-map  --map-by numa:span --bind-to numa perf stat -d ./$FILE $N $N $T
+            echo "--------------------"
+        done
+        echo "heat_stencil_2D_mpi test with MPIrank=$XN and threads=$X and N=$Nx$N T=$T"
+        time OMP_NUM_THREADS=$X mpiexec -n $XN --report-bindings --display-devel-map --map-by numa:span --bind-to numa perf stat -d ./heat_stencil_2D_mpi $N $N $T
+        echo "--------------------"
+    done
+done

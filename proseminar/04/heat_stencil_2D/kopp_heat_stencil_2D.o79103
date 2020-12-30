@@ -1,0 +1,689 @@
+seq for comparison with N=4000 x 4000
+Computing heat-distribution for room size N=4000 x 4000 for T=100 timesteps
+Initial:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X               @                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+runtime=21.659545
+Final:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X               @                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+Verification: OK
+--------------------
+heat_stencil_2D_omp test with threads=1 and N=4000
+Computing heat-distribution for room size N=4000 x 4000 for T=100 timesteps
+Initial:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X               @                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+runtime=21.764824
+Final:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X               @                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+Verification: OK
+
+real	0m21.998s
+user	0m21.885s
+sys	0m0.099s
+--------------------
+heat_stencil_2D_omp test with threads=2 and N=4000
+Computing heat-distribution for room size N=4000 x 4000 for T=100 timesteps
+Initial:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X               @                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+runtime=10.967576
+Final:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X               @                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+Verification: OK
+
+real	0m11.190s
+user	0m22.053s
+sys	0m0.103s
+--------------------
+heat_stencil_2D_omp test with threads=3 and N=4000
+Computing heat-distribution for room size N=4000 x 4000 for T=100 timesteps
+Initial:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X               @                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+runtime=7.330065
+Final:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X               @                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+Verification: OK
+
+real	0m7.552s
+user	0m22.104s
+sys	0m0.105s
+--------------------
+heat_stencil_2D_omp test with threads=4 and N=4000
+Computing heat-distribution for room size N=4000 x 4000 for T=100 timesteps
+Initial:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X               @                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+runtime=5.526437
+Final:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X               @                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+Verification: OK
+
+real	0m5.748s
+user	0m22.220s
+sys	0m0.110s
+--------------------
+heat_stencil_2D_omp test with threads=5 and N=4000
+Computing heat-distribution for room size N=4000 x 4000 for T=100 timesteps
+Initial:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X               @                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+runtime=5.875937
+Final:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X               @                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+Verification: OK
+
+real	0m6.098s
+user	0m25.631s
+sys	0m0.148s
+--------------------
+heat_stencil_2D_omp test with threads=6 and N=4000
+Computing heat-distribution for room size N=4000 x 4000 for T=100 timesteps
+Initial:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X               @                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+runtime=5.101058
+Final:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X               @                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+Verification: OK
+
+real	0m5.324s
+user	0m28.240s
+sys	0m0.171s
+--------------------
+heat_stencil_2D_omp test with threads=7 and N=4000
+Computing heat-distribution for room size N=4000 x 4000 for T=100 timesteps
+Initial:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X               @                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+runtime=5.299447
+Final:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X               @                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+Verification: OK
+
+real	0m5.522s
+user	0m33.535s
+sys	0m0.200s
+--------------------
+heat_stencil_2D_omp test with threads=8 and N=4000
+Computing heat-distribution for room size N=4000 x 4000 for T=100 timesteps
+Initial:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X               @                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+runtime=4.956470
+Final:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X               @                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+X                                                            X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+Verification: OK
+
+real	0m5.179s
+user	0m39.590s
+sys	0m0.234s
+--------------------
