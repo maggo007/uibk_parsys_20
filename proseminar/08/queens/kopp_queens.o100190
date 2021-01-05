@@ -1,0 +1,3176 @@
+seq for comparison with N=8 x 8
+Computing queens problem with N=8 x 8
+found solutions=92
+
+ Performance counter stats for './queens_seq 8':
+
+              1.32 msec task-clock:u              #    0.357 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               188      page-faults:u             #    0.142 M/sec                  
+         1,476,917      cycles:u                  #    1.118 GHz                    
+         1,209,154      instructions:u            #    0.82  insn per cycle         
+           308,623      branches:u                #  233.643 M/sec                  
+     <not counted>      branch-misses:u                                               (0.00%)
+     <not counted>      L1-dcache-loads:u                                             (0.00%)
+     <not counted>      L1-dcache-load-misses:u                                       (0.00%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.003701998 seconds time elapsed
+
+       0.000000000 seconds user
+       0.002332000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+
+real	0m0.022s
+user	0m0.008s
+sys	0m0.013s
+--------------------
+queens_omp test with threads=1 and N=8 x 8
+Computing queens problem with N=8 x 8
+found solutions=92
+
+ Performance counter stats for './queens_omp 8':
+
+              1.96 msec task-clock:u              #    0.446 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               204      page-faults:u             #    0.104 M/sec                  
+         1,431,827      cycles:u                  #    0.730 GHz                      (53.79%)
+         2,756,942      instructions:u            #    1.93  insn per cycle         
+           643,391      branches:u                #  327.990 M/sec                  
+            53,121      branch-misses:u           #    8.26% of all branches          (46.21%)
+     <not counted>      L1-dcache-loads:u                                             (0.00%)
+     <not counted>      L1-dcache-load-misses:u                                       (0.00%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.004395116 seconds time elapsed
+
+       0.000991000 seconds user
+       0.001983000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+
+real	0m0.022s
+user	0m0.009s
+sys	0m0.011s
+--------------------
+queens_omp test with threads=2 and N=8 x 8
+Computing queens problem with N=8 x 8
+found solutions=92
+
+ Performance counter stats for './queens_omp 8':
+
+              6.83 msec task-clock:u              #    1.109 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               213      page-faults:u             #    0.031 M/sec                  
+         2,253,395      cycles:u                  #    0.330 GHz                      (7.07%)
+         5,176,928      instructions:u            #    2.30  insn per cycle           (37.83%)
+         1,732,954      branches:u                #  253.641 M/sec                    (66.87%)
+            41,507      branch-misses:u           #    2.40% of all branches          (89.04%)
+         1,611,918      L1-dcache-loads:u         #  235.926 M/sec                    (33.13%)
+            10,199      L1-dcache-load-misses:u   #    0.63% of all L1-dcache hits    (3.89%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.006163336 seconds time elapsed
+
+       0.007771000 seconds user
+       0.000000000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+
+real	0m0.023s
+user	0m0.016s
+sys	0m0.009s
+--------------------
+queens_omp test with threads=3 and N=8 x 8
+Computing queens problem with N=8 x 8
+found solutions=92
+
+ Performance counter stats for './queens_omp 8':
+
+             10.32 msec task-clock:u              #    1.720 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               214      page-faults:u             #    0.021 M/sec                  
+         6,776,539      cycles:u                  #    0.657 GHz                      (9.02%)
+         6,961,409      instructions:u            #    1.03  insn per cycle           (23.08%)
+         2,810,666      branches:u                #  272.298 M/sec                    (52.00%)
+            38,195      branch-misses:u           #    1.36% of all branches          (71.95%)
+         2,330,377      L1-dcache-loads:u         #  225.767 M/sec                    (48.00%)
+            24,637      L1-dcache-load-misses:u   #    1.06% of all L1-dcache hits    (19.03%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.006001442 seconds time elapsed
+
+       0.008252000 seconds user
+       0.003094000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+
+real	0m0.023s
+user	0m0.012s
+sys	0m0.017s
+--------------------
+queens_omp test with threads=4 and N=8 x 8
+Computing queens problem with N=8 x 8
+found solutions=92
+
+ Performance counter stats for './queens_omp 8':
+
+             15.49 msec task-clock:u              #    2.234 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               219      page-faults:u             #    0.014 M/sec                  
+         8,480,944      cycles:u                  #    0.548 GHz                      (4.17%)
+         3,395,759      instructions:u            #    0.40  insn per cycle           (7.28%)
+         4,006,802      branches:u                #  258.730 M/sec                    (31.75%)
+            41,047      branch-misses:u           #    1.02% of all branches          (53.35%)
+         3,370,736      L1-dcache-loads:u         #  217.657 M/sec                    (51.57%)
+            35,277      L1-dcache-load-misses:u   #    1.05% of all L1-dcache hits    (42.48%)
+            29,264      LLC-loads:u               #    1.890 M/sec                    (16.68%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.006933450 seconds time elapsed
+
+       0.012395000 seconds user
+       0.004131000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+
+real	0m0.024s
+user	0m0.022s
+sys	0m0.012s
+--------------------
+queens_omp test with threads=5 and N=8 x 8
+Computing queens problem with N=8 x 8
+found solutions=92
+
+ Performance counter stats for './queens_omp 8':
+
+             25.74 msec task-clock:u              #    3.150 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               222      page-faults:u             #    0.009 M/sec                  
+         9,526,903      cycles:u                  #    0.370 GHz                      (3.60%)
+         6,135,363      instructions:u            #    0.64  insn per cycle           (5.76%)
+         6,482,954      branches:u                #  251.841 M/sec                    (20.55%)
+            47,382      branch-misses:u           #    0.73% of all branches          (38.12%)
+         4,980,420      L1-dcache-loads:u         #  193.472 M/sec                    (38.78%)
+            60,769      L1-dcache-load-misses:u   #    1.22% of all L1-dcache hits    (38.84%)
+            48,052      LLC-loads:u               #    1.867 M/sec                    (38.87%)
+            16,867      LLC-load-misses:u         #   35.10% of all LL-cache hits     (21.22%)
+
+       0.008171819 seconds time elapsed
+
+       0.024834000 seconds user
+       0.001986000 seconds sys
+
+
+
+real	0m0.025s
+user	0m0.034s
+sys	0m0.009s
+--------------------
+queens_omp test with threads=6 and N=8 x 8
+Computing queens problem with N=8 x 8
+found solutions=92
+
+ Performance counter stats for './queens_omp 8':
+
+             35.24 msec task-clock:u              #    3.805 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               224      page-faults:u             #    0.006 M/sec                  
+        70,382,027      cycles:u                  #    1.997 GHz                      (17.75%)
+        32,214,766      instructions:u            #    0.46  insn per cycle           (18.15%)
+         8,860,006      branches:u                #  251.435 M/sec                    (16.76%)
+            44,569      branch-misses:u           #    0.50% of all branches          (31.19%)
+         6,449,737      L1-dcache-loads:u         #  183.035 M/sec                    (33.98%)
+            96,801      L1-dcache-load-misses:u   #    1.50% of all L1-dcache hits    (34.04%)
+            70,252      LLC-loads:u               #    1.994 M/sec                    (34.06%)
+            23,215      LLC-load-misses:u         #   33.05% of all LL-cache hits     (32.22%)
+
+       0.009261412 seconds time elapsed
+
+       0.031021000 seconds user
+       0.005348000 seconds sys
+
+
+
+real	0m0.027s
+user	0m0.043s
+sys	0m0.011s
+--------------------
+queens_omp test with threads=7 and N=8 x 8
+Computing queens problem with N=8 x 8
+found solutions=92
+
+ Performance counter stats for './queens_omp 8':
+
+             68.82 msec task-clock:u              #    5.255 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               228      page-faults:u             #    0.003 M/sec                  
+       164,651,643      cycles:u                  #    2.393 GHz                      (20.51%)
+        74,012,103      instructions:u            #    0.45  insn per cycle           (37.14%)
+        21,754,288      branches:u                #  316.121 M/sec                    (46.17%)
+            55,848      branch-misses:u           #    0.26% of all branches          (48.92%)
+        11,299,465      L1-dcache-loads:u         #  164.198 M/sec                    (23.31%)
+           166,627      L1-dcache-load-misses:u   #    1.47% of all L1-dcache hits    (20.39%)
+           116,738      LLC-loads:u               #    1.696 M/sec                    (20.34%)
+            52,679      LLC-load-misses:u         #   45.13% of all LL-cache hits     (20.36%)
+
+       0.013095214 seconds time elapsed
+
+       0.066021000 seconds user
+       0.003941000 seconds sys
+
+
+
+real	0m0.030s
+user	0m0.076s
+sys	0m0.011s
+--------------------
+queens_omp test with threads=8 and N=8 x 8
+Computing queens problem with N=8 x 8
+found solutions=92
+
+ Performance counter stats for './queens_omp 8':
+
+             89.55 msec task-clock:u              #    6.150 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               233      page-faults:u             #    0.003 M/sec                  
+       210,223,476      cycles:u                  #    2.348 GHz                      (18.62%)
+        87,301,718      instructions:u            #    0.42  insn per cycle           (29.20%)
+        25,037,180      branches:u                #  279.592 M/sec                    (36.94%)
+            75,543      branch-misses:u           #    0.30% of all branches          (45.14%)
+        14,046,052      L1-dcache-loads:u         #  156.853 M/sec                    (34.78%)
+           178,129      L1-dcache-load-misses:u   #    1.27% of all L1-dcache hits    (27.34%)
+           131,832      LLC-loads:u               #    1.472 M/sec                    (19.32%)
+            70,986      LLC-load-misses:u         #   53.85% of all LL-cache hits     (17.86%)
+
+       0.014560957 seconds time elapsed
+
+       0.086809000 seconds user
+       0.003945000 seconds sys
+
+
+
+real	0m0.032s
+user	0m0.099s
+sys	0m0.009s
+--------------------
+queens_omp_op test with threads=1 and N=8 x 8
+Computing queens problem with N=8 x 8
+found solutions=92
+
+ Performance counter stats for './queens_omp_op 8':
+
+              1.51 msec task-clock:u              #    0.451 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               196      page-faults:u             #    0.130 M/sec                  
+           458,065      cycles:u                  #    0.303 GHz                      (26.14%)
+           626,808      instructions:u            #    1.37  insn per cycle           (72.42%)
+           310,606      branches:u                #  205.487 M/sec                  
+            46,174      branch-misses:u           #   14.87% of all branches          (73.86%)
+     <not counted>      L1-dcache-loads:u                                             (0.00%)
+     <not counted>      L1-dcache-load-misses:u                                       (0.00%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.003350306 seconds time elapsed
+
+       0.001239000 seconds user
+       0.001239000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+
+real	0m0.021s
+user	0m0.009s
+sys	0m0.010s
+--------------------
+queens_omp_op test with threads=2 and N=8 x 8
+Computing queens problem with N=8 x 8
+found solutions=92
+
+ Performance counter stats for './queens_omp_op 8':
+
+              1.76 msec task-clock:u              #    0.507 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               202      page-faults:u             #    0.115 M/sec                  
+                 0      cycles:u                  #    0.000 GHz                      (3.34%)
+         1,355,871      instructions:u                                              
+           350,003      branches:u                #  199.269 M/sec                  
+            36,286      branch-misses:u           #   10.37% of all branches          (96.66%)
+     <not counted>      L1-dcache-loads:u                                             (0.00%)
+     <not counted>      L1-dcache-load-misses:u                                       (0.00%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.003466365 seconds time elapsed
+
+       0.000000000 seconds user
+       0.002679000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+
+real	0m0.021s
+user	0m0.006s
+sys	0m0.013s
+--------------------
+queens_omp_op test with threads=3 and N=8 x 8
+Computing queens problem with N=8 x 8
+found solutions=92
+
+ Performance counter stats for './queens_omp_op 8':
+
+              2.12 msec task-clock:u              #    0.679 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               205      page-faults:u             #    0.097 M/sec                  
+           670,064      cycles:u                  #    0.316 GHz                      (18.51%)
+         1,098,386      instructions:u            #    1.64  insn per cycle           (66.69%)
+           395,526      branches:u                #  186.398 M/sec                  
+            42,744      branch-misses:u           #   10.81% of all branches          (81.49%)
+     <not counted>      L1-dcache-loads:u                                             (0.00%)
+     <not counted>      L1-dcache-load-misses:u                                       (0.00%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.003126531 seconds time elapsed
+
+       0.000000000 seconds user
+       0.003142000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+
+real	0m0.020s
+user	0m0.009s
+sys	0m0.011s
+--------------------
+queens_omp_op test with threads=4 and N=8 x 8
+Computing queens problem with N=8 x 8
+found solutions=92
+
+ Performance counter stats for './queens_omp_op 8':
+
+              2.26 msec task-clock:u              #    0.646 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               208      page-faults:u             #    0.092 M/sec                  
+                 0      cycles:u                  #    0.000 GHz                      (3.41%)
+         1,661,158      instructions:u                                              
+           436,815      branches:u                #  193.590 M/sec                  
+            36,761      branch-misses:u           #    8.42% of all branches          (96.59%)
+     <not counted>      L1-dcache-loads:u                                             (0.00%)
+     <not counted>      L1-dcache-load-misses:u                                       (0.00%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.003494301 seconds time elapsed
+
+       0.000000000 seconds user
+       0.003257000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+
+real	0m0.021s
+user	0m0.006s
+sys	0m0.015s
+--------------------
+queens_omp_op test with threads=5 and N=8 x 8
+Computing queens problem with N=8 x 8
+found solutions=92
+
+ Performance counter stats for './queens_omp_op 8':
+
+              2.84 msec task-clock:u              #    0.810 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               209      page-faults:u             #    0.074 M/sec                  
+         1,146,300      cycles:u                  #    0.404 GHz                      (20.29%)
+         1,495,545      instructions:u            #    1.30  insn per cycle           (51.76%)
+           547,791      branches:u                #  193.009 M/sec                  
+            43,088      branch-misses:u           #    7.87% of all branches          (79.71%)
+     <not counted>      L1-dcache-loads:u                                             (0.00%)
+     <not counted>      L1-dcache-load-misses:u                                       (0.00%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.003503189 seconds time elapsed
+
+       0.000000000 seconds user
+       0.003927000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+
+real	0m0.021s
+user	0m0.009s
+sys	0m0.011s
+--------------------
+queens_omp_op test with threads=6 and N=8 x 8
+Computing queens problem with N=8 x 8
+found solutions=92
+
+ Performance counter stats for './queens_omp_op 8':
+
+              3.36 msec task-clock:u              #    1.003 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               212      page-faults:u             #    0.063 M/sec                  
+         1,029,958      cycles:u                  #    0.307 GHz                      (11.46%)
+           809,147      instructions:u            #    0.79  insn per cycle           (30.87%)
+           665,144      branches:u                #  198.166 M/sec                  
+            39,389      branch-misses:u           #    5.92% of all branches          (88.54%)
+     <not counted>      L1-dcache-loads:u                                             (0.00%)
+     <not counted>      L1-dcache-load-misses:u                                       (0.00%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.003345316 seconds time elapsed
+
+       0.000000000 seconds user
+       0.004462000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+
+real	0m0.021s
+user	0m0.011s
+sys	0m0.010s
+--------------------
+queens_omp_op test with threads=7 and N=8 x 8
+Computing queens problem with N=8 x 8
+found solutions=92
+
+ Performance counter stats for './queens_omp_op 8':
+
+              4.20 msec task-clock:u              #    1.107 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               217      page-faults:u             #    0.052 M/sec                  
+         5,654,097      cycles:u                  #    1.347 GHz                      (70.80%)
+         2,977,835      instructions:u            #    0.53  insn per cycle         
+           812,316      branches:u                #  193.490 M/sec                  
+            48,863      branch-misses:u           #    6.02% of all branches          (29.20%)
+     <not counted>      L1-dcache-loads:u                                             (0.00%)
+     <not counted>      L1-dcache-load-misses:u                                       (0.00%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.003792297 seconds time elapsed
+
+       0.004691000 seconds user
+       0.000670000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+
+real	0m0.021s
+user	0m0.009s
+sys	0m0.013s
+--------------------
+queens_omp_op test with threads=8 and N=8 x 8
+Computing queens problem with N=8 x 8
+found solutions=92
+
+ Performance counter stats for './queens_omp_op 8':
+
+              4.77 msec task-clock:u              #    1.236 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               218      page-faults:u             #    0.046 M/sec                  
+         3,010,366      cycles:u                  #    0.632 GHz                      (17.50%)
+         2,554,609      instructions:u            #    0.85  insn per cycle           (46.95%)
+           922,362      branches:u                #  193.562 M/sec                  
+            38,071      branch-misses:u           #    4.13% of all branches          (82.50%)
+     <not counted>      L1-dcache-loads:u                                             (0.00%)
+     <not counted>      L1-dcache-load-misses:u                                       (0.00%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.003854449 seconds time elapsed
+
+       0.003002000 seconds user
+       0.003002000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+
+real	0m0.021s
+user	0m0.013s
+sys	0m0.010s
+--------------------
+seq for comparison with N=9 x 9
+Computing queens problem with N=9 x 9
+found solutions=352
+
+ Performance counter stats for './queens_seq 9':
+
+              2.84 msec task-clock:u              #    0.604 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               188      page-faults:u             #    0.066 M/sec                  
+         1,871,093      cycles:u                  #    0.659 GHz                      (30.54%)
+         2,797,771      instructions:u            #    1.50  insn per cycle           (48.99%)
+         1,287,782      branches:u                #  453.240 M/sec                    (83.89%)
+           187,368      branch-misses:u           #   14.55% of all branches          (69.46%)
+         1,277,190      L1-dcache-loads:u         #  449.512 M/sec                    (16.11%)
+     <not counted>      L1-dcache-load-misses:u                                       (0.00%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.004705554 seconds time elapsed
+
+       0.002840000 seconds user
+       0.000946000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+
+real	0m0.022s
+user	0m0.014s
+sys	0m0.006s
+--------------------
+queens_omp test with threads=1 and N=9 x 9
+Computing queens problem with N=9 x 9
+found solutions=352
+
+ Performance counter stats for './queens_omp 9':
+
+              4.67 msec task-clock:u              #    0.686 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               205      page-faults:u             #    0.044 M/sec                  
+         5,953,524      cycles:u                  #    1.275 GHz                      (31.27%)
+         9,155,728      instructions:u            #    1.54  insn per cycle           (52.52%)
+         2,548,095      branches:u                #  545.542 M/sec                    (73.94%)
+           152,315      branch-misses:u           #    5.98% of all branches          (64.00%)
+         3,810,389      L1-dcache-loads:u         #  815.797 M/sec                    (26.06%)
+             8,059      L1-dcache-load-misses:u   #    0.21% of all L1-dcache hits    (4.73%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.006805446 seconds time elapsed
+
+       0.004460000 seconds user
+       0.001115000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+
+real	0m0.024s
+user	0m0.011s
+sys	0m0.012s
+--------------------
+queens_omp test with threads=2 and N=9 x 9
+Computing queens problem with N=9 x 9
+found solutions=352
+
+ Performance counter stats for './queens_omp 9':
+
+             24.05 msec task-clock:u              #    1.677 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               214      page-faults:u             #    0.009 M/sec                  
+        41,316,019      cycles:u                  #    1.718 GHz                      (25.17%)
+        26,704,028      instructions:u            #    0.65  insn per cycle           (41.74%)
+         7,298,010      branches:u                #  303.416 M/sec                    (50.01%)
+           155,221      branch-misses:u           #    2.13% of all branches          (49.53%)
+         6,145,016      L1-dcache-loads:u         #  255.480 M/sec                    (25.04%)
+           150,472      L1-dcache-load-misses:u   #    2.45% of all L1-dcache hits    (17.00%)
+           151,645      LLC-loads:u               #    6.305 M/sec                    (16.63%)
+               157      LLC-load-misses:u         #    0.10% of all LL-cache hits     (16.61%)
+
+       0.014345171 seconds time elapsed
+
+       0.019805000 seconds user
+       0.005212000 seconds sys
+
+
+
+real	0m0.031s
+user	0m0.025s
+sys	0m0.017s
+--------------------
+queens_omp test with threads=3 and N=9 x 9
+Computing queens problem with N=9 x 9
+found solutions=352
+
+ Performance counter stats for './queens_omp 9':
+
+             35.39 msec task-clock:u              #    2.421 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               217      page-faults:u             #    0.006 M/sec                  
+        72,646,229      cycles:u                  #    2.053 GHz                      (17.78%)
+        42,009,046      instructions:u            #    0.58  insn per cycle           (34.16%)
+        11,750,759      branches:u                #  332.055 M/sec                    (42.58%)
+           155,241      branch-misses:u           #    1.32% of all branches          (50.24%)
+         8,510,211      L1-dcache-loads:u         #  240.483 M/sec                    (31.97%)
+           102,409      L1-dcache-load-misses:u   #    1.20% of all L1-dcache hits    (23.56%)
+           106,568      LLC-loads:u               #    3.011 M/sec                    (16.95%)
+             1,695      LLC-load-misses:u         #    1.59% of all LL-cache hits     (16.94%)
+
+       0.014618045 seconds time elapsed
+
+       0.030152000 seconds user
+       0.006238000 seconds sys
+
+
+
+real	0m0.032s
+user	0m0.039s
+sys	0m0.014s
+--------------------
+queens_omp test with threads=4 and N=9 x 9
+Computing queens problem with N=9 x 9
+found solutions=352
+
+ Performance counter stats for './queens_omp 9':
+
+             49.70 msec task-clock:u              #    3.256 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               220      page-faults:u             #    0.004 M/sec                  
+       104,181,489      cycles:u                  #    2.096 GHz                      (17.34%)
+        61,138,016      instructions:u            #    0.59  insn per cycle           (30.70%)
+        17,086,479      branches:u                #  343.763 M/sec                    (38.74%)
+           153,567      branch-misses:u           #    0.90% of all branches          (45.52%)
+        11,357,528      L1-dcache-loads:u         #  228.502 M/sec                    (32.16%)
+            99,903      L1-dcache-load-misses:u   #    0.88% of all L1-dcache hits    (28.83%)
+           106,186      LLC-loads:u               #    2.136 M/sec                    (21.06%)
+             7,876      LLC-load-misses:u         #    7.42% of all LL-cache hits     (16.35%)
+
+       0.015265867 seconds time elapsed
+
+       0.044043000 seconds user
+       0.006702000 seconds sys
+
+
+
+real	0m0.032s
+user	0m0.055s
+sys	0m0.013s
+--------------------
+queens_omp test with threads=5 and N=9 x 9
+Computing queens problem with N=9 x 9
+found solutions=352
+
+ Performance counter stats for './queens_omp 9':
+
+             74.60 msec task-clock:u              #    4.085 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               222      page-faults:u             #    0.003 M/sec                  
+       166,283,219      cycles:u                  #    2.229 GHz                      (26.51%)
+        89,094,545      instructions:u            #    0.54  insn per cycle           (34.74%)
+        24,898,187      branches:u                #  333.762 M/sec                    (34.77%)
+           161,100      branch-misses:u           #    0.65% of all branches          (34.19%)
+        15,719,600      L1-dcache-loads:u         #  210.723 M/sec                    (26.31%)
+           182,083      L1-dcache-load-misses:u   #    1.16% of all L1-dcache hits    (26.17%)
+           141,397      LLC-loads:u               #    1.895 M/sec                    (25.90%)
+            30,374      LLC-load-misses:u         #   21.48% of all LL-cache hits     (26.15%)
+
+       0.018260577 seconds time elapsed
+
+       0.070885000 seconds user
+       0.004855000 seconds sys
+
+
+
+real	0m0.036s
+user	0m0.083s
+sys	0m0.010s
+--------------------
+queens_omp test with threads=6 and N=9 x 9
+Computing queens problem with N=9 x 9
+found solutions=352
+
+ Performance counter stats for './queens_omp 9':
+
+            110.55 msec task-clock:u              #    4.880 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               226      page-faults:u             #    0.002 M/sec                  
+       255,792,533      cycles:u                  #    2.314 GHz                      (21.39%)
+       128,685,099      instructions:u            #    0.50  insn per cycle           (35.20%)
+        36,289,048      branches:u                #  328.247 M/sec                    (40.38%)
+           177,108      branch-misses:u           #    0.49% of all branches          (44.54%)
+        21,000,404      L1-dcache-loads:u         #  189.956 M/sec                    (28.53%)
+           260,208      L1-dcache-load-misses:u   #    1.24% of all L1-dcache hits    (23.23%)
+           203,941      LLC-loads:u               #    1.845 M/sec                    (20.62%)
+            52,275      LLC-load-misses:u         #   25.63% of all LL-cache hits     (21.32%)
+
+       0.022655082 seconds time elapsed
+
+       0.106662000 seconds user
+       0.005031000 seconds sys
+
+
+
+real	0m0.040s
+user	0m0.115s
+sys	0m0.013s
+--------------------
+queens_omp test with threads=7 and N=9 x 9
+Computing queens problem with N=9 x 9
+found solutions=352
+
+ Performance counter stats for './queens_omp 9':
+
+            183.58 msec task-clock:u              #    5.777 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               229      page-faults:u             #    0.001 M/sec                  
+       438,561,038      cycles:u                  #    2.389 GHz                      (21.22%)
+       204,303,340      instructions:u            #    0.47  insn per cycle           (33.62%)
+        57,945,516      branches:u                #  315.641 M/sec                    (37.29%)
+           207,680      branch-misses:u           #    0.36% of all branches          (40.93%)
+        32,210,188      L1-dcache-loads:u         #  175.456 M/sec                    (28.27%)
+           434,137      L1-dcache-load-misses:u   #    1.35% of all L1-dcache hits    (27.27%)
+           302,842      LLC-loads:u               #    1.650 M/sec                    (23.86%)
+           134,392      LLC-load-misses:u         #   44.38% of all LL-cache hits     (21.16%)
+
+       0.031775983 seconds time elapsed
+
+       0.180766000 seconds user
+       0.004085000 seconds sys
+
+
+
+real	0m0.049s
+user	0m0.189s
+sys	0m0.013s
+--------------------
+queens_omp test with threads=8 and N=9 x 9
+Computing queens problem with N=9 x 9
+found solutions=352
+
+ Performance counter stats for './queens_omp 9':
+
+            277.03 msec task-clock:u              #    6.794 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               234      page-faults:u             #    0.845 K/sec                  
+       657,351,752      cycles:u                  #    2.373 GHz                      (22.02%)
+       291,949,463      instructions:u            #    0.44  insn per cycle           (33.03%)
+        83,415,821      branches:u                #  301.106 M/sec                    (34.85%)
+           245,993      branch-misses:u           #    0.29% of all branches          (37.97%)
+        45,722,885      L1-dcache-loads:u         #  165.046 M/sec                    (27.13%)
+           605,321      L1-dcache-load-misses:u   #    1.32% of all L1-dcache hits    (26.95%)
+           422,635      LLC-loads:u               #    1.526 M/sec                    (26.50%)
+           218,734      LLC-load-misses:u         #   51.75% of all LL-cache hits     (24.59%)
+
+       0.040774321 seconds time elapsed
+
+       0.267386000 seconds user
+       0.010893000 seconds sys
+
+
+
+real	0m0.058s
+user	0m0.277s
+sys	0m0.019s
+--------------------
+queens_omp_op test with threads=1 and N=9 x 9
+Computing queens problem with N=9 x 9
+found solutions=352
+
+ Performance counter stats for './queens_omp_op 9':
+
+              2.85 msec task-clock:u              #    0.599 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               197      page-faults:u             #    0.069 M/sec                  
+         1,783,111      cycles:u                  #    0.625 GHz                      (27.98%)
+         2,601,361      instructions:u            #    1.46  insn per cycle           (46.16%)
+         1,282,697      branches:u                #  449.725 M/sec                    (80.93%)
+           182,078      branch-misses:u           #   14.19% of all branches          (72.02%)
+         1,038,921      L1-dcache-loads:u         #  364.255 M/sec                    (19.07%)
+     <not counted>      L1-dcache-load-misses:u                                       (0.00%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.004758674 seconds time elapsed
+
+       0.001904000 seconds user
+       0.001904000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+
+real	0m0.023s
+user	0m0.011s
+sys	0m0.010s
+--------------------
+queens_omp_op test with threads=2 and N=9 x 9
+Computing queens problem with N=9 x 9
+found solutions=352
+
+ Performance counter stats for './queens_omp_op 9':
+
+              3.38 msec task-clock:u              #    0.810 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               203      page-faults:u             #    0.060 M/sec                  
+           196,187      cycles:u                  #    0.058 GHz                      (5.23%)
+         4,995,923      instructions:u            #   25.47  insn per cycle           (71.53%)
+         1,433,437      branches:u                #  424.611 M/sec                    (99.61%)
+           143,535      branch-misses:u           #   10.01% of all branches          (94.77%)
+                 0      L1-dcache-loads:u         #    0.000 K/sec                    (0.39%)
+     <not counted>      L1-dcache-load-misses:u                                       (0.00%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.004168508 seconds time elapsed
+
+       0.001742000 seconds user
+       0.002613000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+
+real	0m0.022s
+user	0m0.011s
+sys	0m0.011s
+--------------------
+queens_omp_op test with threads=3 and N=9 x 9
+Computing queens problem with N=9 x 9
+found solutions=352
+
+ Performance counter stats for './queens_omp_op 9':
+
+              3.53 msec task-clock:u              #    0.934 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               205      page-faults:u             #    0.058 M/sec                  
+         2,225,182      cycles:u                  #    0.631 GHz                      (24.29%)
+         4,204,608      instructions:u            #    1.89  insn per cycle           (63.67%)
+         1,406,478      branches:u                #  398.624 M/sec                  
+           174,923      branch-misses:u           #   12.44% of all branches          (75.71%)
+     <not counted>      L1-dcache-loads:u                                             (0.00%)
+     <not counted>      L1-dcache-load-misses:u                                       (0.00%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.003776213 seconds time elapsed
+
+       0.003696000 seconds user
+       0.000924000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+
+real	0m0.021s
+user	0m0.009s
+sys	0m0.012s
+--------------------
+queens_omp_op test with threads=4 and N=9 x 9
+Computing queens problem with N=9 x 9
+found solutions=352
+
+ Performance counter stats for './queens_omp_op 9':
+
+              4.17 msec task-clock:u              #    1.104 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               206      page-faults:u             #    0.049 M/sec                  
+         7,234,503      cycles:u                  #    1.737 GHz                      (81.48%)
+         6,072,081      instructions:u            #    0.84  insn per cycle         
+         1,652,659      branches:u                #  396.714 M/sec                  
+            41,285      branch-misses:u           #    2.50% of all branches          (18.52%)
+     <not counted>      L1-dcache-loads:u                                             (0.00%)
+     <not counted>      L1-dcache-load-misses:u                                       (0.00%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.003772023 seconds time elapsed
+
+       0.004145000 seconds user
+       0.001036000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+
+real	0m0.021s
+user	0m0.009s
+sys	0m0.013s
+--------------------
+queens_omp_op test with threads=5 and N=9 x 9
+Computing queens problem with N=9 x 9
+found solutions=352
+
+ Performance counter stats for './queens_omp_op 9':
+
+              4.31 msec task-clock:u              #    1.157 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               209      page-faults:u             #    0.049 M/sec                  
+                 0      cycles:u                  #    0.000 GHz                      (3.06%)
+         6,017,274      instructions:u                                                (78.02%)
+         1,620,496      branches:u                #  376.068 M/sec                  
+           141,501      branch-misses:u           #    8.73% of all branches          (96.94%)
+     <not counted>      L1-dcache-loads:u                                             (0.00%)
+     <not counted>      L1-dcache-load-misses:u                                       (0.00%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.003725923 seconds time elapsed
+
+       0.004480000 seconds user
+       0.000896000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+
+real	0m0.021s
+user	0m0.008s
+sys	0m0.014s
+--------------------
+queens_omp_op test with threads=6 and N=9 x 9
+Computing queens problem with N=9 x 9
+found solutions=352
+
+ Performance counter stats for './queens_omp_op 9':
+
+             11.87 msec task-clock:u              #    2.230 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               211      page-faults:u             #    0.018 M/sec                  
+         3,955,135      cycles:u                  #    0.333 GHz                      (3.57%)
+         2,980,730      instructions:u            #    0.75  insn per cycle           (7.86%)
+         3,790,755      branches:u                #  319.367 M/sec                    (43.44%)
+           133,133      branch-misses:u           #    3.51% of all branches          (83.45%)
+         2,983,717      L1-dcache-loads:u         #  251.375 M/sec                    (56.56%)
+             4,409      L1-dcache-load-misses:u   #    0.15% of all L1-dcache hits    (12.97%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.005323645 seconds time elapsed
+
+       0.011089000 seconds user
+       0.001848000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+
+real	0m0.022s
+user	0m0.019s
+sys	0m0.011s
+--------------------
+queens_omp_op test with threads=7 and N=9 x 9
+Computing queens problem with N=9 x 9
+found solutions=352
+
+ Performance counter stats for './queens_omp_op 9':
+
+              6.45 msec task-clock:u              #    1.513 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               214      page-faults:u             #    0.033 M/sec                  
+         4,272,170      cycles:u                  #    0.663 GHz                      (13.64%)
+         4,577,211      instructions:u            #    1.07  insn per cycle           (44.39%)
+         2,052,998      branches:u                #  318.370 M/sec                  
+           153,582      branch-misses:u           #    7.48% of all branches          (86.36%)
+     <not counted>      L1-dcache-loads:u                                             (0.00%)
+     <not counted>      L1-dcache-load-misses:u                                       (0.00%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.004261243 seconds time elapsed
+
+       0.005067000 seconds user
+       0.002533000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+
+real	0m0.021s
+user	0m0.015s
+sys	0m0.009s
+--------------------
+queens_omp_op test with threads=8 and N=9 x 9
+Computing queens problem with N=9 x 9
+found solutions=352
+
+ Performance counter stats for './queens_omp_op 9':
+
+              7.84 msec task-clock:u              #    2.030 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               217      page-faults:u             #    0.028 M/sec                  
+         3,137,600      cycles:u                  #    0.400 GHz                      (6.85%)
+         4,611,658      instructions:u            #    1.47  insn per cycle           (28.85%)
+         2,064,506      branches:u                #  263.267 M/sec                  
+           146,466      branch-misses:u           #    7.09% of all branches          (93.15%)
+     <not counted>      L1-dcache-loads:u                                             (0.00%)
+     <not counted>      L1-dcache-load-misses:u                                       (0.00%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.003863006 seconds time elapsed
+
+       0.003013000 seconds user
+       0.006026000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+
+real	0m0.021s
+user	0m0.012s
+sys	0m0.014s
+--------------------
+seq for comparison with N=10 x 10
+Computing queens problem with N=10 x 10
+found solutions=724
+
+ Performance counter stats for './queens_seq 10':
+
+              9.53 msec task-clock:u              #    0.852 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               188      page-faults:u             #    0.020 M/sec                  
+        19,332,031      cycles:u                  #    2.028 GHz                      (26.74%)
+        21,106,360      instructions:u            #    1.09  insn per cycle           (43.65%)
+         5,745,820      branches:u                #  602.798 M/sec                    (47.70%)
+           598,159      branch-misses:u           #   10.41% of all branches          (41.90%)
+         5,763,173      L1-dcache-loads:u         #  604.619 M/sec                    (20.93%)
+               196      L1-dcache-load-misses:u   #    0.00% of all L1-dcache hits    (20.95%)
+               191      LLC-loads:u               #    0.020 M/sec                    (20.91%)
+                 5      LLC-load-misses:u         #    2.62% of all LL-cache hits     (20.87%)
+
+       0.011184450 seconds time elapsed
+
+       0.009492000 seconds user
+       0.000949000 seconds sys
+
+
+
+real	0m0.028s
+user	0m0.018s
+sys	0m0.009s
+--------------------
+queens_omp test with threads=1 and N=10 x 10
+Computing queens problem with N=10 x 10
+found solutions=724
+
+ Performance counter stats for './queens_omp 10':
+
+             17.33 msec task-clock:u              #    0.901 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               205      page-faults:u             #    0.012 M/sec                  
+        40,693,641      cycles:u                  #    2.349 GHz                      (24.28%)
+        45,814,723      instructions:u            #    1.13  insn per cycle           (42.38%)
+        11,194,621      branches:u                #  646.063 M/sec                    (42.36%)
+           532,365      branch-misses:u           #    4.76% of all branches          (41.14%)
+        15,533,954      L1-dcache-loads:u         #  896.494 M/sec                    (23.05%)
+             1,144      L1-dcache-load-misses:u   #    0.01% of all L1-dcache hits    (23.07%)
+             1,527      LLC-loads:u               #    0.088 M/sec                    (23.06%)
+                 0      LLC-load-misses:u         #    0.00% of all LL-cache hits     (23.04%)
+
+       0.019235310 seconds time elapsed
+
+       0.017223000 seconds user
+       0.001013000 seconds sys
+
+
+
+real	0m0.036s
+user	0m0.028s
+sys	0m0.007s
+--------------------
+queens_omp test with threads=2 and N=10 x 10
+Computing queens problem with N=10 x 10
+found solutions=724
+
+ Performance counter stats for './queens_omp 10':
+
+             64.25 msec task-clock:u              #    1.250 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               214      page-faults:u             #    0.003 M/sec                  
+       106,497,157      cycles:u                  #    1.658 GHz                      (26.29%)
+        71,060,026      instructions:u            #    0.67  insn per cycle           (38.80%)
+        19,028,615      branches:u                #  296.174 M/sec                    (41.85%)
+           674,466      branch-misses:u           #    3.54% of all branches          (37.68%)
+        19,273,774      L1-dcache-loads:u         #  299.990 M/sec                    (23.72%)
+           585,331      L1-dcache-load-misses:u   #    3.04% of all L1-dcache hits    (23.59%)
+           577,356      LLC-loads:u               #    8.986 M/sec                    (23.43%)
+               196      LLC-load-misses:u         #    0.03% of all LL-cache hits     (23.43%)
+
+       0.051401571 seconds time elapsed
+
+       0.050364000 seconds user
+       0.014922000 seconds sys
+
+
+
+real	0m0.068s
+user	0m0.060s
+sys	0m0.022s
+--------------------
+queens_omp test with threads=3 and N=10 x 10
+Computing queens problem with N=10 x 10
+found solutions=724
+
+ Performance counter stats for './queens_omp 10':
+
+            111.30 msec task-clock:u              #    2.173 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               220      page-faults:u             #    0.002 M/sec                  
+       223,552,979      cycles:u                  #    2.009 GHz                      (24.80%)
+       139,238,290      instructions:u            #    0.62  insn per cycle           (37.19%)
+        37,936,503      branches:u                #  340.864 M/sec                    (37.57%)
+           691,213      branch-misses:u           #    1.82% of all branches          (37.09%)
+        29,326,478      L1-dcache-loads:u         #  263.502 M/sec                    (24.35%)
+           402,280      L1-dcache-load-misses:u   #    1.37% of all L1-dcache hits    (24.94%)
+           385,283      LLC-loads:u               #    3.462 M/sec                    (25.85%)
+             2,020      LLC-load-misses:u         #    0.52% of all LL-cache hits     (25.40%)
+
+       0.051206158 seconds time elapsed
+
+       0.096429000 seconds user
+       0.015905000 seconds sys
+
+
+
+real	0m0.068s
+user	0m0.104s
+sys	0m0.025s
+--------------------
+queens_omp test with threads=4 and N=10 x 10
+Computing queens problem with N=10 x 10
+found solutions=724
+
+ Performance counter stats for './queens_omp 10':
+
+            165.09 msec task-clock:u              #    3.124 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               222      page-faults:u             #    0.001 M/sec                  
+       359,164,699      cycles:u                  #    2.176 GHz                      (24.42%)
+       217,208,496      instructions:u            #    0.60  insn per cycle           (37.56%)
+        59,937,223      branches:u                #  363.059 M/sec                    (40.04%)
+           658,924      branch-misses:u           #    1.10% of all branches          (39.66%)
+        40,281,783      L1-dcache-loads:u         #  244.000 M/sec                    (24.46%)
+           513,658      L1-dcache-load-misses:u   #    1.28% of all L1-dcache hits    (24.09%)
+           546,169      LLC-loads:u               #    3.308 M/sec                    (23.80%)
+            12,065      LLC-load-misses:u         #    2.21% of all LL-cache hits     (23.52%)
+
+       0.052841155 seconds time elapsed
+
+       0.147549000 seconds user
+       0.018689000 seconds sys
+
+
+
+real	0m0.070s
+user	0m0.158s
+sys	0m0.025s
+--------------------
+queens_omp test with threads=5 and N=10 x 10
+Computing queens problem with N=10 x 10
+found solutions=724
+
+ Performance counter stats for './queens_omp 10':
+
+            232.83 msec task-clock:u              #    4.053 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               221      page-faults:u             #    0.949 K/sec                  
+       519,250,854      cycles:u                  #    2.230 GHz                      (24.03%)
+       301,478,205      instructions:u            #    0.58  insn per cycle           (35.40%)
+        84,229,571      branches:u                #  361.757 M/sec                    (35.43%)
+           695,196      branch-misses:u           #    0.83% of all branches          (37.22%)
+        52,335,032      L1-dcache-loads:u         #  224.773 M/sec                    (25.79%)
+           505,417      L1-dcache-load-misses:u   #    0.97% of all L1-dcache hits    (26.08%)
+           450,719      LLC-loads:u               #    1.936 M/sec                    (25.93%)
+            53,441      LLC-load-misses:u         #   11.86% of all LL-cache hits     (25.53%)
+
+       0.057450992 seconds time elapsed
+
+       0.211260000 seconds user
+       0.022705000 seconds sys
+
+
+
+real	0m0.075s
+user	0m0.221s
+sys	0m0.029s
+--------------------
+queens_omp test with threads=6 and N=10 x 10
+Computing queens problem with N=10 x 10
+found solutions=724
+
+ Performance counter stats for './queens_omp 10':
+
+            349.20 msec task-clock:u              #    5.000 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               226      page-faults:u             #    0.647 K/sec                  
+       813,737,660      cycles:u                  #    2.330 GHz                      (24.02%)
+       437,052,070      instructions:u            #    0.54  insn per cycle           (37.27%)
+       123,076,298      branches:u                #  352.454 M/sec                    (38.75%)
+           739,234      branch-misses:u           #    0.60% of all branches          (40.22%)
+        72,870,850      L1-dcache-loads:u         #  208.681 M/sec                    (25.40%)
+           724,492      L1-dcache-load-misses:u   #    0.99% of all L1-dcache hits    (23.98%)
+           607,918      LLC-loads:u               #    1.741 M/sec                    (23.82%)
+           162,825      LLC-load-misses:u         #   26.78% of all LL-cache hits     (23.82%)
+
+       0.069845290 seconds time elapsed
+
+       0.333615000 seconds user
+       0.016829000 seconds sys
+
+
+
+real	0m0.087s
+user	0m0.343s
+sys	0m0.024s
+--------------------
+queens_omp test with threads=7 and N=10 x 10
+Computing queens problem with N=10 x 10
+found solutions=724
+
+ Performance counter stats for './queens_omp 10':
+
+            560.55 msec task-clock:u              #    5.957 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               227      page-faults:u             #    0.405 K/sec                  
+     1,330,113,602      cycles:u                  #    2.373 GHz                      (24.23%)
+       670,554,423      instructions:u            #    0.50  insn per cycle           (37.13%)
+       189,377,487      branches:u                #  337.844 M/sec                    (38.11%)
+           779,772      branch-misses:u           #    0.41% of all branches          (39.06%)
+       106,316,855      L1-dcache-loads:u         #  189.666 M/sec                    (25.44%)
+         1,497,734      L1-dcache-load-misses:u   #    1.41% of all L1-dcache hits    (24.64%)
+         1,003,672      LLC-loads:u               #    1.791 M/sec                    (24.30%)
+           321,868      LLC-load-misses:u         #   32.07% of all LL-cache hits     (24.22%)
+
+       0.094100016 seconds time elapsed
+
+       0.538890000 seconds user
+       0.022952000 seconds sys
+
+
+
+real	0m0.111s
+user	0m0.548s
+sys	0m0.031s
+--------------------
+queens_omp test with threads=8 and N=10 x 10
+Computing queens problem with N=10 x 10
+found solutions=724
+
+ Performance counter stats for './queens_omp 10':
+
+            869.11 msec task-clock:u              #    6.783 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               235      page-faults:u             #    0.270 K/sec                  
+     2,087,900,056      cycles:u                  #    2.402 GHz                      (24.22%)
+       983,500,493      instructions:u            #    0.47  insn per cycle           (36.60%)
+       278,995,020      branches:u                #  321.012 M/sec                    (37.58%)
+           934,308      branch-misses:u           #    0.33% of all branches          (38.18%)
+       153,162,423      L1-dcache-loads:u         #  176.229 M/sec                    (25.77%)
+         1,857,742      L1-dcache-load-misses:u   #    1.21% of all L1-dcache hits    (25.25%)
+         1,282,039      LLC-loads:u               #    1.475 M/sec                    (24.72%)
+           629,019      LLC-load-misses:u         #   49.06% of all LL-cache hits     (24.27%)
+
+       0.128136074 seconds time elapsed
+
+       0.855723000 seconds user
+       0.014995000 seconds sys
+
+
+
+real	0m0.145s
+user	0m0.867s
+sys	0m0.021s
+--------------------
+queens_omp_op test with threads=1 and N=10 x 10
+Computing queens problem with N=10 x 10
+found solutions=724
+
+ Performance counter stats for './queens_omp_op 10':
+
+              9.54 msec task-clock:u              #    0.667 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               196      page-faults:u             #    0.021 M/sec                  
+        19,219,194      cycles:u                  #    2.014 GHz                      (26.74%)
+        20,463,033      instructions:u            #    1.06  insn per cycle           (41.90%)
+         5,655,105      branches:u                #  592.685 M/sec                    (47.70%)
+           600,557      branch-misses:u           #   10.62% of all branches          (41.85%)
+         4,800,955      L1-dcache-loads:u         #  503.165 M/sec                    (20.92%)
+               172      L1-dcache-load-misses:u   #    0.00% of all L1-dcache hits    (20.93%)
+               191      LLC-loads:u               #    0.020 M/sec                    (20.93%)
+                 0      LLC-load-misses:u         #    0.00% of all LL-cache hits     (20.92%)
+
+       0.014314310 seconds time elapsed
+
+       0.007256000 seconds user
+       0.003224000 seconds sys
+
+
+
+real	0m0.032s
+user	0m0.020s
+sys	0m0.008s
+--------------------
+queens_omp_op test with threads=2 and N=10 x 10
+Computing queens problem with N=10 x 10
+found solutions=724
+
+ Performance counter stats for './queens_omp_op 10':
+
+             10.02 msec task-clock:u              #    1.372 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               203      page-faults:u             #    0.020 M/sec                  
+         4,018,844      cycles:u                  #    0.401 GHz                      (5.42%)
+         4,724,240      instructions:u            #    1.18  insn per cycle           (12.91%)
+         5,149,223      branches:u                #  513.916 M/sec                    (32.73%)
+           627,685      branch-misses:u           #   12.19% of all branches          (47.21%)
+         4,997,087      L1-dcache-loads:u         #  498.732 M/sec                    (39.83%)
+               221      L1-dcache-load-misses:u   #    0.00% of all L1-dcache hits    (39.87%)
+             1,355      LLC-loads:u               #    0.135 M/sec                    (27.44%)
+               253      LLC-load-misses:u         #   18.67% of all LL-cache hits     (7.50%)
+
+       0.007305378 seconds time elapsed
+
+       0.009148000 seconds user
+       0.001829000 seconds sys
+
+
+
+real	0m0.025s
+user	0m0.020s
+sys	0m0.008s
+--------------------
+queens_omp_op test with threads=3 and N=10 x 10
+Computing queens problem with N=10 x 10
+found solutions=724
+
+ Performance counter stats for './queens_omp_op 10':
+
+             11.58 msec task-clock:u              #    1.820 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               206      page-faults:u             #    0.018 M/sec                  
+                 0      cycles:u                  #    0.000 GHz                      (1.34%)
+        20,844,067      instructions:u                                                (28.39%)
+         7,250,550      branches:u                #  626.151 M/sec                    (54.29%)
+           718,981      branch-misses:u           #    9.92% of all branches          (78.70%)
+         4,548,457      L1-dcache-loads:u         #  392.801 M/sec                    (45.71%)
+             2,554      L1-dcache-load-misses:u   #    0.06% of all L1-dcache hits    (19.97%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.006364088 seconds time elapsed
+
+       0.010283000 seconds user
+       0.002285000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+
+real	0m0.023s
+user	0m0.019s
+sys	0m0.010s
+--------------------
+queens_omp_op test with threads=4 and N=10 x 10
+Computing queens problem with N=10 x 10
+found solutions=724
+
+ Performance counter stats for './queens_omp_op 10':
+
+             12.23 msec task-clock:u              #    2.064 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               208      page-faults:u             #    0.017 M/sec                  
+         5,570,530      cycles:u                  #    0.456 GHz                      (4.68%)
+        20,745,805      instructions:u            #    3.72  insn per cycle           (26.23%)
+         7,461,408      branches:u                #  610.124 M/sec                    (58.84%)
+           675,199      branch-misses:u           #    9.05% of all branches          (83.64%)
+         4,635,315      L1-dcache-loads:u         #  379.033 M/sec                    (41.16%)
+               574      L1-dcache-load-misses:u   #    0.01% of all L1-dcache hits    (11.68%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.005925762 seconds time elapsed
+
+       0.012163000 seconds user
+       0.001105000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+
+real	0m0.023s
+user	0m0.020s
+sys	0m0.010s
+--------------------
+queens_omp_op test with threads=5 and N=10 x 10
+Computing queens problem with N=10 x 10
+found solutions=724
+
+ Performance counter stats for './queens_omp_op 10':
+
+             11.02 msec task-clock:u              #    2.278 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               210      page-faults:u             #    0.019 M/sec                  
+         3,435,084      cycles:u                  #    0.312 GHz                      (3.54%)
+        14,031,502      instructions:u            #    4.08  insn per cycle           (18.82%)
+         6,565,168      branches:u                #  595.772 M/sec                    (61.52%)
+           650,199      branch-misses:u           #    9.90% of all branches          (94.45%)
+         4,773,399      L1-dcache-loads:u         #  433.174 M/sec                    (38.48%)
+                 0      L1-dcache-load-misses:u   #    0.00% of all L1-dcache hits    (2.01%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.004838455 seconds time elapsed
+
+       0.004315000 seconds user
+       0.007767000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+
+real	0m0.022s
+user	0m0.014s
+sys	0m0.015s
+--------------------
+queens_omp_op test with threads=6 and N=10 x 10
+Computing queens problem with N=10 x 10
+found solutions=724
+
+ Performance counter stats for './queens_omp_op 10':
+
+             13.33 msec task-clock:u              #    2.524 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               213      page-faults:u             #    0.016 M/sec                  
+         4,935,866      cycles:u                  #    0.370 GHz                      (4.05%)
+        25,217,886      instructions:u            #    5.11  insn per cycle           (45.63%)
+         7,896,888      branches:u                #  592.415 M/sec                    (90.55%)
+           639,515      branch-misses:u           #    8.10% of all branches          (95.95%)
+         2,976,720      L1-dcache-loads:u         #  223.310 M/sec                    (9.45%)
+     <not counted>      L1-dcache-load-misses:u                                       (0.00%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.005280767 seconds time elapsed
+
+       0.012530000 seconds user
+       0.001927000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+
+real	0m0.022s
+user	0m0.021s
+sys	0m0.010s
+--------------------
+queens_omp_op test with threads=7 and N=10 x 10
+Computing queens problem with N=10 x 10
+found solutions=724
+
+ Performance counter stats for './queens_omp_op 10':
+
+             22.86 msec task-clock:u              #    3.550 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               212      page-faults:u             #    0.009 M/sec                  
+                 0      cycles:u                  #    0.000 GHz                      (0.06%)
+        27,551,665      instructions:u                                                (16.51%)
+         9,535,692      branches:u                #  417.088 M/sec                    (46.97%)
+           621,440      branch-misses:u           #    6.52% of all branches          (73.38%)
+         8,095,565      L1-dcache-loads:u         #  354.098 M/sec                    (52.27%)
+             4,628      L1-dcache-load-misses:u   #    0.06% of all L1-dcache hits    (26.55%)
+                 0      LLC-loads:u               #    0.000 K/sec                    (0.76%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.006439566 seconds time elapsed
+
+       0.016874000 seconds user
+       0.007105000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+
+real	0m0.024s
+user	0m0.024s
+sys	0m0.017s
+--------------------
+queens_omp_op test with threads=8 and N=10 x 10
+Computing queens problem with N=10 x 10
+found solutions=724
+
+ Performance counter stats for './queens_omp_op 10':
+
+             18.59 msec task-clock:u              #    3.274 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               219      page-faults:u             #    0.012 M/sec                  
+         5,233,876      cycles:u                  #    0.282 GHz                      (1.56%)
+        25,832,505      instructions:u            #    4.94  insn per cycle           (30.00%)
+         8,903,969      branches:u                #  479.045 M/sec                    (72.99%)
+           624,678      branch-misses:u           #    7.02% of all branches          (98.44%)
+         4,585,505      L1-dcache-loads:u         #  246.706 M/sec                    (27.01%)
+     <not counted>      L1-dcache-load-misses:u                                       (0.00%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.005677816 seconds time elapsed
+
+       0.017569000 seconds user
+       0.002196000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+
+real	0m0.023s
+user	0m0.026s
+sys	0m0.010s
+--------------------
+seq for comparison with N=11 x 11
+Computing queens problem with N=11 x 11
+found solutions=2680
+
+ Performance counter stats for './queens_seq 11':
+
+             45.50 msec task-clock:u              #    0.959 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               188      page-faults:u             #    0.004 M/sec                  
+       107,784,933      cycles:u                  #    2.369 GHz                      (23.11%)
+       124,969,734      instructions:u            #    1.16  insn per cycle           (35.19%)
+        35,106,605      branches:u                #  771.544 M/sec                    (37.38%)
+         3,106,239      branch-misses:u           #    8.85% of all branches          (38.43%)
+        28,113,962      L1-dcache-loads:u         #  617.866 M/sec                    (26.36%)
+               698      L1-dcache-load-misses:u   #    0.00% of all L1-dcache hits    (26.36%)
+             1,345      LLC-loads:u               #    0.030 M/sec                    (25.28%)
+                 9      LLC-load-misses:u         #    0.67% of all LL-cache hits     (23.08%)
+
+       0.047436504 seconds time elapsed
+
+       0.045407000 seconds user
+       0.000987000 seconds sys
+
+
+
+real	0m0.065s
+user	0m0.054s
+sys	0m0.009s
+--------------------
+queens_omp test with threads=1 and N=11 x 11
+Computing queens problem with N=11 x 11
+found solutions=2680
+
+ Performance counter stats for './queens_omp 11':
+
+             82.03 msec task-clock:u              #    0.980 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               205      page-faults:u             #    0.002 M/sec                  
+       195,685,097      cycles:u                  #    2.385 GHz                      (26.39%)
+       246,710,707      instructions:u            #    1.26  insn per cycle           (39.07%)
+        61,590,672      branches:u                #  750.812 M/sec                    (39.07%)
+         2,921,105      branch-misses:u           #    4.74% of all branches          (37.05%)
+        71,575,303      L1-dcache-loads:u         #  872.528 M/sec                    (24.37%)
+             7,123      L1-dcache-load-misses:u   #    0.01% of all L1-dcache hits    (24.37%)
+             6,689      LLC-loads:u               #    0.082 M/sec                    (24.37%)
+                 0      LLC-load-misses:u         #    0.00% of all LL-cache hits     (24.37%)
+
+       0.083748902 seconds time elapsed
+
+       0.081949000 seconds user
+       0.001011000 seconds sys
+
+
+
+real	0m0.100s
+user	0m0.090s
+sys	0m0.010s
+--------------------
+queens_omp test with threads=2 and N=11 x 11
+Computing queens problem with N=11 x 11
+found solutions=2680
+
+ Performance counter stats for './queens_omp 11':
+
+            242.52 msec task-clock:u              #    1.062 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               214      page-faults:u             #    0.882 K/sec                  
+       388,577,578      cycles:u                  #    1.602 GHz                      (24.77%)
+       279,280,260      instructions:u            #    0.72  insn per cycle           (38.20%)
+        71,370,718      branches:u                #  294.289 M/sec                    (38.72%)
+         3,389,662      branch-misses:u           #    4.75% of all branches          (38.64%)
+        81,031,002      L1-dcache-loads:u         #  334.122 M/sec                    (24.80%)
+         1,991,156      L1-dcache-load-misses:u   #    2.46% of all L1-dcache hits    (24.22%)
+         1,830,572      LLC-loads:u               #    7.548 M/sec                    (24.22%)
+               244      LLC-load-misses:u         #    0.01% of all LL-cache hits     (24.62%)
+
+       0.228443460 seconds time elapsed
+
+       0.173678000 seconds user
+       0.069870000 seconds sys
+
+
+
+real	0m0.245s
+user	0m0.183s
+sys	0m0.077s
+--------------------
+queens_omp test with threads=3 and N=11 x 11
+Computing queens problem with N=11 x 11
+found solutions=2680
+
+ Performance counter stats for './queens_omp 11':
+
+            375.23 msec task-clock:u              #    1.637 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               218      page-faults:u             #    0.581 K/sec                  
+       698,029,387      cycles:u                  #    1.860 GHz                      (24.80%)
+       470,530,239      instructions:u            #    0.67  insn per cycle           (37.96%)
+       125,225,562      branches:u                #  333.730 M/sec                    (38.35%)
+         3,451,751      branch-misses:u           #    2.76% of all branches          (38.25%)
+       106,934,302      L1-dcache-loads:u         #  284.983 M/sec                    (24.90%)
+         1,686,334      L1-dcache-load-misses:u   #    1.58% of all L1-dcache hits    (24.79%)
+         1,700,723      LLC-loads:u               #    4.532 M/sec                    (24.36%)
+             2,664      LLC-load-misses:u         #    0.16% of all LL-cache hits     (24.55%)
+
+       0.229277391 seconds time elapsed
+
+       0.308775000 seconds user
+       0.068277000 seconds sys
+
+
+
+real	0m0.246s
+user	0m0.318s
+sys	0m0.075s
+--------------------
+queens_omp test with threads=4 and N=11 x 11
+Computing queens problem with N=11 x 11
+found solutions=2680
+
+ Performance counter stats for './queens_omp 11':
+
+            605.15 msec task-clock:u              #    2.616 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               226      page-faults:u             #    0.373 K/sec                  
+     1,277,258,249      cycles:u                  #    2.111 GHz                      (24.75%)
+       802,687,061      instructions:u            #    0.63  insn per cycle           (37.23%)
+       218,515,737      branches:u                #  361.094 M/sec                    (38.06%)
+         3,700,089      branch-misses:u           #    1.69% of all branches          (38.27%)
+       155,205,983      L1-dcache-loads:u         #  256.475 M/sec                    (25.48%)
+         1,675,236      L1-dcache-load-misses:u   #    1.08% of all L1-dcache hits    (24.80%)
+         1,596,027      LLC-loads:u               #    2.637 M/sec                    (24.24%)
+            16,291      LLC-load-misses:u         #    1.02% of all LL-cache hits     (24.40%)
+
+       0.231324723 seconds time elapsed
+
+       0.528688000 seconds user
+       0.078214000 seconds sys
+
+
+
+real	0m0.249s
+user	0m0.538s
+sys	0m0.086s
+--------------------
+queens_omp test with threads=5 and N=11 x 11
+Computing queens problem with N=11 x 11
+found solutions=2680
+
+ Performance counter stats for './queens_omp 11':
+
+            867.71 msec task-clock:u              #    3.554 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               224      page-faults:u             #    0.258 K/sec                  
+     1,903,500,848      cycles:u                  #    2.194 GHz                      (24.94%)
+     1,161,142,068      instructions:u            #    0.61  insn per cycle           (37.56%)
+       324,783,119      branches:u                #  374.298 M/sec                    (37.13%)
+         3,305,100      branch-misses:u           #    1.02% of all branches          (37.56%)
+       207,324,141      L1-dcache-loads:u         #  238.932 M/sec                    (25.02%)
+         2,174,326      L1-dcache-load-misses:u   #    1.05% of all L1-dcache hits    (25.25%)
+         1,994,346      LLC-loads:u               #    2.298 M/sec                    (25.14%)
+            88,054      LLC-load-misses:u         #    4.42% of all LL-cache hits     (24.97%)
+
+       0.244120566 seconds time elapsed
+
+       0.811627000 seconds user
+       0.057973000 seconds sys
+
+
+
+real	0m0.262s
+user	0m0.817s
+sys	0m0.070s
+--------------------
+queens_omp test with threads=6 and N=11 x 11
+Computing queens problem with N=11 x 11
+found solutions=2680
+
+ Performance counter stats for './queens_omp 11':
+
+          1,143.54 msec task-clock:u              #    4.529 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               225      page-faults:u             #    0.197 K/sec                  
+     2,605,341,287      cycles:u                  #    2.278 GHz                      (24.26%)
+     1,534,680,121      instructions:u            #    0.59  insn per cycle           (36.87%)
+       430,503,132      branches:u                #  376.464 M/sec                    (37.32%)
+         3,421,260      branch-misses:u           #    0.79% of all branches          (37.78%)
+       262,000,578      L1-dcache-loads:u         #  229.113 M/sec                    (25.45%)
+         2,324,121      L1-dcache-load-misses:u   #    0.89% of all L1-dcache hits    (25.58%)
+         2,086,866      LLC-loads:u               #    1.825 M/sec                    (25.05%)
+           185,433      LLC-load-misses:u         #    8.89% of all LL-cache hits     (24.55%)
+
+       0.252510118 seconds time elapsed
+
+       1.079544000 seconds user
+       0.065850000 seconds sys
+
+
+
+real	0m0.270s
+user	0m1.092s
+sys	0m0.071s
+--------------------
+queens_omp test with threads=7 and N=11 x 11
+Computing queens problem with N=11 x 11
+found solutions=2680
+
+ Performance counter stats for './queens_omp 11':
+
+          1,775.00 msec task-clock:u              #    5.419 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               228      page-faults:u             #    0.128 K/sec                  
+     4,161,727,131      cycles:u                  #    2.345 GHz                      (24.58%)
+     2,257,232,470      instructions:u            #    0.54  insn per cycle           (37.12%)
+       636,802,179      branches:u                #  358.761 M/sec                    (37.41%)
+         3,657,764      branch-misses:u           #    0.57% of all branches          (37.97%)
+       366,556,409      L1-dcache-loads:u         #  206.510 M/sec                    (25.27%)
+         4,001,619      L1-dcache-load-misses:u   #    1.09% of all L1-dcache hits    (25.11%)
+         3,235,937      LLC-loads:u               #    1.823 M/sec                    (24.95%)
+           721,306      LLC-load-misses:u         #   22.29% of all LL-cache hits     (24.71%)
+
+       0.327575668 seconds time elapsed
+
+       1.693459000 seconds user
+       0.083367000 seconds sys
+
+
+
+real	0m0.345s
+user	0m1.704s
+sys	0m0.091s
+--------------------
+queens_omp test with threads=8 and N=11 x 11
+Computing queens problem with N=11 x 11
+found solutions=2680
+
+ Performance counter stats for './queens_omp 11':
+
+          2,922.56 msec task-clock:u              #    6.278 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               234      page-faults:u             #    0.080 K/sec                  
+     6,987,063,843      cycles:u                  #    2.391 GHz                      (24.95%)
+     3,484,694,123      instructions:u            #    0.50  insn per cycle           (37.48%)
+       987,223,702      branches:u                #  337.794 M/sec                    (37.63%)
+         4,053,291      branch-misses:u           #    0.41% of all branches          (37.71%)
+       547,718,425      L1-dcache-loads:u         #  187.411 M/sec                    (25.06%)
+         6,537,879      L1-dcache-load-misses:u   #    1.19% of all L1-dcache hits    (24.90%)
+         4,803,926      LLC-loads:u               #    1.644 M/sec                    (24.83%)
+         1,928,672      LLC-load-misses:u         #   40.15% of all LL-cache hits     (24.92%)
+
+       0.465522418 seconds time elapsed
+
+       2.857513000 seconds user
+       0.067105000 seconds sys
+
+
+
+real	0m0.483s
+user	0m2.865s
+sys	0m0.077s
+--------------------
+queens_omp_op test with threads=1 and N=11 x 11
+Computing queens problem with N=11 x 11
+found solutions=2680
+
+ Performance counter stats for './queens_omp_op 11':
+
+             45.12 msec task-clock:u              #    0.957 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               196      page-faults:u             #    0.004 M/sec                  
+       106,047,102      cycles:u                  #    2.350 GHz                      (23.59%)
+       123,549,779      instructions:u            #    1.17  insn per cycle           (35.74%)
+        34,928,443      branches:u                #  774.161 M/sec                    (37.96%)
+         3,110,281      branch-misses:u           #    8.90% of all branches          (38.75%)
+        23,442,673      L1-dcache-loads:u         #  519.588 M/sec                    (26.59%)
+             2,400      L1-dcache-load-misses:u   #    0.01% of all L1-dcache hits    (26.59%)
+             2,039      LLC-loads:u               #    0.045 M/sec                    (24.37%)
+                 0      LLC-load-misses:u         #    0.00% of all LL-cache hits     (22.15%)
+
+       0.047137841 seconds time elapsed
+
+       0.044081000 seconds user
+       0.002003000 seconds sys
+
+
+
+real	0m0.065s
+user	0m0.053s
+sys	0m0.010s
+--------------------
+queens_omp_op test with threads=2 and N=11 x 11
+Computing queens problem with N=11 x 11
+found solutions=2680
+
+ Performance counter stats for './queens_omp_op 11':
+
+             46.97 msec task-clock:u              #    1.735 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               202      page-faults:u             #    0.004 M/sec                  
+       113,523,693      cycles:u                  #    2.417 GHz                      (21.74%)
+       126,257,221      instructions:u            #    1.11  insn per cycle           (36.21%)
+        35,676,856      branches:u                #  759.552 M/sec                    (38.33%)
+         3,092,791      branch-misses:u           #    8.67% of all branches          (40.01%)
+        24,285,704      L1-dcache-loads:u         #  517.037 M/sec                    (25.53%)
+               873      L1-dcache-load-misses:u   #    0.00% of all L1-dcache hits    (25.55%)
+               934      LLC-loads:u               #    0.020 M/sec                    (25.49%)
+                 9      LLC-load-misses:u         #    0.96% of all LL-cache hits     (23.35%)
+
+       0.027079655 seconds time elapsed
+
+       0.046003000 seconds user
+       0.002000000 seconds sys
+
+
+
+real	0m0.044s
+user	0m0.056s
+sys	0m0.009s
+--------------------
+queens_omp_op test with threads=3 and N=11 x 11
+Computing queens problem with N=11 x 11
+found solutions=2680
+
+ Performance counter stats for './queens_omp_op 11':
+
+             48.07 msec task-clock:u              #    2.427 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               207      page-faults:u             #    0.004 M/sec                  
+       109,445,189      cycles:u                  #    2.277 GHz                      (24.91%)
+       125,840,550      instructions:u            #    1.15  insn per cycle           (39.07%)
+        35,682,275      branches:u                #  742.298 M/sec                    (41.18%)
+         3,257,076      branch-misses:u           #    9.13% of all branches          (39.11%)
+        24,484,088      L1-dcache-loads:u         #  509.342 M/sec                    (24.95%)
+             1,158      L1-dcache-load-misses:u   #    0.00% of all L1-dcache hits    (24.96%)
+             1,149      LLC-loads:u               #    0.024 M/sec                    (23.50%)
+                14      LLC-load-misses:u         #    1.22% of all LL-cache hits     (21.40%)
+
+       0.019804887 seconds time elapsed
+
+       0.048087000 seconds user
+       0.001001000 seconds sys
+
+
+
+real	0m0.037s
+user	0m0.054s
+sys	0m0.012s
+--------------------
+queens_omp_op test with threads=4 and N=11 x 11
+Computing queens problem with N=11 x 11
+found solutions=2680
+
+ Performance counter stats for './queens_omp_op 11':
+
+             48.52 msec task-clock:u              #    3.074 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               208      page-faults:u             #    0.004 M/sec                  
+       118,762,495      cycles:u                  #    2.448 GHz                      (16.59%)
+       124,166,745      instructions:u            #    1.05  insn per cycle           (31.22%)
+        35,132,695      branches:u                #  724.065 M/sec                    (39.10%)
+         2,928,864      branch-misses:u           #    8.34% of all branches          (45.18%)
+        25,155,007      L1-dcache-loads:u         #  518.430 M/sec                    (28.84%)
+             1,525      L1-dcache-load-misses:u   #    0.01% of all L1-dcache hits    (28.85%)
+             2,730      LLC-loads:u               #    0.056 M/sec                    (23.81%)
+               130      LLC-load-misses:u         #    4.76% of all LL-cache hits     (17.64%)
+
+       0.015784496 seconds time elapsed
+
+       0.048533000 seconds user
+       0.001011000 seconds sys
+
+
+
+real	0m0.033s
+user	0m0.056s
+sys	0m0.010s
+--------------------
+queens_omp_op test with threads=5 and N=11 x 11
+Computing queens problem with N=11 x 11
+found solutions=2680
+
+ Performance counter stats for './queens_omp_op 11':
+
+             52.22 msec task-clock:u              #    3.463 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               210      page-faults:u             #    0.004 M/sec                  
+       122,707,166      cycles:u                  #    2.350 GHz                      (20.34%)
+       136,371,834      instructions:u            #    1.11  insn per cycle           (33.04%)
+        35,973,516      branches:u                #  688.830 M/sec                    (42.19%)
+         2,604,914      branch-misses:u           #    7.24% of all branches          (46.92%)
+        24,479,063      L1-dcache-loads:u         #  468.731 M/sec                    (26.96%)
+             3,100      L1-dcache-load-misses:u   #    0.01% of all L1-dcache hits    (22.97%)
+             3,776      LLC-loads:u               #    0.072 M/sec                    (21.27%)
+             1,308      LLC-load-misses:u         #   34.64% of all LL-cache hits     (19.35%)
+
+       0.015079588 seconds time elapsed
+
+       0.050261000 seconds user
+       0.003015000 seconds sys
+
+
+
+real	0m0.033s
+user	0m0.059s
+sys	0m0.012s
+--------------------
+queens_omp_op test with threads=6 and N=11 x 11
+Computing queens problem with N=11 x 11
+found solutions=2680
+
+ Performance counter stats for './queens_omp_op 11':
+
+             49.66 msec task-clock:u              #    4.264 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               213      page-faults:u             #    0.004 M/sec                  
+       115,529,275      cycles:u                  #    2.326 GHz                      (21.77%)
+       127,854,659      instructions:u            #    1.11  insn per cycle           (36.14%)
+        35,251,049      branches:u                #  709.839 M/sec                    (41.51%)
+         3,010,046      branch-misses:u           #    8.54% of all branches          (41.87%)
+        25,560,173      L1-dcache-loads:u         #  514.697 M/sec                    (24.13%)
+             4,155      L1-dcache-load-misses:u   #    0.02% of all L1-dcache hits    (24.16%)
+            10,396      LLC-loads:u               #    0.209 M/sec                    (24.29%)
+             2,268      LLC-load-misses:u         #   21.82% of all LL-cache hits     (22.27%)
+
+       0.011645768 seconds time elapsed
+
+       0.048836000 seconds user
+       0.001953000 seconds sys
+
+
+
+real	0m0.029s
+user	0m0.061s
+sys	0m0.007s
+--------------------
+queens_omp_op test with threads=7 and N=11 x 11
+Computing queens problem with N=11 x 11
+found solutions=2680
+
+ Performance counter stats for './queens_omp_op 11':
+
+             55.54 msec task-clock:u              #    4.652 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               216      page-faults:u             #    0.004 M/sec                  
+       130,015,648      cycles:u                  #    2.341 GHz                      (24.55%)
+       130,817,080      instructions:u            #    1.01  insn per cycle           (34.09%)
+        36,170,630      branches:u                #  651.266 M/sec                    (36.98%)
+         3,127,390      branch-misses:u           #    8.65% of all branches          (37.65%)
+        26,239,286      L1-dcache-loads:u         #  472.448 M/sec                    (25.18%)
+            27,775      L1-dcache-load-misses:u   #    0.11% of all L1-dcache hits    (25.19%)
+            43,121      LLC-loads:u               #    0.776 M/sec                    (25.22%)
+            18,061      LLC-load-misses:u         #   41.88% of all LL-cache hits     (25.23%)
+
+       0.011939394 seconds time elapsed
+
+       0.054647000 seconds user
+       0.002143000 seconds sys
+
+
+
+real	0m0.029s
+user	0m0.065s
+sys	0m0.009s
+--------------------
+queens_omp_op test with threads=8 and N=11 x 11
+Computing queens problem with N=11 x 11
+found solutions=2680
+
+ Performance counter stats for './queens_omp_op 11':
+
+             61.66 msec task-clock:u              #    5.132 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               221      page-faults:u             #    0.004 M/sec                  
+       145,033,104      cycles:u                  #    2.352 GHz                      (23.06%)
+       131,760,822      instructions:u            #    0.91  insn per cycle           (31.66%)
+        37,607,879      branches:u                #  609.901 M/sec                    (35.43%)
+         3,205,930      branch-misses:u           #    8.52% of all branches          (37.98%)
+        27,556,071      L1-dcache-loads:u         #  446.887 M/sec                    (26.02%)
+            46,207      L1-dcache-load-misses:u   #    0.17% of all L1-dcache hits    (26.00%)
+            68,189      LLC-loads:u               #    1.106 M/sec                    (25.97%)
+            38,138      LLC-load-misses:u         #   55.93% of all LL-cache hits     (25.55%)
+
+       0.012016042 seconds time elapsed
+
+       0.058724000 seconds user
+       0.004120000 seconds sys
+
+
+
+real	0m0.029s
+user	0m0.070s
+sys	0m0.010s
+--------------------
+seq for comparison with N=12 x 12
+Computing queens problem with N=12 x 12
+found solutions=14200
+
+ Performance counter stats for './queens_seq 12':
+
+            255.68 msec task-clock:u              #    0.992 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               188      page-faults:u             #    0.735 K/sec                  
+       628,559,529      cycles:u                  #    2.458 GHz                      (24.71%)
+       749,302,825      instructions:u            #    1.19  insn per cycle           (37.43%)
+       213,194,505      branches:u                #  833.827 M/sec                    (37.44%)
+        17,398,183      branch-misses:u           #    8.16% of all branches          (37.75%)
+       158,488,816      L1-dcache-loads:u         #  619.867 M/sec                    (25.03%)
+             2,289      L1-dcache-load-misses:u   #    0.00% of all L1-dcache hits    (25.03%)
+             2,880      LLC-loads:u               #    0.011 M/sec                    (25.03%)
+                12      LLC-load-misses:u         #    0.42% of all LL-cache hits     (25.02%)
+
+       0.257614334 seconds time elapsed
+
+       0.254602000 seconds user
+       0.002004000 seconds sys
+
+
+
+real	0m0.275s
+user	0m0.265s
+sys	0m0.009s
+--------------------
+queens_omp test with threads=1 and N=12 x 12
+Computing queens problem with N=12 x 12
+found solutions=14200
+
+ Performance counter stats for './queens_omp 12':
+
+            444.78 msec task-clock:u              #    0.996 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               205      page-faults:u             #    0.461 K/sec                  
+     1,095,892,127      cycles:u                  #    2.464 GHz                      (24.79%)
+     1,377,024,516      instructions:u            #    1.26  insn per cycle           (37.53%)
+       350,568,026      branches:u                #  788.190 M/sec                    (37.75%)
+        16,532,633      branch-misses:u           #    4.72% of all branches          (37.91%)
+       386,493,988      L1-dcache-loads:u         #  868.964 M/sec                    (25.16%)
+            39,854      L1-dcache-load-misses:u   #    0.01% of all L1-dcache hits    (24.93%)
+            40,531      LLC-loads:u               #    0.091 M/sec                    (24.73%)
+                 0      LLC-load-misses:u         #    0.00% of all LL-cache hits     (24.73%)
+
+       0.446551477 seconds time elapsed
+
+       0.443698000 seconds user
+       0.002003000 seconds sys
+
+
+
+real	0m0.464s
+user	0m0.453s
+sys	0m0.010s
+--------------------
+queens_omp test with threads=2 and N=12 x 12
+Computing queens problem with N=12 x 12
+found solutions=14200
+
+ Performance counter stats for './queens_omp 12':
+
+          1,217.80 msec task-clock:u              #    1.013 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               213      page-faults:u             #    0.175 K/sec                  
+     1,928,274,665      cycles:u                  #    1.583 GHz                      (24.95%)
+     1,433,037,545      instructions:u            #    0.74  insn per cycle           (37.34%)
+       367,194,745      branches:u                #  301.522 M/sec                    (37.39%)
+        19,174,658      branch-misses:u           #    5.22% of all branches          (37.40%)
+       417,189,737      L1-dcache-loads:u         #  342.576 M/sec                    (25.10%)
+        11,428,684      L1-dcache-load-misses:u   #    2.74% of all L1-dcache hits    (25.12%)
+        10,442,007      LLC-loads:u               #    8.574 M/sec                    (25.06%)
+               272      LLC-load-misses:u         #    0.00% of all LL-cache hits     (24.97%)
+
+       1.202193987 seconds time elapsed
+
+       0.857095000 seconds user
+       0.361773000 seconds sys
+
+
+
+real	0m1.219s
+user	0m0.866s
+sys	0m0.370s
+--------------------
+queens_omp test with threads=3 and N=12 x 12
+Computing queens problem with N=12 x 12
+found solutions=14200
+
+ Performance counter stats for './queens_omp 12':
+
+          1,394.98 msec task-clock:u              #    1.145 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               218      page-faults:u             #    0.156 K/sec                  
+     2,353,950,722      cycles:u                  #    1.687 GHz                      (25.01%)
+     1,669,816,601      instructions:u            #    0.71  insn per cycle           (37.54%)
+       434,743,020      branches:u                #  311.647 M/sec                    (37.53%)
+        18,966,198      branch-misses:u           #    4.36% of all branches          (37.42%)
+       450,935,535      L1-dcache-loads:u         #  323.255 M/sec                    (24.93%)
+        13,554,191      L1-dcache-load-misses:u   #    3.01% of all L1-dcache hits    (25.07%)
+        12,851,595      LLC-loads:u               #    9.213 M/sec                    (25.04%)
+             2,896      LLC-load-misses:u         #    0.02% of all LL-cache hits     (25.00%)
+
+       1.218686368 seconds time elapsed
+
+       1.036329000 seconds user
+       0.360722000 seconds sys
+
+
+
+real	0m1.236s
+user	0m1.046s
+sys	0m0.368s
+--------------------
+queens_omp test with threads=4 and N=12 x 12
+Computing queens problem with N=12 x 12
+found solutions=14200
+
+ Performance counter stats for './queens_omp 12':
+
+          2,383.86 msec task-clock:u              #    1.991 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               225      page-faults:u             #    0.094 K/sec                  
+     4,766,284,637      cycles:u                  #    1.999 GHz                      (24.71%)
+     3,154,225,927      instructions:u            #    0.66  insn per cycle           (37.13%)
+       856,876,374      branches:u                #  359.449 M/sec                    (37.40%)
+        19,416,951      branch-misses:u           #    2.27% of all branches          (37.68%)
+       656,838,532      L1-dcache-loads:u         #  275.536 M/sec                    (25.16%)
+         9,684,958      L1-dcache-load-misses:u   #    1.47% of all L1-dcache hits    (25.15%)
+         9,386,103      LLC-loads:u               #    3.937 M/sec                    (25.01%)
+            21,849      LLC-load-misses:u         #    0.23% of all LL-cache hits     (24.89%)
+
+       1.197398303 seconds time elapsed
+
+       2.000135000 seconds user
+       0.388501000 seconds sys
+
+
+
+real	0m1.215s
+user	0m2.009s
+sys	0m0.396s
+--------------------
+queens_omp test with threads=5 and N=12 x 12
+Computing queens problem with N=12 x 12
+found solutions=14200
+
+ Performance counter stats for './queens_omp 12':
+
+          3,571.20 msec task-clock:u              #    2.990 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               230      page-faults:u             #    0.064 K/sec                  
+     7,738,243,220      cycles:u                  #    2.167 GHz                      (24.85%)
+     4,909,153,449      instructions:u            #    0.63  insn per cycle           (37.33%)
+     1,360,312,230      branches:u                #  380.911 M/sec                    (37.53%)
+        19,532,541      branch-misses:u           #    1.44% of all branches          (37.61%)
+       912,064,129      L1-dcache-loads:u         #  255.394 M/sec                    (25.00%)
+         8,573,435      L1-dcache-load-misses:u   #    0.94% of all L1-dcache hits    (24.98%)
+         8,312,455      LLC-loads:u               #    2.328 M/sec                    (25.06%)
+            90,947      LLC-load-misses:u         #    1.09% of all LL-cache hits     (24.97%)
+
+       1.194361731 seconds time elapsed
+
+       3.204640000 seconds user
+       0.371232000 seconds sys
+
+
+
+real	0m1.212s
+user	0m3.211s
+sys	0m0.382s
+--------------------
+queens_omp test with threads=6 and N=12 x 12
+Computing queens problem with N=12 x 12
+found solutions=14200
+
+ Performance counter stats for './queens_omp 12':
+
+          5,036.10 msec task-clock:u              #    3.949 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               230      page-faults:u             #    0.046 K/sec                  
+    11,312,384,922      cycles:u                  #    2.246 GHz                      (24.93%)
+     6,905,759,720      instructions:u            #    0.61  insn per cycle           (37.32%)
+     1,932,879,318      branches:u                #  383.805 M/sec                    (37.47%)
+        19,094,675      branch-misses:u           #    0.99% of all branches          (37.40%)
+     1,205,714,799      L1-dcache-loads:u         #  239.414 M/sec                    (24.90%)
+        20,200,442      L1-dcache-load-misses:u   #    1.68% of all L1-dcache hits    (25.04%)
+        13,678,732      LLC-loads:u               #    2.716 M/sec                    (25.17%)
+           386,905      LLC-load-misses:u         #    2.83% of all LL-cache hits     (25.10%)
+
+       1.275410437 seconds time elapsed
+
+       4.684215000 seconds user
+       0.357389000 seconds sys
+
+
+
+real	0m1.293s
+user	0m4.693s
+sys	0m0.366s
+--------------------
+queens_omp test with threads=7 and N=12 x 12
+Computing queens problem with N=12 x 12
+found solutions=14200
+
+ Performance counter stats for './queens_omp 12':
+
+          7,002.86 msec task-clock:u              #    4.867 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               230      page-faults:u             #    0.033 K/sec                  
+    16,134,543,045      cycles:u                  #    2.304 GHz                      (24.92%)
+     9,318,050,897      instructions:u            #    0.58  insn per cycle           (37.33%)
+     2,621,155,072      branches:u                #  374.298 M/sec                    (37.53%)
+        19,687,778      branch-misses:u           #    0.75% of all branches          (37.53%)
+     1,553,352,098      L1-dcache-loads:u         #  221.817 M/sec                    (25.07%)
+        20,174,742      L1-dcache-load-misses:u   #    1.30% of all L1-dcache hits    (24.97%)
+        15,355,799      LLC-loads:u               #    2.193 M/sec                    (24.98%)
+         1,775,986      LLC-load-misses:u         #   11.57% of all LL-cache hits     (25.00%)
+
+       1.438707327 seconds time elapsed
+
+       6.655322000 seconds user
+       0.353486000 seconds sys
+
+
+
+real	0m1.457s
+user	0m6.663s
+sys	0m0.363s
+--------------------
+queens_omp test with threads=8 and N=12 x 12
+Computing queens problem with N=12 x 12
+found solutions=14200
+
+ Performance counter stats for './queens_omp 12':
+
+         10,704.43 msec task-clock:u              #    5.675 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               235      page-faults:u             #    0.022 K/sec                  
+    25,276,039,965      cycles:u                  #    2.361 GHz                      (24.99%)
+    13,443,414,301      instructions:u            #    0.53  insn per cycle           (37.45%)
+     3,803,419,556      branches:u                #  355.313 M/sec                    (37.56%)
+        19,859,959      branch-misses:u           #    0.52% of all branches          (37.52%)
+     2,160,202,828      L1-dcache-loads:u         #  201.805 M/sec                    (24.99%)
+        22,081,805      L1-dcache-load-misses:u   #    1.02% of all L1-dcache hits    (25.02%)
+        16,997,550      LLC-loads:u               #    1.588 M/sec                    (24.98%)
+         5,594,825      LLC-load-misses:u         #   32.92% of all LL-cache hits     (24.94%)
+
+       1.886346677 seconds time elapsed
+
+      10.329154000 seconds user
+       0.382005000 seconds sys
+
+
+
+real	0m1.904s
+user	0m10.338s
+sys	0m0.391s
+--------------------
+queens_omp_op test with threads=1 and N=12 x 12
+Computing queens problem with N=12 x 12
+found solutions=14200
+
+ Performance counter stats for './queens_omp_op 12':
+
+            250.79 msec task-clock:u              #    0.992 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               197      page-faults:u             #    0.786 K/sec                  
+       617,576,506      cycles:u                  #    2.463 GHz                      (24.81%)
+       743,526,638      instructions:u            #    1.20  insn per cycle           (37.78%)
+       212,342,949      branches:u                #  846.708 M/sec                    (38.18%)
+        17,091,581      branch-misses:u           #    8.05% of all branches          (38.12%)
+       132,470,818      L1-dcache-loads:u         #  528.221 M/sec                    (24.74%)
+             4,807      L1-dcache-load-misses:u   #    0.00% of all L1-dcache hits    (24.72%)
+             4,179      LLC-loads:u               #    0.017 M/sec                    (24.72%)
+                 0      LLC-load-misses:u         #    0.00% of all LL-cache hits     (24.72%)
+
+       0.252779455 seconds time elapsed
+
+       0.248848000 seconds user
+       0.002986000 seconds sys
+
+
+
+real	0m0.271s
+user	0m0.260s
+sys	0m0.010s
+--------------------
+queens_omp_op test with threads=2 and N=12 x 12
+Computing queens problem with N=12 x 12
+found solutions=14200
+
+ Performance counter stats for './queens_omp_op 12':
+
+            253.22 msec task-clock:u              #    1.963 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               204      page-faults:u             #    0.806 K/sec                  
+       619,698,859      cycles:u                  #    2.447 GHz                      (24.76%)
+       742,731,735      instructions:u            #    1.20  insn per cycle           (36.86%)
+       213,372,049      branches:u                #  842.648 M/sec                    (36.82%)
+        17,198,420      branch-misses:u           #    8.06% of all branches          (37.33%)
+       133,390,848      L1-dcache-loads:u         #  526.787 M/sec                    (25.27%)
+             5,908      L1-dcache-load-misses:u   #    0.00% of all L1-dcache hits    (25.27%)
+             5,116      LLC-loads:u               #    0.020 M/sec                    (25.27%)
+                20      LLC-load-misses:u         #    0.39% of all LL-cache hits     (25.27%)
+
+       0.129009537 seconds time elapsed
+
+       0.251251000 seconds user
+       0.002991000 seconds sys
+
+
+
+real	0m0.147s
+user	0m0.261s
+sys	0m0.011s
+--------------------
+queens_omp_op test with threads=3 and N=12 x 12
+Computing queens problem with N=12 x 12
+found solutions=14200
+
+ Performance counter stats for './queens_omp_op 12':
+
+            255.20 msec task-clock:u              #    2.830 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               207      page-faults:u             #    0.811 K/sec                  
+       625,447,145      cycles:u                  #    2.451 GHz                      (24.50%)
+       752,173,047      instructions:u            #    1.20  insn per cycle           (36.59%)
+       215,062,709      branches:u                #  842.717 M/sec                    (37.37%)
+        17,188,460      branch-misses:u           #    7.99% of all branches          (37.95%)
+       131,768,088      L1-dcache-loads:u         #  516.329 M/sec                    (25.72%)
+             8,221      L1-dcache-load-misses:u   #    0.01% of all L1-dcache hits    (25.40%)
+             5,991      LLC-loads:u               #    0.023 M/sec                    (24.77%)
+                12      LLC-load-misses:u         #    0.20% of all LL-cache hits     (24.30%)
+
+       0.090173953 seconds time elapsed
+
+       0.251266000 seconds user
+       0.004946000 seconds sys
+
+
+
+real	0m0.108s
+user	0m0.261s
+sys	0m0.012s
+--------------------
+queens_omp_op test with threads=4 and N=12 x 12
+Computing queens problem with N=12 x 12
+found solutions=14200
+
+ Performance counter stats for './queens_omp_op 12':
+
+            255.89 msec task-clock:u              #    3.726 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               208      page-faults:u             #    0.813 K/sec                  
+       628,578,860      cycles:u                  #    2.456 GHz                      (24.01%)
+       747,013,750      instructions:u            #    1.19  insn per cycle           (36.92%)
+       214,673,220      branches:u                #  838.916 M/sec                    (37.84%)
+        17,200,389      branch-misses:u           #    8.01% of all branches          (38.44%)
+       134,515,987      L1-dcache-loads:u         #  525.671 M/sec                    (25.01%)
+             7,150      L1-dcache-load-misses:u   #    0.01% of all L1-dcache hits    (25.01%)
+             6,780      LLC-loads:u               #    0.026 M/sec                    (25.04%)
+                73      LLC-load-misses:u         #    1.08% of all LL-cache hits     (24.65%)
+
+       0.068669001 seconds time elapsed
+
+       0.254994000 seconds user
+       0.002007000 seconds sys
+
+
+
+real	0m0.086s
+user	0m0.265s
+sys	0m0.008s
+--------------------
+queens_omp_op test with threads=5 and N=12 x 12
+Computing queens problem with N=12 x 12
+found solutions=14200
+
+ Performance counter stats for './queens_omp_op 12':
+
+            258.95 msec task-clock:u              #    3.814 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               210      page-faults:u             #    0.811 K/sec                  
+       631,819,671      cycles:u                  #    2.440 GHz                      (23.64%)
+       756,211,882      instructions:u            #    1.20  insn per cycle           (35.87%)
+       215,311,886      branches:u                #  831.486 M/sec                    (37.45%)
+        17,194,631      branch-misses:u           #    7.99% of all branches          (38.39%)
+       135,803,121      L1-dcache-loads:u         #  524.441 M/sec                    (25.49%)
+             5,224      L1-dcache-load-misses:u   #    0.00% of all L1-dcache hits    (25.48%)
+             4,965      LLC-loads:u               #    0.019 M/sec                    (25.24%)
+               132      LLC-load-misses:u         #    2.66% of all LL-cache hits     (24.31%)
+
+       0.067886210 seconds time elapsed
+
+       0.253109000 seconds user
+       0.006948000 seconds sys
+
+
+
+real	0m0.085s
+user	0m0.262s
+sys	0m0.015s
+--------------------
+queens_omp_op test with threads=6 and N=12 x 12
+Computing queens problem with N=12 x 12
+found solutions=14200
+
+ Performance counter stats for './queens_omp_op 12':
+
+            258.24 msec task-clock:u              #    5.481 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               212      page-faults:u             #    0.821 K/sec                  
+       631,634,312      cycles:u                  #    2.446 GHz                      (23.44%)
+       751,239,948      instructions:u            #    1.19  insn per cycle           (35.28%)
+       212,560,560      branches:u                #  823.102 M/sec                    (37.21%)
+        16,794,060      branch-misses:u           #    7.90% of all branches          (38.62%)
+       134,941,571      L1-dcache-loads:u         #  522.537 M/sec                    (26.40%)
+            13,355      L1-dcache-load-misses:u   #    0.01% of all L1-dcache hits    (26.31%)
+            21,351      LLC-loads:u               #    0.083 M/sec                    (24.78%)
+            17,456      LLC-load-misses:u         #   81.76% of all LL-cache hits     (23.24%)
+
+       0.047119687 seconds time elapsed
+
+       0.250508000 seconds user
+       0.008911000 seconds sys
+
+
+
+real	0m0.064s
+user	0m0.259s
+sys	0m0.017s
+--------------------
+queens_omp_op test with threads=7 and N=12 x 12
+Computing queens problem with N=12 x 12
+found solutions=14200
+
+ Performance counter stats for './queens_omp_op 12':
+
+            272.08 msec task-clock:u              #    5.585 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               213      page-faults:u             #    0.783 K/sec                  
+       669,314,472      cycles:u                  #    2.460 GHz                      (22.82%)
+       762,325,237      instructions:u            #    1.14  insn per cycle           (35.85%)
+       210,663,865      branches:u                #  774.267 M/sec                    (37.96%)
+        15,903,117      branch-misses:u           #    7.55% of all branches          (39.65%)
+       138,744,843      L1-dcache-loads:u         #  509.938 M/sec                    (25.89%)
+            38,423      L1-dcache-load-misses:u   #    0.03% of all L1-dcache hits    (25.26%)
+            61,079      LLC-loads:u               #    0.224 M/sec                    (24.76%)
+            51,879      LLC-load-misses:u         #   84.94% of all LL-cache hits     (23.66%)
+
+       0.048718359 seconds time elapsed
+
+       0.271245000 seconds user
+       0.002009000 seconds sys
+
+
+
+real	0m0.066s
+user	0m0.281s
+sys	0m0.009s
+--------------------
+queens_omp_op test with threads=8 and N=12 x 12
+Computing queens problem with N=12 x 12
+found solutions=14200
+
+ Performance counter stats for './queens_omp_op 12':
+
+            286.41 msec task-clock:u              #    5.217 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               217      page-faults:u             #    0.758 K/sec                  
+       702,026,900      cycles:u                  #    2.451 GHz                      (23.04%)
+       764,881,044      instructions:u            #    1.09  insn per cycle           (36.33%)
+       215,090,056      branches:u                #  750.998 M/sec                    (38.10%)
+        16,162,705      branch-misses:u           #    7.51% of all branches          (40.12%)
+       139,807,917      L1-dcache-loads:u         #  488.146 M/sec                    (25.91%)
+           103,768      L1-dcache-load-misses:u   #    0.07% of all L1-dcache hits    (24.87%)
+           166,207      LLC-loads:u               #    0.580 M/sec                    (24.20%)
+           118,859      LLC-load-misses:u         #   71.51% of all LL-cache hits     (23.78%)
+
+       0.054895335 seconds time elapsed
+
+       0.285642000 seconds user
+       0.002018000 seconds sys
+
+
+
+real	0m0.072s
+user	0m0.295s
+sys	0m0.009s
+--------------------
+seq for comparison with N=13 x 13
+Computing queens problem with N=13 x 13
+found solutions=73712
+
+ Performance counter stats for './queens_seq 13':
+
+          1,541.70 msec task-clock:u              #    0.998 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               188      page-faults:u             #    0.122 K/sec                  
+     3,804,747,198      cycles:u                  #    2.468 GHz                      (24.95%)
+     4,654,125,050      instructions:u            #    1.22  insn per cycle           (37.44%)
+     1,336,917,502      branches:u                #  867.168 M/sec                    (37.51%)
+       103,687,273      branch-misses:u           #    7.76% of all branches          (37.53%)
+       957,653,692      L1-dcache-loads:u         #  621.165 M/sec                    (25.04%)
+            28,522      L1-dcache-load-misses:u   #    0.00% of all L1-dcache hits    (25.04%)
+            26,422      LLC-loads:u               #    0.017 M/sec                    (25.01%)
+                32      LLC-load-misses:u         #    0.12% of all LL-cache hits     (24.94%)
+
+       1.544062383 seconds time elapsed
+
+       1.541668000 seconds user
+       0.000999000 seconds sys
+
+
+
+real	0m1.561s
+user	0m1.548s
+sys	0m0.012s
+--------------------
+queens_omp test with threads=1 and N=13 x 13
+Computing queens problem with N=13 x 13
+found solutions=73712
+
+ Performance counter stats for './queens_omp 13':
+
+          2,554.52 msec task-clock:u              #    0.999 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               205      page-faults:u             #    0.080 K/sec                  
+     6,303,996,505      cycles:u                  #    2.468 GHz                      (25.00%)
+     8,040,547,205      instructions:u            #    1.28  insn per cycle           (37.51%)
+     2,083,206,117      branches:u                #  815.497 M/sec                    (37.55%)
+        98,779,167      branch-misses:u           #    4.74% of all branches          (37.54%)
+     2,156,957,856      L1-dcache-loads:u         #  844.368 M/sec                    (24.99%)
+           228,041      L1-dcache-load-misses:u   #    0.01% of all L1-dcache hits    (24.97%)
+           253,366      LLC-loads:u               #    0.099 M/sec                    (24.97%)
+                 0      LLC-load-misses:u         #    0.00% of all LL-cache hits     (24.98%)
+
+       2.556340817 seconds time elapsed
+
+       2.553452000 seconds user
+       0.001999000 seconds sys
+
+
+
+real	0m2.573s
+user	0m2.565s
+sys	0m0.007s
+--------------------
+queens_omp test with threads=2 and N=13 x 13
+Computing queens problem with N=13 x 13
+found solutions=73712
+
+ Performance counter stats for './queens_omp 13':
+
+          6,706.36 msec task-clock:u              #    1.002 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               214      page-faults:u             #    0.032 K/sec                  
+    10,665,418,497      cycles:u                  #    1.590 GHz                      (24.96%)
+     8,255,136,525      instructions:u            #    0.77  insn per cycle           (37.45%)
+     2,142,818,533      branches:u                #  319.520 M/sec                    (37.49%)
+       114,325,198      branch-misses:u           #    5.34% of all branches          (37.51%)
+     2,354,371,323      L1-dcache-loads:u         #  351.065 M/sec                    (25.04%)
+        57,238,136      L1-dcache-load-misses:u   #    2.43% of all L1-dcache hits    (25.03%)
+        52,186,522      LLC-loads:u               #    7.782 M/sec                    (25.00%)
+               304      LLC-load-misses:u         #    0.00% of all LL-cache hits     (24.96%)
+
+       6.689908140 seconds time elapsed
+
+       4.795358000 seconds user
+       1.912143000 seconds sys
+
+
+
+real	0m6.708s
+user	0m4.802s
+sys	0m1.923s
+--------------------
+queens_omp test with threads=3 and N=13 x 13
+Computing queens problem with N=13 x 13
+found solutions=73712
+
+ Performance counter stats for './queens_omp 13':
+
+          6,977.64 msec task-clock:u              #    1.033 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               220      page-faults:u             #    0.032 K/sec                  
+    11,291,291,572      cycles:u                  #    1.618 GHz                      (24.93%)
+     8,568,229,991      instructions:u            #    0.76  insn per cycle           (37.48%)
+     2,234,012,539      branches:u                #  320.167 M/sec                    (37.59%)
+       112,893,561      branch-misses:u           #    5.05% of all branches          (37.64%)
+     2,407,151,994      L1-dcache-loads:u         #  344.981 M/sec                    (25.04%)
+        83,111,194      L1-dcache-load-misses:u   #    3.45% of all L1-dcache hits    (24.98%)
+        64,551,610      LLC-loads:u               #    9.251 M/sec                    (24.92%)
+             4,470      LLC-load-misses:u         #    0.01% of all LL-cache hits     (24.90%)
+
+       6.756210313 seconds time elapsed
+
+       5.025032000 seconds user
+       1.955292000 seconds sys
+
+
+
+real	0m6.778s
+user	0m5.037s
+sys	0m1.965s
+--------------------
+queens_omp test with threads=4 and N=13 x 13
+Computing queens problem with N=13 x 13
+found solutions=73712
+
+ Performance counter stats for './queens_omp 13':
+
+          8,458.05 msec task-clock:u              #    1.260 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               222      page-faults:u             #    0.026 K/sec                  
+    14,897,750,260      cycles:u                  #    1.761 GHz                      (25.00%)
+    10,782,259,144      instructions:u            #    0.72  insn per cycle           (37.41%)
+     2,870,340,247      branches:u                #  339.362 M/sec                    (37.57%)
+       113,434,438      branch-misses:u           #    3.95% of all branches          (37.56%)
+     2,691,064,584      L1-dcache-loads:u         #  318.166 M/sec                    (24.99%)
+        62,066,979      L1-dcache-load-misses:u   #    2.31% of all L1-dcache hits    (24.96%)
+        57,903,379      LLC-loads:u               #    6.846 M/sec                    (24.98%)
+            32,540      LLC-load-misses:u         #    0.06% of all LL-cache hits     (24.95%)
+
+       6.713245852 seconds time elapsed
+
+       6.520327000 seconds user
+       1.948372000 seconds sys
+
+
+
+real	0m6.732s
+user	0m6.529s
+sys	0m1.958s
+--------------------
+queens_omp test with threads=5 and N=13 x 13
+Computing queens problem with N=13 x 13
+found solutions=73712
+
+ Performance counter stats for './queens_omp 13':
+
+         14,968.63 msec task-clock:u              #    2.214 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               228      page-faults:u             #    0.015 K/sec                  
+    30,799,997,214      cycles:u                  #    2.058 GHz                      (25.06%)
+    20,235,564,920      instructions:u            #    0.66  insn per cycle           (37.50%)
+     5,587,384,084      branches:u                #  373.273 M/sec                    (37.45%)
+       112,283,920      branch-misses:u           #    2.01% of all branches          (37.43%)
+     4,028,425,243      L1-dcache-loads:u         #  269.124 M/sec                    (24.95%)
+        59,655,284      L1-dcache-load-misses:u   #    1.48% of all L1-dcache hits    (24.97%)
+        55,671,321      LLC-loads:u               #    3.719 M/sec                    (25.07%)
+           207,759      LLC-load-misses:u         #    0.37% of all LL-cache hits     (25.07%)
+
+       6.760022375 seconds time elapsed
+
+      12.978764000 seconds user
+       2.007272000 seconds sys
+
+
+
+real	0m6.778s
+user	0m12.989s
+sys	0m2.014s
+--------------------
+queens_omp test with threads=6 and N=13 x 13
+Computing queens problem with N=13 x 13
+found solutions=73712
+
+ Performance counter stats for './queens_omp 13':
+
+         21,532.34 msec task-clock:u              #    3.227 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               236      page-faults:u             #    0.011 K/sec                  
+    47,351,773,018      cycles:u                  #    2.199 GHz                      (25.01%)
+    30,097,740,471      instructions:u            #    0.64  insn per cycle           (37.51%)
+     8,381,182,114      branches:u                #  389.237 M/sec                    (37.53%)
+       113,148,838      branch-misses:u           #    1.35% of all branches          (37.57%)
+     5,443,996,480      L1-dcache-loads:u         #  252.829 M/sec                    (25.01%)
+        48,191,747      L1-dcache-load-misses:u   #    0.89% of all L1-dcache hits    (24.94%)
+        47,445,655      LLC-loads:u               #    2.203 M/sec                    (24.96%)
+           847,746      LLC-load-misses:u         #    1.79% of all LL-cache hits     (24.98%)
+
+       6.672084135 seconds time elapsed
+
+      19.617311000 seconds user
+       1.930293000 seconds sys
+
+
+
+real	0m6.690s
+user	0m19.623s
+sys	0m1.942s
+--------------------
+queens_omp test with threads=7 and N=13 x 13
+Computing queens problem with N=13 x 13
+found solutions=73712
+
+ Performance counter stats for './queens_omp 13':
+
+         30,042.07 msec task-clock:u              #    4.189 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               234      page-faults:u             #    0.008 K/sec                  
+    68,090,415,313      cycles:u                  #    2.267 GHz                      (25.00%)
+    41,356,604,777      instructions:u            #    0.61  insn per cycle           (37.48%)
+    11,612,716,087      branches:u                #  386.548 M/sec                    (37.46%)
+       114,181,016      branch-misses:u           #    0.98% of all branches          (37.46%)
+     7,050,543,727      L1-dcache-loads:u         #  234.689 M/sec                    (25.01%)
+        70,111,609      L1-dcache-load-misses:u   #    0.99% of all L1-dcache hits    (25.05%)
+        66,336,122      LLC-loads:u               #    2.208 M/sec                    (25.03%)
+         3,685,361      LLC-load-misses:u         #    5.56% of all LL-cache hits     (24.99%)
+
+       7.172306562 seconds time elapsed
+
+      28.103845000 seconds user
+       1.956641000 seconds sys
+
+
+
+real	0m7.190s
+user	0m28.113s
+sys	0m1.965s
+--------------------
+queens_omp test with threads=8 and N=13 x 13
+Computing queens problem with N=13 x 13
+found solutions=73712
+
+ Performance counter stats for './queens_omp 13':
+
+         41,815.07 msec task-clock:u              #    5.124 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               231      page-faults:u             #    0.006 K/sec                  
+    97,071,811,557      cycles:u                  #    2.321 GHz                      (24.97%)
+    55,926,840,253      instructions:u            #    0.58  insn per cycle           (37.49%)
+    15,767,735,171      branches:u                #  377.083 M/sec                    (37.51%)
+       113,964,464      branch-misses:u           #    0.72% of all branches          (37.55%)
+     9,210,370,260      L1-dcache-loads:u         #  220.264 M/sec                    (25.00%)
+        77,487,338      L1-dcache-load-misses:u   #    0.84% of all L1-dcache hits    (25.01%)
+        66,656,752      LLC-loads:u               #    1.594 M/sec                    (25.00%)
+        11,576,236      LLC-load-misses:u         #   17.37% of all LL-cache hits     (24.97%)
+
+       8.159977480 seconds time elapsed
+
+      39.807460000 seconds user
+       2.030369000 seconds sys
+
+
+
+real	0m8.179s
+user	0m39.812s
+sys	0m2.044s
+--------------------
+queens_omp_op test with threads=1 and N=13 x 13
+Computing queens problem with N=13 x 13
+found solutions=73712
+
+ Performance counter stats for './queens_omp_op 13':
+
+          1,508.38 msec task-clock:u              #    0.998 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               197      page-faults:u             #    0.131 K/sec                  
+     3,723,091,588      cycles:u                  #    2.468 GHz                      (24.96%)
+     4,616,048,758      instructions:u            #    1.24  insn per cycle           (37.52%)
+     1,336,967,382      branches:u                #  886.358 M/sec                    (37.59%)
+       101,802,455      branch-misses:u           #    7.61% of all branches          (37.62%)
+       805,348,898      L1-dcache-loads:u         #  533.915 M/sec                    (25.02%)
+            27,487      L1-dcache-load-misses:u   #    0.00% of all L1-dcache hits    (24.96%)
+            24,617      LLC-loads:u               #    0.016 M/sec                    (24.93%)
+                 0      LLC-load-misses:u         #    0.00% of all LL-cache hits     (24.93%)
+
+       1.510682861 seconds time elapsed
+
+       1.508453000 seconds user
+       0.001001000 seconds sys
+
+
+
+real	0m1.529s
+user	0m1.516s
+sys	0m0.010s
+--------------------
+queens_omp_op test with threads=2 and N=13 x 13
+Computing queens problem with N=13 x 13
+found solutions=73712
+
+ Performance counter stats for './queens_omp_op 13':
+
+          1,513.78 msec task-clock:u              #    1.854 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               203      page-faults:u             #    0.134 K/sec                  
+     3,731,310,444      cycles:u                  #    2.465 GHz                      (24.90%)
+     4,618,741,532      instructions:u            #    1.24  insn per cycle           (37.37%)
+     1,337,691,875      branches:u                #  883.676 M/sec                    (37.47%)
+       101,920,436      branch-misses:u           #    7.62% of all branches          (37.57%)
+       805,241,121      L1-dcache-loads:u         #  531.940 M/sec                    (25.10%)
+            35,348      L1-dcache-load-misses:u   #    0.00% of all L1-dcache hits    (25.05%)
+            29,051      LLC-loads:u               #    0.019 M/sec                    (24.98%)
+                60      LLC-load-misses:u         #    0.21% of all LL-cache hits     (24.93%)
+
+       0.816437347 seconds time elapsed
+
+       1.512875000 seconds user
+       0.001999000 seconds sys
+
+
+
+real	0m0.834s
+user	0m1.523s
+sys	0m0.009s
+--------------------
+queens_omp_op test with threads=3 and N=13 x 13
+Computing queens problem with N=13 x 13
+found solutions=73712
+
+ Performance counter stats for './queens_omp_op 13':
+
+          1,516.51 msec task-clock:u              #    2.657 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               207      page-faults:u             #    0.136 K/sec                  
+     3,736,903,547      cycles:u                  #    2.464 GHz                      (24.95%)
+     4,612,792,133      instructions:u            #    1.23  insn per cycle           (37.36%)
+     1,337,322,059      branches:u                #  881.841 M/sec                    (37.40%)
+       102,061,348      branch-misses:u           #    7.63% of all branches          (37.46%)
+       808,123,910      L1-dcache-loads:u         #  532.883 M/sec                    (25.06%)
+            30,651      L1-dcache-load-misses:u   #    0.00% of all L1-dcache hits    (25.06%)
+            26,968      LLC-loads:u               #    0.018 M/sec                    (25.06%)
+                48      LLC-load-misses:u         #    0.18% of all LL-cache hits     (25.01%)
+
+       0.570731919 seconds time elapsed
+
+       1.516586000 seconds user
+       0.000999000 seconds sys
+
+
+
+real	0m0.589s
+user	0m1.523s
+sys	0m0.012s
+--------------------
+queens_omp_op test with threads=4 and N=13 x 13
+Computing queens problem with N=13 x 13
+found solutions=73712
+
+ Performance counter stats for './queens_omp_op 13':
+
+          1,519.03 msec task-clock:u              #    3.377 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               209      page-faults:u             #    0.138 K/sec                  
+     3,735,238,013      cycles:u                  #    2.459 GHz                      (24.84%)
+     4,618,609,444      instructions:u            #    1.24  insn per cycle           (37.41%)
+     1,337,388,436      branches:u                #  880.421 M/sec                    (37.59%)
+       102,061,231      branch-misses:u           #    7.63% of all branches          (37.64%)
+       808,887,377      L1-dcache-loads:u         #  532.501 M/sec                    (25.01%)
+            38,675      L1-dcache-load-misses:u   #    0.00% of all L1-dcache hits    (25.02%)
+            31,687      LLC-loads:u               #    0.021 M/sec                    (25.02%)
+                80      LLC-load-misses:u         #    0.25% of all LL-cache hits     (24.89%)
+
+       0.449791216 seconds time elapsed
+
+       1.515184000 seconds user
+       0.004990000 seconds sys
+
+
+
+real	0m0.468s
+user	0m1.516s
+sys	0m0.022s
+--------------------
+queens_omp_op test with threads=5 and N=13 x 13
+Computing queens problem with N=13 x 13
+found solutions=73712
+
+ Performance counter stats for './queens_omp_op 13':
+
+          1,521.35 msec task-clock:u              #    4.083 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               210      page-faults:u             #    0.138 K/sec                  
+     3,746,535,869      cycles:u                  #    2.463 GHz                      (24.90%)
+     4,611,682,316      instructions:u            #    1.23  insn per cycle           (37.42%)
+     1,335,244,934      branches:u                #  877.671 M/sec                    (37.61%)
+       101,750,500      branch-misses:u           #    7.62% of all branches          (37.63%)
+       810,228,707      L1-dcache-loads:u         #  532.572 M/sec                    (24.99%)
+            29,751      L1-dcache-load-misses:u   #    0.00% of all L1-dcache hits    (24.98%)
+            25,565      LLC-loads:u               #    0.017 M/sec                    (24.98%)
+                44      LLC-load-misses:u         #    0.17% of all LL-cache hits     (24.92%)
+
+       0.372579425 seconds time elapsed
+
+       1.520540000 seconds user
+       0.002000000 seconds sys
+
+
+
+real	0m0.390s
+user	0m1.524s
+sys	0m0.016s
+--------------------
+queens_omp_op test with threads=6 and N=13 x 13
+Computing queens problem with N=13 x 13
+found solutions=73712
+
+ Performance counter stats for './queens_omp_op 13':
+
+          1,524.35 msec task-clock:u              #    4.613 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               213      page-faults:u             #    0.140 K/sec                  
+     3,753,838,788      cycles:u                  #    2.463 GHz                      (24.87%)
+     4,626,272,276      instructions:u            #    1.23  insn per cycle           (37.28%)
+     1,336,134,897      branches:u                #  876.530 M/sec                    (37.51%)
+       101,651,724      branch-misses:u           #    7.61% of all branches          (37.65%)
+       808,039,304      L1-dcache-loads:u         #  530.089 M/sec                    (25.10%)
+            45,534      L1-dcache-load-misses:u   #    0.01% of all L1-dcache hits    (25.02%)
+            33,474      LLC-loads:u               #    0.022 M/sec                    (24.96%)
+                12      LLC-load-misses:u         #    0.04% of all LL-cache hits     (24.89%)
+
+       0.330465341 seconds time elapsed
+
+       1.515594000 seconds user
+       0.009957000 seconds sys
+
+
+
+real	0m0.348s
+user	0m1.528s
+sys	0m0.015s
+--------------------
+queens_omp_op test with threads=7 and N=13 x 13
+Computing queens problem with N=13 x 13
+found solutions=73712
+
+ Performance counter stats for './queens_omp_op 13':
+
+          1,532.24 msec task-clock:u              #    6.095 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               216      page-faults:u             #    0.141 K/sec                  
+     3,774,863,115      cycles:u                  #    2.464 GHz                      (24.80%)
+     4,618,892,558      instructions:u            #    1.22  insn per cycle           (37.39%)
+     1,337,720,722      branches:u                #  873.052 M/sec                    (37.59%)
+       101,759,475      branch-misses:u           #    7.61% of all branches          (37.77%)
+       808,466,569      L1-dcache-loads:u         #  527.639 M/sec                    (25.10%)
+            76,674      L1-dcache-load-misses:u   #    0.01% of all L1-dcache hits    (25.04%)
+            81,231      LLC-loads:u               #    0.053 M/sec                    (24.91%)
+            46,305      LLC-load-misses:u         #   57.00% of all LL-cache hits     (24.79%)
+
+       0.251372464 seconds time elapsed
+
+       1.533491000 seconds user
+       0.000000000 seconds sys
+
+
+
+real	0m0.269s
+user	0m1.543s
+sys	0m0.007s
+--------------------
+queens_omp_op test with threads=8 and N=13 x 13
+Computing queens problem with N=13 x 13
+found solutions=73712
+
+ Performance counter stats for './queens_omp_op 13':
+
+          1,587.42 msec task-clock:u              #    6.178 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               217      page-faults:u             #    0.137 K/sec                  
+     3,909,309,482      cycles:u                  #    2.463 GHz                      (24.85%)
+     4,651,209,502      instructions:u            #    1.19  insn per cycle           (37.17%)
+     1,341,380,217      branches:u                #  845.008 M/sec                    (37.31%)
+       100,814,254      branch-misses:u           #    7.52% of all branches          (37.58%)
+       807,526,336      L1-dcache-loads:u         #  508.705 M/sec                    (25.28%)
+           356,119      L1-dcache-load-misses:u   #    0.04% of all L1-dcache hits    (25.10%)
+           464,867      LLC-loads:u               #    0.293 M/sec                    (24.95%)
+           425,896      LLC-load-misses:u         #   91.62% of all LL-cache hits     (24.94%)
+
+       0.256961753 seconds time elapsed
+
+       1.581002000 seconds user
+       0.007984000 seconds sys
+
+
+
+real	0m0.274s
+user	0m1.590s
+sys	0m0.016s
+--------------------

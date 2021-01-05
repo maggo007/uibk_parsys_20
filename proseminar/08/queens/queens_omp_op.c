@@ -32,7 +32,7 @@ int check_paths(int pos_row, int pos_col, int problem_size, int board[problem_si
   return 1;
 }
 
-int req_solve(int problem_size, int board[problem_size][problem_size], int start_col, int *solvenumbers){
+int req_solve(int problem_size, int board[problem_size][problem_size], int start_col, int lastrow, int *solvenumbers){
   if (start_col >= problem_size){
     /* for (int row=0; row < problem_size; ++row) { */
     /*   for (int col=0; col < problem_size; ++col) { */
@@ -48,9 +48,12 @@ int req_solve(int problem_size, int board[problem_size][problem_size], int start
   }
 
   for (int row=0; row<problem_size; ++row) {
+    if (row == lastrow || row == lastrow-1 || row == lastrow +1){
+      continue;
+    }
     if (check_paths(row, start_col, problem_size, board)){
       board[row][start_col] = 1;
-      req_solve(problem_size, board, start_col+1, solvenumbers);
+      req_solve(problem_size, board, start_col+1, row, solvenumbers);
       board[row][start_col] = 0;
     }
   }
@@ -91,7 +94,7 @@ for (int i=0; i < N; ++i) {
 
 #pragma omp parallel for
 for (int i = 0; i < N; ++i) {
-  req_solve(N, boards[i], 1, &solvenumbers);
+  req_solve(N, boards[i], 1, i, &solvenumbers);
 }
   
   printf("found solutions=%d\n", solvenumbers);
