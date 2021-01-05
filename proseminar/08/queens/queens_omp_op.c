@@ -42,16 +42,15 @@ int req_solve(int problem_size, int board[problem_size][problem_size], int start
     /* } */
     /* printf("Solution %d\n", ++(*solvenumbers)); */
     /* printf("---------\n"); */
+#pragma omp atomic
     ++(*solvenumbers);
-    return 0;
+    return 0; //stop here normaly with return 1 for he first solution only
   }
+
   for (int row=0; row<problem_size; ++row) {
     if (check_paths(row, start_col, problem_size, board)){
       board[row][start_col] = 1;
-
-      if (req_solve(problem_size, board, start_col+1, solvenumbers)){
-        return 1;        
-      }
+      req_solve(problem_size, board, start_col+1, solvenumbers);
       board[row][start_col] = 0;
     }
   }
@@ -68,15 +67,33 @@ int main(int argc, char *argv[])
   printf("Computing queens problem with N=%d x %d\n", N,N);
 
   // board is used with [row][columns]
-  int board[N][N];
+  int *boards[N];
+  //int board[N][N];
   int solvenumbers = 0;
 
+for (int i=0; i < N; ++i) {
+  boards[i] = malloc(sizeof(int)*N*N);
   for (int row=0; row < N; ++row) {
     for (int col=0; col < N; ++col) {
-      board[row][col] = 0;
+      *(boards[i]+row*N+col) = 0;
     }
+    *(boards[i]+i*N) = 1;
   }
-  req_solve(N, board, 0, &solvenumbers);
+}
+
+/* for (int row=0; row < N; ++row) { */
+/*   for (int col=0; col < N; ++col) { */
+/*     printf("%d ", *(boards[1]+row*N+col)); */
+/*   } */
+/*   printf("\n"); */
+/* } */
+
+
+#pragma omp parallel for
+for (int i = 0; i < N; ++i) {
+  req_solve(N, boards[i], 1, &solvenumbers);
+}
+  
   printf("found solutions=%d\n", solvenumbers);
   
   /* for (int row=0; row < N; ++row) { */
@@ -85,7 +102,10 @@ int main(int argc, char *argv[])
   /*   } */
   /*   printf("\n"); */
   /* } */
-    
+  for (int i = 0; i < N; ++i) {
+    free(boards[i]);
+  }
+
     
   return EXIT_SUCCESS;
 }

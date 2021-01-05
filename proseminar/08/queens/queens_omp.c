@@ -42,16 +42,17 @@ int req_solve(int problem_size, int board[problem_size][problem_size], int start
     /* } */
     /* printf("Solution %d\n", ++(*solvenumbers)); */
     /* printf("---------\n"); */
+#pragma omp atomic
     ++(*solvenumbers);
-    return 0;
+    return 0; //stop here normaly with return 1 for he first solution only
   }
+  
   for (int row=0; row<problem_size; ++row) {
     if (check_paths(row, start_col, problem_size, board)){
       board[row][start_col] = 1;
-
-      if (req_solve(problem_size, board, start_col+1, solvenumbers)){
-        return 1;        
-      }
+#pragma omp task
+      req_solve(problem_size, board, start_col+1, solvenumbers);
+#pragma omp taskwait
       board[row][start_col] = 0;
     }
   }
@@ -76,7 +77,14 @@ int main(int argc, char *argv[])
       board[row][col] = 0;
     }
   }
-  req_solve(N, board, 0, &solvenumbers);
+#pragma omp parallel
+  {
+#pragma omp single
+    {
+      req_solve(N, board, 0, &solvenumbers);
+    }
+  }
+
   printf("found solutions=%d\n", solvenumbers);
   
   /* for (int row=0; row < N; ++row) { */
