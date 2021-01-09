@@ -1,0 +1,122 @@
+matmul_omp_op test with threads=1 and N=3000 x 3000
+Computing matrix-matrix product with N=3000
+Verification: OK
+
+ Performance counter stats for './matmul_omp_op 3000':
+
+         80,199.96 msec task-clock:u              #    1.000 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            70,518      page-faults:u             #    0.879 K/sec                  
+   195,788,441,074      cycles:u                  #    2.441 GHz                      (25.00%)
+    94,804,727,907      instructions:u            #    0.48  insn per cycle           (37.50%)
+    13,571,054,103      branches:u                #  169.215 M/sec                    (37.50%)
+         9,029,657      branch-misses:u           #    0.07% of all branches          (37.50%)
+    54,203,098,308      L1-dcache-loads:u         #  675.849 M/sec                    (25.00%)
+    47,669,688,459      L1-dcache-load-misses:u   #   87.95% of all L1-dcache hits    (25.00%)
+     6,788,293,724      LLC-loads:u               #   84.642 M/sec                    (25.00%)
+        56,694,887      LLC-load-misses:u         #    0.84% of all LL-cache hits     (25.00%)
+
+      80.220363843 seconds time elapsed
+
+      79.721280000 seconds user
+       0.479989000 seconds sys
+
+
+
+real	1m20.240s
+user	1m19.730s
+sys	0m0.491s
+--------------------
+matmul_omp_op test with threads=8 and N=3000 x 3000
+Computing matrix-matrix product with N=3000
+Verification: OK
+
+ Performance counter stats for './matmul_omp_op 3000':
+
+        133,268.32 msec task-clock:u              #    7.521 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            70,536      page-faults:u             #    0.529 K/sec                  
+   325,838,444,360      cycles:u                  #    2.445 GHz                      (25.00%)
+    94,940,525,254      instructions:u            #    0.29  insn per cycle           (37.50%)
+    13,583,150,023      branches:u                #  101.923 M/sec                    (37.50%)
+        10,131,593      branch-misses:u           #    0.07% of all branches          (37.50%)
+    64,752,905,898      L1-dcache-loads:u         #  485.884 M/sec                    (25.00%)
+    43,452,201,615      L1-dcache-load-misses:u   #   67.10% of all L1-dcache hits    (25.00%)
+     6,793,766,341      LLC-loads:u               #   50.978 M/sec                    (25.00%)
+        42,484,151      LLC-load-misses:u         #    0.63% of all LL-cache hits     (25.00%)
+
+      17.719205957 seconds time elapsed
+
+     132.594727000 seconds user
+       0.678655000 seconds sys
+
+
+
+real	0m17.738s
+user	2m12.604s
+sys	0m0.688s
+--------------------
+matmul_omp_op_block test with threads=1 and N=3000 x 3000
+Computing matrix-matrix product with N=3000
+Verification: OK
+blocksize=300 
+
+ Performance counter stats for './matmul_omp_op_block 3000':
+
+         35,553.34 msec task-clock:u              #    1.000 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            70,519      page-faults:u             #    0.002 M/sec                  
+    87,198,340,558      cycles:u                  #    2.453 GHz                      (25.00%)
+    96,621,216,966      instructions:u            #    1.11  insn per cycle           (37.50%)
+    13,915,884,235      branches:u                #  391.409 M/sec                    (37.50%)
+        90,340,816      branch-misses:u           #    0.65% of all branches          (37.50%)
+    54,891,039,883      L1-dcache-loads:u         # 1543.907 M/sec                    (25.00%)
+    27,178,005,024      L1-dcache-load-misses:u   #   49.51% of all L1-dcache hits    (25.00%)
+     3,589,860,913      LLC-loads:u               #  100.971 M/sec                    (25.00%)
+         1,400,580      LLC-load-misses:u         #    0.04% of all LL-cache hits     (25.00%)
+
+      35.566723597 seconds time elapsed
+
+      35.300648000 seconds user
+       0.253983000 seconds sys
+
+
+
+real	0m35.585s
+user	0m35.311s
+sys	0m0.262s
+--------------------
+matmul_omp_op_block test with threads=8 and N=3000 x 3000
+Computing matrix-matrix product with N=3000
+Verification: OK
+blocksize=300 
+
+ Performance counter stats for './matmul_omp_op_block 3000':
+
+         36,812.11 msec task-clock:u              #    7.500 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            70,537      page-faults:u             #    0.002 M/sec                  
+    89,414,810,090      cycles:u                  #    2.429 GHz                      (25.00%)
+    96,659,372,156      instructions:u            #    1.08  insn per cycle           (37.50%)
+    13,924,452,944      branches:u                #  378.257 M/sec                    (37.49%)
+        90,384,765      branch-misses:u           #    0.65% of all branches          (37.49%)
+    54,894,253,060      L1-dcache-loads:u         # 1491.201 M/sec                    (25.00%)
+    27,164,825,708      L1-dcache-load-misses:u   #   49.49% of all L1-dcache hits    (25.01%)
+     3,589,340,571      LLC-loads:u               #   97.504 M/sec                    (25.00%)
+         3,239,748      LLC-load-misses:u         #    0.09% of all LL-cache hits     (25.00%)
+
+       4.908607468 seconds time elapsed
+
+      36.326028000 seconds user
+       0.488919000 seconds sys
+
+
+
+real	0m4.927s
+user	0m36.336s
+sys	0m0.497s
+--------------------

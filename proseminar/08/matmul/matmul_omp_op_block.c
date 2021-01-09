@@ -32,6 +32,7 @@ int main(int argc, char **argv) {
   Matrix Btranspose = createMatrix(N, N);
 
   // fill matrixes
+#pragma omp parallel for collapse(2)
   for (int i = 0; i < N; i++) {
     for (int j = 0; j < N; j++) {
       A[i * N + j] = i * j;            // some matrix - note: flattend indexing!
@@ -40,6 +41,7 @@ int main(int argc, char **argv) {
   }
 
   // transpose B matrix for better data coherence //
+#pragma omp parallel for collapse(2)
   for (int i = 0; i < N; i++) {
     for (int j = 0; j < N; j++) {
       Btranspose[i * N + j] = B[j * N + i];
@@ -67,6 +69,7 @@ int main(int argc, char **argv) {
         for (long long i = ii; i < ii+blocksize; i++) {
           for (long long j = jj; j < jj+blocksize; j++) {
             sum = C[i*N +j];
+#pragma omp simd
             for (long long k = kk; k < kk+blocksize; k++) {
               sum += A[i * N + k] * Btranspose[j * N + k];
             }

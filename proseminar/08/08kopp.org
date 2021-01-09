@@ -1,0 +1,415 @@
+#+options: ':nil *:t -:t ::t <:t H:3 \n:t ^:nil arch:headline
+#+options: author:t broken-links:nil c:nil creator:nil
+#+options: d:(not "LOGBOOK") date:t e:t email:t f:t inline:t num:t
+#+options: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+options: timestamp:t title:t toc:t todo:t |:t
+#+options: center:nil
+#+title: Assignment 08
+#+author: Markus Kopp
+#+email: markus.kopp@student.uibk.ac.at
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 28.0.50 (Org mode 9.4)
+
+#+latex_class: scrartcl
+#+latex_class_options:
+#+latex_header: \usepackage[margin=0.5in]{geometry}
+#+latex_header_extra:
+#+description:
+#+keywords:
+#+subtitle:
+#+latex_compiler: pdflatex
+#+date: \today
+* Exercise 1
+The first version was a straight forward implementation with just applying the pragma at the for loop. The code itself was lifted from the opencl course where this was also implemented by me and some colleagues. For comparison with a sequential version the build command just omits the =-fopenmp= argument.
+** matmul_omp
+#+begin_src C :eval never-export
+  // copy from openCL course  https://git.uibk.ac.at/csat2062/parallel_local/
+  #include <stdio.h>
+  #include <stdlib.h>
+
+  typedef double value_t;
+
+  // -- matrix utilities --
+
+  typedef value_t *Matrix;
+
+  Matrix createMatrix(int N, int M);
+
+  void releaseMatrix(Matrix m);
+
+  // ----------------------
+
+  int main(int argc, char **argv) {
+
+    // 'parsing' optional input parameter = problem size
+    int N = 1000;
+    if (argc > 1) {
+      N = atoi(argv[1]);
+    }
+    printf("Computing matrix-matrix product with N=%d\n", N);
+
+    // ---------- setup ----------
+
+    // create two input matrixes (on heap!)
+    Matrix A = createMatrix(N, N);
+    Matrix B = createMatrix(N, N);
+
+    // fill matrixes
+    for (int i = 0; i < N; i++) {
+      for (int j = 0; j < N; j++) {
+        A[i * N + j] = i * j;            // some matrix - note: flattend indexing!
+        B[i * N + j] = (i == j) ? 1 : 0; // identity
+      }
+    }
+
+    // ---------- compute ----------
+
+    Matrix C = createMatrix(N, N);
+
+  #pragma omp parallel for collapse(2)
+    for (long long i = 0; i < N; i++) {
+      for (long long j = 0; j < N; j++) {
+        value_t sum = 0;
+        for (long long k = 0; k < N; k++) {
+          sum += A[i * N + k] * B[k * N + j];
+        }
+        C[i * N + j] = sum;
+      }
+    }
+
+    // ---------- check ----------
+
+    int success = 1;
+    for (long long i = 0; i < N; i++) {
+      for (long long j = 0; j < N; j++) {
+        if (C[i * N + j] == i * j)
+          continue;
+        success = 0;
+        break;
+      }
+    }
+
+    printf("Verification: %s\n", (success) ? "OK" : "FAILED");
+
+    // ---------- cleanup ----------
+
+    releaseMatrix(A);
+    releaseMatrix(B);
+    releaseMatrix(C);
+
+    // done
+    return (success) ? EXIT_SUCCESS : EXIT_FAILURE;
+  }
+
+  Matrix createMatrix(int N, int M) {
+    // create data and index vector
+    return malloc(sizeof(value_t) * N * M);
+  }
+
+  void releaseMatrix(Matrix m) { free(m); }
+
+#+end_src
+** matmul_omp_op
+This version implements a simple speedup by transposing the matrix =B= so that access to its members is sequential in memory address.
+#+begin_example
+| 1| 2| 3| 4|   | 1| 2| 3| 4|
+| 5| 6| 7| 8| X | 5| 6| 7| 8|
+| 9|10|11|12|   | 9|10|11|12|
+|13|14|15|16|   |13|14|15|16|
+#+end_example
+When multiplying these two matrices you would calculate the first cell top left by $1*1+2*5+3*9+4*13$ which is the elements from the frist row in matrix =A= combined with the first column from matrix =B=. Transposing matrix =B= will allow us two use rows on both matrices and increase cache hits.
+#+begin_example
+| 1| 2| 3| 4|   | 1| 5| 9|13|
+| 5| 6| 7| 8| X | 2| 6|10|14|
+| 9|10|11|12|   | 3| 7|11|15|
+|13|14|15|16|   | 4| 8|12|16|
+#+end_example
+The time for transposing the matrix is included in the results.
+#+begin_src C :eval never-export
+  // copy from openCL course  https://git.uibk.ac.at/csat2062/parallel_local/
+
+  #include <stdio.h>
+  #include <stdlib.h>
+
+  typedef double value_t;
+
+  // -- matrix utilities --
+
+  typedef value_t *Matrix;
+
+  Matrix createMatrix(int N, int M);
+
+  void releaseMatrix(Matrix m);
+
+  // ----------------------
+
+  int main(int argc, char **argv) {
+
+    // 'parsing' optional input parameter = problem size
+    int N = 1000;
+    if (argc > 1) {
+      N = atoi(argv[1]);
+    }
+    printf("Computing matrix-matrix product with N=%d\n", N);
+
+    // ---------- setup ----------
+
+    // create two input matrixes (on heap!)
+    Matrix A = createMatrix(N, N);
+    Matrix B = createMatrix(N, N);
+    Matrix Btranspose = createMatrix(N, N);
+
+    // fill matrixes
+    for (int i = 0; i < N; i++) {
+      for (int j = 0; j < N; j++) {
+        A[i * N + j] = i * j;            // some matrix - note: flattend indexing!
+        B[i * N + j] = (i == j) ? 1 : 0; // identity
+      }
+    }
+
+    // transpose B matrix for better data coherence //
+    for (int i = 0; i < N; i++) {
+      for (int j = 0; j < N; j++) {
+        Btranspose[i * N + j] = B[j * N + i];
+      }
+    }
+  
+
+    // ---------- compute ----------
+
+    Matrix C = createMatrix(N, N);
+
+    // blocking approach //
+
+  #pragma omp parallel for collapse(2)
+    for (long long i = 0; i < N; i++) {
+      for (long long j = 0; j < N; j++) {
+        value_t sum = 0;
+        for (long long k = 0; k < N; k++) {
+          sum += A[i * N + k] * Btranspose[j * N + k];
+        }
+        C[i * N + j] = sum;
+      }
+    }
+
+    // ---------- check ----------
+
+    int success = 1;
+    for (long long i = 0; i < N; i++) {
+      for (long long j = 0; j < N; j++) {
+        if (C[i * N + j] == i * j)
+          continue;
+        success = 0;
+        break;
+      }
+    }
+
+    printf("Verification: %s\n", (success) ? "OK" : "FAILED");
+
+    // ---------- cleanup ----------
+
+    releaseMatrix(A);
+    releaseMatrix(B);
+    releaseMatrix(C);
+
+    // done
+    return (success) ? EXIT_SUCCESS : EXIT_FAILURE;
+  }
+
+  Matrix createMatrix(int N, int M) {
+    // create data and index vector
+    return malloc(sizeof(value_t) * N * M);
+  }
+
+  void releaseMatrix(Matrix m) { free(m); }
+
+#+end_src
+** matmul_omp_op_block
+By including blocks we also increase local memory accesses while working on partial solutions for the cells. The for loop gets additions for the tile sizes. Also the simd pragma was used to increase the calculation again.
+#+begin_src C :eval never-export
+  // copy from openCL course  https://git.uibk.ac.at/csat2062/parallel_local/
+
+  #include <stdio.h>
+  #include <stdlib.h>
+
+  typedef double value_t;
+
+  // -- matrix utilities --
+
+  typedef value_t *Matrix;
+
+  Matrix createMatrix(int N, int M);
+
+  void releaseMatrix(Matrix m);
+
+  // ----------------------
+
+  int main(int argc, char **argv) {
+
+    // 'parsing' optional input parameter = problem size
+    int N = 1000;
+    if (argc > 1) {
+      N = atoi(argv[1]);
+    }
+    printf("Computing matrix-matrix product with N=%d\n", N);
+
+    // ---------- setup ----------
+
+    // create two input matrixes (on heap!)
+    Matrix A = createMatrix(N, N);
+    Matrix B = createMatrix(N, N);
+    Matrix Btranspose = createMatrix(N, N);
+
+    // fill matrixes
+  #pragma omp parallel for collapse(2)
+    for (int i = 0; i < N; i++) {
+      for (int j = 0; j < N; j++) {
+        A[i * N + j] = i * j;            // some matrix - note: flattend indexing!
+        B[i * N + j] = (i == j) ? 1 : 0; // identity
+      }
+    }
+
+    // transpose B matrix for better data coherence //
+  #pragma omp parallel for collapse(2)
+    for (int i = 0; i < N; i++) {
+      for (int j = 0; j < N; j++) {
+        Btranspose[i * N + j] = B[j * N + i];
+      }
+    }
+
+
+    // ---------- compute ----------
+
+    Matrix C = createMatrix(N, N);
+    for (int i = 0; i < N; i++) {
+      for (int j = 0; j < N; j++) {
+        C[i * N + j] = 0.0;
+      }
+    }
+
+    // blocking approach //
+
+    int blocksize = 60;
+    value_t sum = 0;
+  #pragma omp parallel for collapse(3)
+    for (long long ii = 0; ii < N; ii+=blocksize) {
+      for (long long jj = 0; jj < N; jj+=blocksize) {
+        for (long long kk = 0; kk < N; kk+=blocksize) {
+          for (long long i = ii; i < ii+blocksize; i++) {
+            for (long long j = jj; j < jj+blocksize; j++) {
+              sum = C[i*N +j];
+  #pragma omp simd
+              for (long long k = kk; k < kk+blocksize; k++) {
+                sum += A[i * N + k] * Btranspose[j * N + k];
+              }
+              C[i * N + j] = sum;
+            }
+          }
+        }
+      }
+    }
+
+    // ---------- check ----------
+
+    int success = 1;
+    for (long long i = 0; i < N; i++) {
+      for (long long j = 0; j < N; j++) {
+        if (C[i * N + j] == i * j)
+          continue;
+        success = 0;
+        break;
+      }
+    }
+
+    printf("Verification: %s\n", (success) ? "OK" : "FAILED");
+    printf("blocksize=%d \n", blocksize);
+
+    // ---------- cleanup ----------
+
+    releaseMatrix(A);
+    releaseMatrix(B);
+    releaseMatrix(C);
+
+    // done
+    return (success) ? EXIT_SUCCESS : EXIT_FAILURE;
+  }
+
+  Matrix createMatrix(int N, int M) {
+    // create data and index vector
+    return malloc(sizeof(value_t) * N * M);
+  }
+
+  void releaseMatrix(Matrix m) { free(m); }
+
+#+end_src
+** MakeFile
+#+begin_src makefile :eval never-export
+  CC=gcc
+  CC_FLAGS=-O3 -g -std=gnu99 -Wall -Wextra -pedantic -ffast-math
+
+  .PHONEY: all
+  all: matmul_omp matmul_seq matmul_omp_op matmul_omp_op_block
+
+  matmul_omp: matmul_omp.c
+    @$(CC) $(CC_FLAGS) -fopenmp $< -o matmul_omp
+
+  matmul_seq: matmul_omp.c
+    @$(CC) $(CC_FLAGS) $< -o matmul_seq
+
+  matmul_omp_op: matmul_omp_op.c
+    @$(CC) $(CC_FLAGS) -fopenmp $< -o matmul_omp_op
+
+  matmul_omp_op_block: matmul_omp_op_block.c
+    @$(CC) $(CC_FLAGS) -fopenmp $< -o matmul_omp_op_block
+
+  .PHONEY: clean
+  clean:
+    @rm matmul_omp
+    @rm matmul_seq
+    @rm matmul_omp_op
+      @rm matmul_omp_op_block
+#+end_src
+** matmul.script
+Script for running on different sizes and amount of threads.
+#+begin_src bash :eval never-export
+  #!/bin/bash
+
+  # Execute job in the queue "std.q" unless you have special requirements.
+  #$ -q std.q
+
+  # The batch system should use the current directory as working directory.
+  #$ -cwd
+
+  # Name your job. Unless you use the -o and -e options, output will
+  # go to a unique file name.ojob_id for each job.
+  #$ -N kopp_matmul
+
+  ##$ -M markus.kopp@student.uibk.ac.at
+  ##$ -m e
+
+  # Join the error stream to the output stream.
+  #$ -j yes
+
+  #$ -pe openmpi-8perhost 8
+
+  ##module load openmpi/4.0.3
+
+  for N in 500 1000 1500 2000; do
+      echo "seq for comparison with N=$N x $N"
+      time perf stat -d ./matmul_seq $N
+      echo "--------------------"
+      for FILE in matmul_omp
+      do
+          for X in {1..8..1}; do
+              echo "$FILE test with threads=$X and N=$N x $N"
+              time OMP_NUM_THREADS=$X perf stat -d ./$FILE $N
+              echo "--------------------"
+          done
+      done    
+  done
+
+#+end_src
+** Results
+* Exercise 2
