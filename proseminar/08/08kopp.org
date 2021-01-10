@@ -412,4 +412,672 @@ Script for running on different sizes and amount of threads.
 
 #+end_src
 ** Results
+First only the sequential version and the first omp version were compared. We can see that speedup and efficiency has diminishing returns with more threads. This is why the version with the transposed Matrix and black/tiling were introduced.
+*** N=500x500
+#+ATTR_LATEX: :width \textwidth :caption Execution time on lcc2 in seconds for N=500x500
+| threads |   seq |   omp |
+|---------+-------+-------|
+|       1 | 0.415 | 0.404 |
+|       2 | 0.415 | 0.165 |
+|       3 | 0.415 | 0.116 |
+|       4 | 0.415 | 0.163 |
+|       5 | 0.415 |  0.14 |
+|       6 | 0.415 | 0.081 |
+|       7 | 0.415 | 0.074 |
+|       8 | 0.415 | 0.069 |
+
+#+ATTR_LATEX: :width \textwidth :caption Speedup on lcc2 for N=1000x1000
+| threads | seq |   omp |
+|---------+-----+-------|
+|       1 |   1 | 1.027 |
+|       2 |   1 | 2.515 |
+|       3 |   1 | 3.578 |
+|       4 |   1 | 2.546 |
+|       5 |   1 | 2.964 |
+|       6 |   1 | 5.123 |
+|       7 |   1 | 5.608 |
+|       8 |   1 | 6.014 |
+
+#+ATTR_LATEX: :width \textwidth :caption Efficiency on lcc2 for N=500x500
+| Threads | seq |   omp |
+|---------+-----+-------|
+|       1 |   1 | 1.027 |
+|       2 |   1 | 1.258 |
+|       3 |   1 | 1.193 |
+|       4 |   1 | 0.637 |
+|       5 |   1 | 0.593 |
+|       6 |   1 | 0.854 |
+|       7 |   1 | 0.801 |
+|       8 |   1 | 0.752 |
+[[./graphs/matmul500.png]]
+[[./graphs/matmulspeedup500.png]]
+[[./graphs/matmuleff500.png]]
+*** N=1000x1000
+#+ATTR_LATEX: :width \textwidth :caption Execution time on lcc2 in seconds for N=1000x1000
+| threads |   seq |   omp |
+|---------+-------+-------|
+|       1 | 4.173 |   4.2 |
+|       2 | 4.173 | 2.252 |
+|       3 | 4.173 | 1.839 |
+|       4 | 4.173 | 1.362 |
+|       5 | 4.173 | 1.203 |
+|       6 | 4.173 | 0.997 |
+|       7 | 4.173 | 0.888 |
+|       8 | 4.173 | 0.738 |
+
+#+ATTR_LATEX: :width \textwidth :caption Speedup on lcc2 for N=1000x1000
+| threads | seq |   omp |
+|---------+-----+-------|
+|       1 |   1 | 0.994 |
+|       2 |   1 | 1.853 |
+|       3 |   1 | 2.269 |
+|       4 |   1 | 3.064 |
+|       5 |   1 | 3.469 |
+|       6 |   1 | 4.186 |
+|       7 |   1 | 4.699 |
+|       8 |   1 | 5.654 |
+
+#+ATTR_LATEX: :width \textwidth :caption Efficiency on lcc2 for N=100x1000
+| threads | seq |   omp |
+|---------+-----+-------|
+|       1 |   1 | 0.994 |
+|       2 |   1 | 0.927 |
+|       3 |   1 | 0.756 |
+|       4 |   1 | 0.766 |
+|       5 |   1 | 0.694 |
+|       6 |   1 | 0.698 |
+|       7 |   1 | 0.671 |
+|       8 |   1 | 0.707 |
+[[./graphs/matmul1000.png]]
+[[./graphs/matmulspeedup1000.png]]
+[[./graphs/matmuleff1000.png]]
+*** N=1500x1500
+#+ATTR_LATEX: :width \textwidth :caption Execution time on lcc2 in seconds for N=1500x1500
+| threads |   seq |   omp |
+|---------+-------+-------|
+|       1 | 15.11 | 15.13 |
+|       2 | 15.11 | 7.986 |
+|       3 | 15.11 | 6.708 |
+|       4 | 15.11 | 5.138 |
+|       5 | 15.11 | 4.379 |
+|       6 | 15.11 | 3.736 |
+|       7 | 15.11 | 3.962 |
+|       8 | 15.11 | 3.611 |
+
+#+ATTR_LATEX: :width \textwidth :caption Speedup on lcc2 for N=1500x1500
+| threads | seq |   omp |
+|---------+-----+-------|
+|       1 |   1 | 0.999 |
+|       2 |   1 | 1.892 |
+|       3 |   1 | 2.253 |
+|       4 |   1 | 2.941 |
+|       5 |   1 | 3.451 |
+|       6 |   1 | 4.044 |
+|       7 |   1 | 3.814 |
+|       8 |   1 | 4.184 |
+
+#+ATTR_LATEX: :width \textwidth :caption Efficiency on lcc2 for N=1500x1500
+| threads | seq |   omp |
+|---------+-----+-------|
+|       1 |   1 | 0.999 |
+|       2 |   1 | 0.946 |
+|       3 |   1 | 0.751 |
+|       4 |   1 | 0.735 |
+|       5 |   1 | 0.690 |
+|       6 |   1 | 0.674 |
+|       7 |   1 | 0.545 |
+|       8 |   1 | 0.523 |
+[[./graphs/matmul1500.png]]
+[[./graphs/matmulspeedup1500.png]]
+[[./graphs/matmuleff1500.png]]
+*** N=2000x2000
+#+ATTR_LATEX: :width \textwidth :caption Execution time on lcc2 in seconds for N=2000x2000
+| threads |   seq |    omp |
+|---------+-------+--------|
+|       1 | 36.94 | 36.896 |
+|       2 | 36.94 | 19.371 |
+|       3 | 36.94 | 16.438 |
+|       4 | 36.94 | 12.952 |
+|       5 | 36.94 | 10.739 |
+|       6 | 36.94 | 10.152 |
+|       7 | 36.94 | 10.176 |
+|       8 | 36.94 |  6.647 |
+
+#+ATTR_LATEX: :width \textwidth :caption Speedup on lcc2 for N=2000x2000
+
+| threads | seq |   omp |
+|---------+-----+-------|
+|       1 |   1 | 1.001 |
+|       2 |   1 | 1.907 |
+|       3 |   1 | 2.247 |
+|       4 |   1 | 2.852 |
+|       5 |   1 | 3.440 |
+|       6 |   1 | 3.639 |
+|       7 |   1 | 3.630 |
+|       8 |   1 | 5.557 |
+
+
+
+#+ATTR_LATEX: :width \textwidth :caption Efficiency on lcc2 for N=2000x2000
+| threads | seq |   omp |
+|---------+-----+-------|
+|       1 |   1 | 1.001 |
+|       2 |   1 | 0.953 |
+|       3 |   1 | 0.749 |
+|       4 |   1 | 0.713 |
+|       5 |   1 | 0.688 |
+|       6 |   1 | 0.606 |
+|       7 |   1 | 0.519 |
+|       8 |   1 | 0.695 |
+
+[[./graphs/matmul2000.png]]
+[[./graphs/matmulspeedup2000.png]]
+[[./graphs/matmuleff2000.png]]
+*** Optimized version N=3000x3000
+The last version is used in the online form for the fasted time
+#+ATTR_LATEX: :width \textwidth :caption Execution time on lcc2 in seconds for N=3000x3000
+| threads |    omp | omp_op_block |
+|---------+--------+--------------|
+|       1 | 80.227 |       35.361 |
+|       8 | 28.619 |        4.705 |
+
+[[./graphs/matmul3000.png]]
+
 * Exercise 2
+The N-queens problem is the general problem of placing Queens on a chess board without any one of them being able to take another figure [[https://en.wikipedia.org/wiki/Eight_queens_puzzle]]. First a sequential version was implemented and later parallelized.
+
+** queens_seq
+Using recursion to check if placement is possible until all columns are filled with queens. We don't stop after finding the first solution but count how many we can find.
+#+begin_src C :eval never-export
+  //some inspritation from https://www.geeksforgeeks.org/n-queen-problem-backtracking-3/
+
+  #include <stdio.h>
+  #include <stdlib.h>
+
+  int check_paths(int pos_row, int pos_col, int problem_size,
+                  int board[problem_size][problem_size]) {
+
+    int row, col;
+    // check left row
+    for (int col = 0; col < pos_col; ++col) {
+      if (board[pos_row][col]) {
+        // printf("left row\n");
+        return 0;
+      }
+    }
+
+    // check left upper diogonal
+    for (row = pos_row - 1, col = pos_col - 1; row >= 0 && col >= 0;
+         --row, --col) {
+      if (board[row][col]) {
+        // printf("left upper diogonal\n");
+        return 0;
+      }
+    }
+
+    // check left lower diogonal
+    for (row = pos_row + 1, col = pos_col - 1; row < problem_size && col >= 0;
+         ++row, --col) {
+      if (board[row][col]) {
+        // printf("left lower diogonal\n");
+        return 0;
+      }
+    }
+    return 1;
+  }
+
+  int req_solve(int problem_size, int board[problem_size][problem_size],
+                int start_col, int *solvenumbers) {
+    if (start_col >= problem_size) {
+      /* for (int row=0; row < problem_size; ++row) { */
+      /*   for (int col=0; col < problem_size; ++col) { */
+      /*     printf("%d ", board[row][col]); */
+      /*   } */
+      /*   printf("\n"); */
+      /* } */
+      /* printf("Solution %d\n", ++(*solvenumbers)); */
+      /* printf("---------\n"); */
+      ++(*solvenumbers);
+      return 0;
+    }
+    for (int row = 0; row < problem_size; ++row) {
+      if (check_paths(row, start_col, problem_size, board)) {
+        board[row][start_col] = 1;
+
+        if (req_solve(problem_size, board, start_col + 1, solvenumbers)) {
+          return 1;
+        }
+        board[row][start_col] = 0;
+      }
+    }
+    return 0;
+  }
+
+  int main(int argc, char *argv[]) {
+    // 'parsing' optional input parameter = problem size
+    int N = 8;
+    if (argc > 1) {
+      N = atoi(argv[1]);
+    }
+    printf("Computing queens problem with N=%d x %d\n", N, N);
+
+    // board is used with [row][columns]
+    int board[N][N];
+    int solvenumbers = 0;
+
+    for (int row = 0; row < N; ++row) {
+      for (int col = 0; col < N; ++col) {
+        board[row][col] = 0;
+      }
+    }
+    req_solve(N, board, 0, &solvenumbers);
+    printf("found solutions=%d\n", solvenumbers);
+
+    /* for (int row=0; row < N; ++row) { */
+    /*   for (int col=0; col < N; ++col) { */
+    /*     printf("%d ", board[row][col]); */
+    /*   } */
+    /*   printf("\n"); */
+    /* } */
+
+    return EXIT_SUCCESS;
+  }
+#+end_src
+
+** queens_omp
+The first version was just using task parallelism. The problem here was that we don't have any parallel computation at all because there is only one recursive call per thread and it has to wait for the recursive call to return to continue. That's why a different version with multiple boards was created.
+#+begin_src C :eval never-export
+  //some inspritation from https://www.geeksforgeeks.org/n-queen-problem-backtracking-3/
+
+  #include <stdio.h>
+  #include <stdlib.h>
+
+  int check_paths(int pos_row, int pos_col, int problem_size,
+                  int board[problem_size][problem_size]) {
+
+    int row, col;
+    // check left row
+    for (int col = 0; col < pos_col; ++col) {
+      if (board[pos_row][col]) {
+        // printf("left row\n");
+        return 0;
+      }
+    }
+
+    // check left upper diogonal
+    for (row = pos_row - 1, col = pos_col - 1; row >= 0 && col >= 0;
+         --row, --col) {
+      if (board[row][col]) {
+        // printf("left upper diogonal\n");
+        return 0;
+      }
+    }
+
+    // check left lower diogonal
+    for (row = pos_row + 1, col = pos_col - 1; row < problem_size && col >= 0;
+         ++row, --col) {
+      if (board[row][col]) {
+        // printf("left lower diogonal\n");
+        return 0;
+      }
+    }
+    return 1;
+  }
+
+  int req_solve(int problem_size, int board[problem_size][problem_size],
+                int start_col, int *solvenumbers) {
+    if (start_col >= problem_size) {
+      /* for (int row=0; row < problem_size; ++row) { */
+      /*   for (int col=0; col < problem_size; ++col) { */
+      /*     printf("%d ", board[row][col]); */
+      /*   } */
+      /*   printf("\n"); */
+      /* } */
+      /* printf("Solution %d\n", ++(*solvenumbers)); */
+      /* printf("---------\n"); */
+  #pragma omp atomic
+      ++(*solvenumbers);
+      return 0; // stop here normaly with return 1 for he first solution only
+    }
+
+    for (int row = 0; row < problem_size; ++row) {
+      if (check_paths(row, start_col, problem_size, board)) {
+        board[row][start_col] = 1;
+  #pragma omp task
+        req_solve(problem_size, board, start_col + 1, solvenumbers);
+  #pragma omp taskwait
+        board[row][start_col] = 0;
+      }
+    }
+    return 0;
+  }
+
+  int main(int argc, char *argv[]) {
+    // 'parsing' optional input parameter = problem size
+    int N = 8;
+    if (argc > 1) {
+      N = atoi(argv[1]);
+    }
+    printf("Computing queens problem with N=%d x %d\n", N, N);
+
+    // board is used with [row][columns]
+    int board[N][N];
+    int solvenumbers = 0;
+
+    for (int row = 0; row < N; ++row) {
+      for (int col = 0; col < N; ++col) {
+        board[row][col] = 0;
+      }
+    }
+  #pragma omp parallel
+    {
+  #pragma omp single
+      { req_solve(N, board, 0, &solvenumbers); }
+    }
+
+    printf("found solutions=%d\n", solvenumbers);
+
+    /* for (int row=0; row < N; ++row) { */
+    /*   for (int col=0; col < N; ++col) { */
+    /*     printf("%d ", board[row][col]); */
+    /*   } */
+    /*   printf("\n"); */
+    /* } */
+
+    return EXIT_SUCCESS;
+  }
+#+end_src
+
+** queens_omp_op
+This version has multiple boards ans also doesn't place queens in obvious places in adjacent columns where its not allowed. 
+#+begin_src C :eval never-export
+  // some inspiration from https://www.geeksforgeeks.org/n-queen-problem-backtracking-3/
+
+  #include <stdio.h>
+  #include <stdlib.h>
+
+  int check_paths(int pos_row, int pos_col, int problem_size, int *board) {
+
+    int row, col;
+    // check left row
+    for (int col = 0; col < pos_col; ++col) {
+      if (board[pos_row * problem_size + col]) {
+        // printf("left row\n");
+        return 0;
+      }
+    }
+
+    // check left upper diogonal
+    for (row = pos_row - 1, col = pos_col - 1; row >= 0 && col >= 0;
+         --row, --col) {
+      if (board[row * problem_size + col]) {
+        // printf("left upper diogonal\n");
+        return 0;
+      }
+    }
+
+    // check left lower diogonal
+    for (row = pos_row + 1, col = pos_col - 1; row < problem_size && col >= 0;
+         ++row, --col) {
+      if (board[row * problem_size + col]) {
+        // printf("left lower diogonal\n");
+        return 0;
+      }
+    }
+    return 1;
+  }
+
+  int req_solve(int problem_size, int *board, int start_col, int lastrow,
+                int *solvenumbers) {
+    if (start_col >= problem_size) {
+      /* for (int row=0; row < problem_size; ++row) { */
+      /*   for (int col=0; col < problem_size; ++col) { */
+      /*     printf("%d ", board[row][col]); */
+      /*   } */
+      /*   printf("\n"); */
+      /* } */
+      /* printf("Solution %d\n", ++(*solvenumbers)); */
+      /* printf("---------\n"); */
+  #pragma omp atomic
+      ++(*solvenumbers);
+      return 0; // stop here normaly with return 1 for he first solution only
+    }
+
+    for (int row = 0; row < problem_size; ++row) {
+      if (row == lastrow || row == lastrow - 1 || row == lastrow + 1) {
+        continue;
+      }
+      if (check_paths(row, start_col, problem_size, board)) {
+        board[row * problem_size + start_col] = 1;
+        req_solve(problem_size, board, start_col + 1, row, solvenumbers);
+        board[row * problem_size + start_col] = 0;
+      }
+    }
+    return 0;
+  }
+
+  int main(int argc, char *argv[]) {
+    // 'parsing' optional input parameter = problem size
+    int N = 8;
+    if (argc > 1) {
+      N = atoi(argv[1]);
+    }
+    printf("Computing queens problem with N=%d x %d\n", N, N);
+
+    // board is used with [row][columns]
+    int *boards[N];
+    int solvenumbers = 0;
+  #pragma omp parallel for
+    for (int i = 0; i < N; ++i) {
+      boards[i] = malloc(sizeof(int) * N * N);
+      for (int row = 0; row < N; ++row) {
+        for (int col = 0; col < N; ++col) {
+          ,*(boards[i] + row * N + col) = 0;
+        }
+        ,*(boards[i] + i * N) = 1;
+      }
+    }
+
+  #pragma omp parallel for
+    for (int i = 0; i < N; ++i) {
+      req_solve(N, boards[i], 1, i, &solvenumbers);
+    }
+
+    printf("found solutions=%d\n", solvenumbers);
+  #pragma omp parallel for
+    for (int i = 0; i < N; ++i) {
+      free(boards[i]);
+    }
+
+    return EXIT_SUCCESS;
+  }
+
+#+end_src
+
+** Makefile
+#+begin_src makefile :eval never-export
+    CC=gcc
+  CC_FLAGS=-O3 -g -std=gnu99 -Wall -Wextra -pedantic
+
+  .PHONEY: all
+  all: queens_seq queens_omp queens_omp_op
+
+  queens_seq: queens_seq.c
+    @$(CC) $(CC_FLAGS) -fopenmp $< -o queens_seq
+
+  queens_omp: queens_omp.c
+    @$(CC) $(CC_FLAGS) -fopenmp $< -o queens_omp
+
+  queens_omp_op: queens_omp_op.c
+    @$(CC) $(CC_FLAGS) -fopenmp $< -o queens_omp_op
+
+  .PHONEY: clean
+  clean:
+    @rm queens_seq
+    @rm queens_omp
+    @rm queens_omp_op
+#+end_src
+
+** queens.script
+#+begin_src bash :eval never-export
+#!/bin/bash
+
+# Execute job in the queue "std.q" unless you have special requirements.
+#$ -q std.q
+
+# The batch system should use the current directory as working directory.
+#$ -cwd
+
+# Name your job. Unless you use the -o and -e options, output will
+# go to a unique file name.ojob_id for each job.
+#$ -N kopp_queens
+
+##$ -M markus.kopp@student.uibk.ac.at
+##$ -m e
+
+# Join the error stream to the output stream.
+#$ -j yes
+
+#$ -pe openmpi-8perhost 8
+
+module load openmpi/4.0.3
+
+for N in 8 9 10 11 12 13; do
+    echo "seq for comparison with N=$N x $N"
+    time perf stat -d ./queens_seq $N
+    echo "--------------------"
+    for FILE in queens_omp queens_omp_op
+    do
+        for X in {1..8..1}; do
+            echo "$FILE test with threads=$X and N=$N x $N"
+            time OMP_NUM_THREADS=$X perf stat -d ./$FILE $N
+            echo "--------------------"
+        done
+    done    
+done
+#+end_src
+
+** Results
+only three of the measurements are displayed because for $N<11$ all the wall times are very small.
+*** N=11x11
+#+ATTR_LATEX: :width \textwidth :caption Execution time on lcc2 in seconds for N=11x11
+| threads |   seq |   omp | omp_op |
+|---------+-------+-------+--------|
+|       1 | 0.065 |  0.12 |  0.059 |
+|       2 | 0.065 | 0.248 |  0.041 |
+|       3 | 0.065 | 0.251 |  0.035 |
+|       4 | 0.065 |  0.25 |  0.032 |
+|       5 | 0.065 | 0.258 |  0.031 |
+|       6 | 0.065 | 0.277 |  0.028 |
+|       7 | 0.065 | 0.339 |  0.029 |
+|       8 | 0.065 |  0.49 |  0.039 |
+
+#+ATTR_LATEX: :width \textwidth :caption Speedup on lcc2 for N=11x11
+| threads | seq |   omp | omp_op |
+|---------+-----+-------+--------|
+|       1 |   1 | 0.542 |  1.102 |
+|       2 |   1 | 0.262 |  1.585 |
+|       3 |   1 | 0.259 |  1.857 |
+|       4 |   1 | 0.260 |  2.031 |
+|       5 |   1 | 0.252 |  2.097 |
+|       6 |   1 | 0.235 |  2.321 |
+|       7 |   1 | 0.192 |  2.241 |
+|       8 |   1 | 0.133 |  1.667 |
+
+
+#+ATTR_LATEX: :width \textwidth :caption Efficiency on lcc2 for N=11x11
+| threads | seq |   omp | omp_op |
+|---------+-----+-------+--------|
+|       1 |   1 | 0.542 |  1.102 |
+|       2 |   1 | 0.131 |  0.793 |
+|       3 |   1 | 0.086 |  0.619 |
+|       4 |   1 | 0.065 |  0.508 |
+|       5 |   1 | 0.050 |  0.419 |
+|       6 |   1 | 0.039 |  0.387 |
+|       7 |   1 | 0.027 |  0.320 |
+|       8 |   1 | 0.017 |  0.208 |
+[[./graphs/nqueens11.png]]
+[[./graphs/nqueensspeedup11.png]]
+[[./graphs/nqueenseff11.png]]
+*** N=12x12
+#+ATTR_LATEX: :width \textwidth :caption Execution time on lcc2 in seconds for N=12x12
+| threads |   seq |   omp | omp_op |
+|---------+-------+-------+--------|
+|       1 | 0.281 | 0.475 |  0.238 |
+|       2 | 0.281 | 1.213 |   0.13 |
+|       3 | 0.281 |  1.21 |  0.097 |
+|       4 | 0.281 | 1.216 |  0.078 |
+|       5 | 0.281 | 1.227 |  0.077 |
+|       6 | 0.281 | 1.241 |  0.059 |
+|       7 | 0.281 | 1.446 |  0.059 |
+|       8 | 0.281 | 1.894 |  0.062 |
+
+
+#+ATTR_LATEX: :width \textwidth :caption Speedup on lcc2 for N=12x12
+| threads | seq |   omp | omp_op |
+|---------+-----+-------+--------|
+|       1 |   1 | 0.592 |  1.181 |
+|       2 |   1 | 0.232 |  2.162 |
+|       3 |   1 | 0.232 |  2.897 |
+|       4 |   1 | 0.231 |  3.603 |
+|       5 |   1 | 0.229 |  3.649 |
+|       6 |   1 | 0.226 |  4.763 |
+|       7 |   1 | 0.194 |  4.763 |
+|       8 |   1 | 0.148 |  4.532 |
+
+#+ATTR_LATEX: :width \textwidth :caption Efficiency on lcc2 for N=12x12
+| threads | seq |   omp | omp_op |
+|---------+-----+-------+--------|
+|       1 |   1 | 0.592 |  1.181 |
+|       2 |   1 | 0.116 |  1.081 |
+|       3 |   1 | 0.077 |  0.966 |
+|       4 |   1 | 0.058 |  0.901 |
+|       5 |   1 | 0.046 |  0.730 |
+|       6 |   1 | 0.038 |  0.794 |
+|       7 |   1 | 0.028 |  0.680 |
+|       8 |   1 | 0.019 |  0.567 |
+
+[[./graphs/nqueens12.png]]
+[[./graphs/nqueensspeedup12.png]]
+[[./graphs/nqueenseff12.png]]
+*** N=13x13
+#+ATTR_LATEX: :width \textwidth :caption Execution time on lcc2 in seconds for N=13x13
+| threads |   seq |   omp | omp_op |
+|---------+-------+-------+--------|
+|       1 | 1.562 | 2.586 |  1.338 |
+|       2 | 1.562 | 6.685 |  0.734 |
+|       3 | 1.562 | 6.656 |  0.519 |
+|       4 | 1.562 |  6.63 |  0.413 |
+|       5 | 1.562 | 6.622 |  0.345 |
+|       6 | 1.562 |  6.75 |  0.309 |
+|       7 | 1.562 | 7.214 |  0.238 |
+|       8 | 1.562 | 8.123 |   0.24 |
+
+
+#+ATTR_LATEX: :width \textwidth :caption Speedup on lcc2 for N=13x13
+| threads | seq |   omp | omp_op |
+|---------+-----+-------+--------|
+|       1 |   1 | 0.604 |  1.167 |
+|       2 |   1 | 0.234 |  2.128 |
+|       3 |   1 | 0.235 |  3.010 |
+|       4 |   1 | 0.236 |  3.782 |
+|       5 |   1 | 0.236 |  4.528 |
+|       6 |   1 | 0.231 |  5.055 |
+|       7 |   1 | 0.217 |  6.563 |
+|       8 |   1 | 0.192 |  6.508 |
+
+#+ATTR_LATEX: :width \textwidth :caption Efficiency on lcc2 for N=13x13
+| threads | seq |   omp | omp_op |
+|---------+-----+-------+--------|
+|       1 |   1 | 0.604 |  1.167 |
+|       2 |   1 | 0.117 |  1.064 |
+|       3 |   1 | 0.078 |  1.003 |
+|       4 |   1 | 0.059 |  0.946 |
+|       5 |   1 | 0.047 |  0.906 |
+|       6 |   1 | 0.039 |  0.843 |
+|       7 |   1 | 0.031 |  0.938 |
+|       8 |   1 | 0.024 |  0.814 |
+
+[[./graphs/nqueens13.png]]
+[[./graphs/nqueensspeedup13.png]]
+[[./graphs/nqueenseff13.png]]

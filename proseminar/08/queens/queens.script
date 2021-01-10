@@ -18,7 +18,7 @@
 
 #$ -pe openmpi-8perhost 8
 
-##module load openmpi/4.0.3
+#module load openmpi/4.0.3
 
 for N in 8 9 10 11 12 13; do
     echo "seq for comparison with N=$N x $N"
