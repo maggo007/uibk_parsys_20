@@ -1,0 +1,549 @@
+seq for comparison
+
+
+ Benchmark
+
+ No input file. Using compiled defaults 
+ Size:  256x 256x 256  (class B)
+ Iterations:                     20
+
+  iter   1
+  iter   5
+  iter  10
+  iter  15
+  iter  20
+
+ Benchmark completed
+ VERIFICATION SUCCESSFUL
+ L2 Norm is  1.8005644013551E-06
+ Error is    6.6330115975290E-14
+
+
+ Benchmark Completed.
+ Class           =                        B
+ Size            =            256x 256x 256
+ Iterations      =                       20
+ Operation type  =           floating point
+ Verification    =               SUCCESSFUL
+ Version         =                    3.3.1
+  SECTION   Time (secs)
+  benchmk :   12.575  (100.00%)
+  mg3P    :    9.455  ( 75.19%)
+  psinv   :    2.894  ( 23.01%)
+  resid   :    6.051  ( 48.12%)
+    --> mg-resid:    3.039  ( 24.16%)
+  rprj3   :    1.511  ( 12.02%)
+  interp  :    1.459  ( 11.60%)
+  norm2   :    0.107  (  0.85%)
+  comm3   :    0.331  (  2.63%)
+
+ Performance counter stats for './real':
+
+         15,590.34 msec task-clock:u              #    0.995 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+           110,720      page-faults:u             #    0.007 M/sec                  
+    37,023,266,951      cycles:u                  #    2.375 GHz                      (25.00%)
+    42,352,979,477      instructions:u            #    1.14  insn per cycle           (37.51%)
+     1,653,416,869      branches:u                #  106.054 M/sec                    (37.50%)
+         7,111,621      branch-misses:u           #    0.43% of all branches          (37.51%)
+    20,089,024,549      L1-dcache-loads:u         # 1288.556 M/sec                    (25.00%)
+       892,049,893      L1-dcache-load-misses:u   #    4.44% of all L1-dcache hits    (25.00%)
+       870,839,650      LLC-loads:u               #   55.858 M/sec                    (25.00%)
+        26,854,928      LLC-load-misses:u         #    3.08% of all LL-cache hits     (24.99%)
+
+      15.661330582 seconds time elapsed
+
+      15.143668000 seconds user
+       0.447642000 seconds sys
+
+
+--------------------
+real_omp test with threads=1
+
+
+ Benchmark
+
+ No input file. Using compiled defaults 
+ Size:  256x 256x 256  (class B)
+ Iterations:                     20
+
+  iter   1
+  iter   5
+  iter  10
+  iter  15
+  iter  20
+
+ Benchmark completed
+ VERIFICATION SUCCESSFUL
+ L2 Norm is  1.8005644013551E-06
+ Error is    6.6330115975290E-14
+
+
+ Benchmark Completed.
+ Class           =                        B
+ Size            =            256x 256x 256
+ Iterations      =                       20
+ Operation type  =           floating point
+ Verification    =               SUCCESSFUL
+ Version         =                    3.3.1
+  SECTION   Time (secs)
+  benchmk :   12.702  (100.00%)
+  mg3P    :    9.558  ( 75.25%)
+  psinv   :    2.914  ( 22.94%)
+  resid   :    6.103  ( 48.05%)
+    --> mg-resid:    3.066  ( 24.14%)
+  rprj3   :    1.563  ( 12.31%)
+  interp  :    1.459  ( 11.49%)
+  norm2   :    0.107  (  0.85%)
+  comm3   :    0.333  (  2.62%)
+
+ Performance counter stats for './real_omp':
+
+         15,724.13 msec task-clock:u              #    0.999 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+           110,779      page-faults:u             #    0.007 M/sec                  
+    37,334,291,351      cycles:u                  #    2.374 GHz                      (25.00%)
+    42,410,863,888      instructions:u            #    1.14  insn per cycle           (37.49%)
+     1,644,373,785      branches:u                #  104.576 M/sec                    (37.52%)
+         6,658,770      branch-misses:u           #    0.40% of all branches          (37.50%)
+    20,095,543,125      L1-dcache-loads:u         # 1278.006 M/sec                    (25.00%)
+       915,192,337      L1-dcache-load-misses:u   #    4.55% of all L1-dcache hits    (25.00%)
+       875,596,280      LLC-loads:u               #   55.685 M/sec                    (24.99%)
+        23,146,876      LLC-load-misses:u         #    2.64% of all LL-cache hits     (24.99%)
+
+      15.740153378 seconds time elapsed
+
+      15.293026000 seconds user
+       0.432029000 seconds sys
+
+
+--------------------
+real_omp test with threads=2
+
+
+ Benchmark
+
+ No input file. Using compiled defaults 
+ Size:  256x 256x 256  (class B)
+ Iterations:                     20
+
+  iter   1
+  iter   5
+  iter  10
+  iter  15
+  iter  20
+
+ Benchmark completed
+ VERIFICATION SUCCESSFUL
+ L2 Norm is  1.8005644013551E-06
+ Error is    6.6330115975290E-14
+
+
+ Benchmark Completed.
+ Class           =                        B
+ Size            =            256x 256x 256
+ Iterations      =                       20
+ Operation type  =           floating point
+ Verification    =               SUCCESSFUL
+ Version         =                    3.3.1
+  SECTION   Time (secs)
+  benchmk :    8.897  (100.00%)
+  mg3P    :    6.995  ( 78.62%)
+  psinv   :    1.584  ( 17.80%)
+  resid   :    3.548  ( 39.87%)
+    --> mg-resid:    1.753  ( 19.70%)
+  rprj3   :    1.562  ( 17.55%)
+  interp  :    1.613  ( 18.13%)
+  norm2   :    0.107  (  1.20%)
+  comm3   :    0.364  (  4.09%)
+
+ Performance counter stats for './real_omp':
+
+         17,594.32 msec task-clock:u              #    1.533 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+           111,064      page-faults:u             #    0.006 M/sec                  
+    41,711,917,885      cycles:u                  #    2.371 GHz                      (24.98%)
+    42,948,866,377      instructions:u            #    1.03  insn per cycle           (37.49%)
+     1,791,668,114      branches:u                #  101.832 M/sec                    (37.50%)
+         6,675,628      branch-misses:u           #    0.37% of all branches          (37.51%)
+    20,153,883,645      L1-dcache-loads:u         # 1145.477 M/sec                    (25.01%)
+     1,072,046,555      L1-dcache-load-misses:u   #    5.32% of all L1-dcache hits    (25.01%)
+       902,621,513      LLC-loads:u               #   51.302 M/sec                    (25.00%)
+        28,657,178      LLC-load-misses:u         #    3.17% of all LL-cache hits     (24.99%)
+
+      11.474997451 seconds time elapsed
+
+      17.059198000 seconds user
+       0.537226000 seconds sys
+
+
+--------------------
+real_omp test with threads=3
+
+
+ Benchmark
+
+ No input file. Using compiled defaults 
+ Size:  256x 256x 256  (class B)
+ Iterations:                     20
+
+  iter   1
+  iter   5
+  iter  10
+  iter  15
+  iter  20
+
+ Benchmark completed
+ VERIFICATION SUCCESSFUL
+ L2 Norm is  1.8005644013551E-06
+ Error is    6.6330115975290E-14
+
+
+ Benchmark Completed.
+ Class           =                        B
+ Size            =            256x 256x 256
+ Iterations      =                       20
+ Operation type  =           floating point
+ Verification    =               SUCCESSFUL
+ Version         =                    3.3.1
+  SECTION   Time (secs)
+  benchmk :   12.452  (100.00%)
+  mg3P    :    9.332  ( 74.94%)
+  psinv   :    2.589  ( 20.79%)
+  resid   :    6.032  ( 48.44%)
+    --> mg-resid:    3.018  ( 24.24%)
+  rprj3   :    1.561  ( 12.53%)
+  interp  :    1.698  ( 13.64%)
+  norm2   :    0.107  (  0.86%)
+  comm3   :    0.369  (  2.96%)
+
+ Performance counter stats for './real_omp':
+
+         30,982.87 msec task-clock:u              #    2.041 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+           110,994      page-faults:u             #    0.004 M/sec                  
+    74,390,467,389      cycles:u                  #    2.401 GHz                      (25.00%)
+    43,625,739,554      instructions:u            #    0.59  insn per cycle           (37.50%)
+     1,968,463,070      branches:u                #   63.534 M/sec                    (37.50%)
+         6,715,560      branch-misses:u           #    0.34% of all branches          (37.48%)
+    20,226,187,840      L1-dcache-loads:u         #  652.818 M/sec                    (24.99%)
+     1,366,513,046      L1-dcache-load-misses:u   #    6.76% of all L1-dcache hits    (25.00%)
+       894,477,567      LLC-loads:u               #   28.870 M/sec                    (25.01%)
+        64,702,222      LLC-load-misses:u         #    7.23% of all LL-cache hits     (25.01%)
+
+      15.180661559 seconds time elapsed
+
+      30.392587000 seconds user
+       0.594796000 seconds sys
+
+
+--------------------
+real_omp test with threads=4
+
+
+ Benchmark
+
+ No input file. Using compiled defaults 
+ Size:  256x 256x 256  (class B)
+ Iterations:                     20
+
+  iter   1
+  iter   5
+  iter  10
+  iter  15
+  iter  20
+
+ Benchmark completed
+ VERIFICATION SUCCESSFUL
+ L2 Norm is  1.8005644013551E-06
+ Error is    6.6330115975290E-14
+
+
+ Benchmark Completed.
+ Class           =                        B
+ Size            =            256x 256x 256
+ Iterations      =                       20
+ Operation type  =           floating point
+ Verification    =               SUCCESSFUL
+ Version         =                    3.3.1
+  SECTION   Time (secs)
+  benchmk :    8.538  (100.00%)
+  mg3P    :    6.698  ( 78.45%)
+  psinv   :    1.260  ( 14.76%)
+  resid   :    3.378  ( 39.57%)
+    --> mg-resid:    1.645  ( 19.26%)
+  rprj3   :    1.556  ( 18.23%)
+  interp  :    1.756  ( 20.57%)
+  norm2   :    0.107  (  1.25%)
+  comm3   :    0.402  (  4.71%)
+
+ Performance counter stats for './real_omp':
+
+         27,352.18 msec task-clock:u              #    2.491 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+           111,054      page-faults:u             #    0.004 M/sec                  
+    65,288,232,006      cycles:u                  #    2.387 GHz                      (25.02%)
+    43,943,223,689      instructions:u            #    0.67  insn per cycle           (37.51%)
+     2,069,733,833      branches:u                #   75.670 M/sec                    (37.49%)
+         6,690,032      branch-misses:u           #    0.32% of all branches          (37.48%)
+    20,297,582,292      L1-dcache-loads:u         #  742.083 M/sec                    (25.01%)
+       997,775,066      L1-dcache-load-misses:u   #    4.92% of all L1-dcache hits    (25.00%)
+       899,997,776      LLC-loads:u               #   32.904 M/sec                    (24.99%)
+        39,019,071      LLC-load-misses:u         #    4.34% of all LL-cache hits     (25.00%)
+
+      10.980268755 seconds time elapsed
+
+      26.677452000 seconds user
+       0.680190000 seconds sys
+
+
+--------------------
+real_omp test with threads=5
+
+
+ Benchmark
+
+ No input file. Using compiled defaults 
+ Size:  256x 256x 256  (class B)
+ Iterations:                     20
+
+  iter   1
+  iter   5
+  iter  10
+  iter  15
+  iter  20
+
+ Benchmark completed
+ VERIFICATION SUCCESSFUL
+ L2 Norm is  1.8005644013551E-06
+ Error is    6.6330115975290E-14
+
+
+ Benchmark Completed.
+ Class           =                        B
+ Size            =            256x 256x 256
+ Iterations      =                       20
+ Operation type  =           floating point
+ Verification    =               SUCCESSFUL
+ Version         =                    3.3.1
+  SECTION   Time (secs)
+  benchmk :   11.381  (100.00%)
+  mg3P    :    8.634  ( 75.87%)
+  psinv   :    2.191  ( 19.25%)
+  resid   :    5.295  ( 46.52%)
+    --> mg-resid:    2.655  ( 23.33%)
+  rprj3   :    1.557  ( 13.68%)
+  interp  :    1.763  ( 15.49%)
+  norm2   :    0.107  (  0.94%)
+  comm3   :    0.385  (  3.38%)
+
+ Performance counter stats for './real_omp':
+
+         43,889.68 msec task-clock:u              #    3.133 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+           110,794      page-faults:u             #    0.003 M/sec                  
+   105,150,435,094      cycles:u                  #    2.396 GHz                      (24.99%)
+    44,745,608,437      instructions:u            #    0.43  insn per cycle           (37.49%)
+     2,330,615,927      branches:u                #   53.102 M/sec                    (37.51%)
+         6,673,645      branch-misses:u           #    0.29% of all branches          (37.52%)
+    20,492,587,142      L1-dcache-loads:u         #  466.911 M/sec                    (24.98%)
+     1,320,294,062      L1-dcache-load-misses:u   #    6.44% of all L1-dcache hits    (25.00%)
+       896,076,377      LLC-loads:u               #   20.417 M/sec                    (25.01%)
+        91,362,907      LLC-load-misses:u         #   10.20% of all LL-cache hits     (24.99%)
+
+      14.009661220 seconds time elapsed
+
+      43.152480000 seconds user
+       0.746423000 seconds sys
+
+
+--------------------
+real_omp test with threads=6
+
+
+ Benchmark
+
+ No input file. Using compiled defaults 
+ Size:  256x 256x 256  (class B)
+ Iterations:                     20
+
+  iter   1
+  iter   5
+  iter  10
+  iter  15
+  iter  20
+
+ Benchmark completed
+ VERIFICATION SUCCESSFUL
+ L2 Norm is  1.8005644013551E-06
+ Error is    6.6330115975290E-14
+
+
+ Benchmark Completed.
+ Class           =                        B
+ Size            =            256x 256x 256
+ Iterations      =                       20
+ Operation type  =           floating point
+ Verification    =               SUCCESSFUL
+ Version         =                    3.3.1
+  SECTION   Time (secs)
+  benchmk :   10.040  (100.00%)
+  mg3P    :    7.690  ( 76.59%)
+  psinv   :    1.766  ( 17.59%)
+  resid   :    4.416  ( 43.98%)
+    --> mg-resid:    2.173  ( 21.64%)
+  rprj3   :    1.561  ( 15.54%)
+  interp  :    1.729  ( 17.22%)
+  norm2   :    0.107  (  1.07%)
+  comm3   :    0.384  (  3.83%)
+
+ Performance counter stats for './real_omp':
+
+         45,691.91 msec task-clock:u              #    3.638 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+           110,884      page-faults:u             #    0.002 M/sec                  
+   108,857,808,469      cycles:u                  #    2.382 GHz                      (24.99%)
+    44,998,346,982      instructions:u            #    0.41  insn per cycle           (37.49%)
+     2,388,578,362      branches:u                #   52.276 M/sec                    (37.49%)
+         6,720,427      branch-misses:u           #    0.28% of all branches          (37.50%)
+    20,480,210,548      L1-dcache-loads:u         #  448.224 M/sec                    (25.00%)
+     1,288,002,674      L1-dcache-load-misses:u   #    6.29% of all L1-dcache hits    (25.01%)
+       898,460,082      LLC-loads:u               #   19.663 M/sec                    (25.01%)
+        85,150,291      LLC-load-misses:u         #    9.48% of all LL-cache hits     (25.00%)
+
+      12.558358562 seconds time elapsed
+
+      44.885194000 seconds user
+       0.819350000 seconds sys
+
+
+--------------------
+real_omp test with threads=7
+
+
+ Benchmark
+
+ No input file. Using compiled defaults 
+ Size:  256x 256x 256  (class B)
+ Iterations:                     20
+
+  iter   1
+  iter   5
+  iter  10
+  iter  15
+  iter  20
+
+ Benchmark completed
+ VERIFICATION SUCCESSFUL
+ L2 Norm is  1.8005644013551E-06
+ Error is    6.6330115975290E-14
+
+
+ Benchmark Completed.
+ Class           =                        B
+ Size            =            256x 256x 256
+ Iterations      =                       20
+ Operation type  =           floating point
+ Verification    =               SUCCESSFUL
+ Version         =                    3.3.1
+  SECTION   Time (secs)
+  benchmk :   11.260  (100.00%)
+  mg3P    :    8.544  ( 75.88%)
+  psinv   :    2.185  ( 19.40%)
+  resid   :    5.203  ( 46.21%)
+    --> mg-resid:    2.594  ( 23.04%)
+  rprj3   :    1.555  ( 13.81%)
+  interp  :    1.748  ( 15.52%)
+  norm2   :    0.107  (  0.95%)
+  comm3   :    0.383  (  3.40%)
+
+ Performance counter stats for './real_omp':
+
+         57,681.50 msec task-clock:u              #    4.162 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+           110,808      page-faults:u             #    0.002 M/sec                  
+   137,197,126,246      cycles:u                  #    2.379 GHz                      (25.00%)
+    45,778,103,594      instructions:u            #    0.33  insn per cycle           (37.49%)
+     2,570,736,859      branches:u                #   44.568 M/sec                    (37.50%)
+         6,692,259      branch-misses:u           #    0.26% of all branches          (37.50%)
+    20,529,693,712      L1-dcache-loads:u         #  355.915 M/sec                    (25.02%)
+     1,324,045,607      L1-dcache-load-misses:u   #    6.45% of all L1-dcache hits    (25.01%)
+       897,184,385      LLC-loads:u               #   15.554 M/sec                    (24.99%)
+       120,840,743      LLC-load-misses:u         #   13.47% of all LL-cache hits     (24.99%)
+
+      13.859019007 seconds time elapsed
+
+      56.735429000 seconds user
+       0.960702000 seconds sys
+
+
+--------------------
+real_omp test with threads=8
+
+
+ Benchmark
+
+ No input file. Using compiled defaults 
+ Size:  256x 256x 256  (class B)
+ Iterations:                     20
+
+  iter   1
+  iter   5
+  iter  10
+  iter  15
+  iter  20
+
+ Benchmark completed
+ VERIFICATION SUCCESSFUL
+ L2 Norm is  1.8005644013551E-06
+ Error is    6.6330115975290E-14
+
+
+ Benchmark Completed.
+ Class           =                        B
+ Size            =            256x 256x 256
+ Iterations      =                       20
+ Operation type  =           floating point
+ Verification    =               SUCCESSFUL
+ Version         =                    3.3.1
+  SECTION   Time (secs)
+  benchmk :    8.682  (100.00%)
+  mg3P    :    6.829  ( 78.65%)
+  psinv   :    1.326  ( 15.27%)
+  resid   :    3.454  ( 39.79%)
+    --> mg-resid:    1.708  ( 19.67%)
+  rprj3   :    1.556  ( 17.92%)
+  interp  :    1.769  ( 20.37%)
+  norm2   :    0.107  (  1.23%)
+  comm3   :    0.396  (  4.56%)
+
+ Performance counter stats for './real_omp':
+
+         50,116.19 msec task-clock:u              #    4.508 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+           110,974      page-faults:u             #    0.002 M/sec                  
+   117,881,879,069      cycles:u                  #    2.352 GHz                      (25.00%)
+    46,043,392,988      instructions:u            #    0.39  insn per cycle           (37.50%)
+     2,701,120,893      branches:u                #   53.897 M/sec                    (37.47%)
+         6,720,409      branch-misses:u           #    0.25% of all branches          (37.49%)
+    20,620,857,266      L1-dcache-loads:u         #  411.461 M/sec                    (24.99%)
+     1,143,809,588      L1-dcache-load-misses:u   #    5.55% of all L1-dcache hits    (24.98%)
+       895,921,641      LLC-loads:u               #   17.877 M/sec                    (25.01%)
+        79,826,785      LLC-load-misses:u         #    8.91% of all LL-cache hits     (25.05%)
+
+      11.116540681 seconds time elapsed
+
+      49.025619000 seconds user
+       1.099722000 seconds sys
+
+
+--------------------
