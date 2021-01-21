@@ -1,0 +1,223 @@
+seq for comparison
+Number of points    = 1000000000
+Random number seed  = 314159265
+Approximation of pi = 3.1416045
+
+ Performance counter stats for './pi':
+
+        263,511.04 msec task-clock:u              #    1.000 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+             1,100      page-faults:u             #    0.004 K/sec                  
+   650,872,361,702      cycles:u                  #    2.470 GHz                      (25.00%)
+   614,588,116,671      instructions:u            #    0.94  insn per cycle           (37.50%)
+    76,978,087,721      branches:u                #  292.125 M/sec                    (37.50%)
+       275,888,680      branch-misses:u           #    0.36% of all branches          (37.50%)
+   429,480,534,647      L1-dcache-loads:u         # 1629.839 M/sec                    (25.00%)
+         5,132,331      L1-dcache-load-misses:u   #    0.00% of all L1-dcache hits    (25.00%)
+         4,181,605      LLC-loads:u               #    0.016 M/sec                    (25.00%)
+            14,264      LLC-load-misses:u         #    0.34% of all LL-cache hits     (25.00%)
+
+     263.506514667 seconds time elapsed
+
+     263.461700000 seconds user
+       0.086989000 seconds sys
+
+
+--------------------
+pi_par test with threads=2
+Number of points    = 1000000000
+Random number seed  = 314159265
+Number of tasks     = 2
+Approximation of pi = 3.1416045
+
+ Performance counter stats for './pi_par':
+
+        262,508.91 msec task-clock:u              #    1.992 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               912      page-faults:u             #    0.003 K/sec                  
+   648,014,031,566      cycles:u                  #    2.469 GHz                      (25.00%)
+   617,619,253,327      instructions:u            #    0.95  insn per cycle           (37.50%)
+    76,978,094,310      branches:u                #  293.240 M/sec                    (37.50%)
+       224,413,098      branch-misses:u           #    0.29% of all branches          (37.50%)
+   428,355,934,596      L1-dcache-loads:u         # 1631.777 M/sec                    (25.00%)
+         5,410,743      L1-dcache-load-misses:u   #    0.00% of all L1-dcache hits    (25.00%)
+         3,822,380      LLC-loads:u               #    0.015 M/sec                    (25.00%)
+             2,240      LLC-load-misses:u         #    0.06% of all LL-cache hits     (25.00%)
+
+     131.764780110 seconds time elapsed
+
+     262.487370000 seconds user
+       0.025997000 seconds sys
+
+
+--------------------
+pi_par test with threads=3
+Number of points    = 1000000000
+Random number seed  = 314159265
+Number of tasks     = 3
+Approximation of pi = 3.1416045
+
+ Performance counter stats for './pi_par':
+
+        262,363.51 msec task-clock:u              #    2.998 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               938      page-faults:u             #    0.004 K/sec                  
+   647,432,816,897      cycles:u                  #    2.468 GHz                      (25.00%)
+   617,659,997,499      instructions:u            #    0.95  insn per cycle           (37.50%)
+    76,969,373,613      branches:u                #  293.369 M/sec                    (37.50%)
+       240,695,558      branch-misses:u           #    0.31% of all branches          (37.50%)
+   426,014,831,597      L1-dcache-loads:u         # 1623.758 M/sec                    (25.00%)
+         4,737,041      L1-dcache-load-misses:u   #    0.00% of all L1-dcache hits    (25.00%)
+         3,937,407      LLC-loads:u               #    0.015 M/sec                    (25.00%)
+             4,744      LLC-load-misses:u         #    0.12% of all LL-cache hits     (25.00%)
+
+      87.513662245 seconds time elapsed
+
+     262.299884000 seconds user
+       0.066996000 seconds sys
+
+
+--------------------
+pi_par test with threads=4
+Number of points    = 1000000000
+Random number seed  = 314159265
+Number of tasks     = 4
+Approximation of pi = 3.1416045
+
+ Performance counter stats for './pi_par':
+
+        261,752.74 msec task-clock:u              #    3.969 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               995      page-faults:u             #    0.004 K/sec                  
+   646,122,133,485      cycles:u                  #    2.468 GHz                      (25.00%)
+   617,640,186,863      instructions:u            #    0.96  insn per cycle           (37.50%)
+    76,970,905,066      branches:u                #  294.060 M/sec                    (37.50%)
+       289,189,724      branch-misses:u           #    0.38% of all branches          (37.50%)
+   423,287,356,080      L1-dcache-loads:u         # 1617.127 M/sec                    (25.00%)
+         4,448,334      L1-dcache-load-misses:u   #    0.00% of all L1-dcache hits    (25.00%)
+         3,779,433      LLC-loads:u               #    0.014 M/sec                    (25.00%)
+            12,985      LLC-load-misses:u         #    0.34% of all LL-cache hits     (25.00%)
+
+      65.946289603 seconds time elapsed
+
+     261.732766000 seconds user
+       0.023000000 seconds sys
+
+
+--------------------
+pi_par test with threads=5
+Number of points    = 1000000000
+Random number seed  = 314159265
+Number of tasks     = 5
+Approximation of pi = 3.1416045
+
+ Performance counter stats for './pi_par':
+
+        261,318.76 msec task-clock:u              #    4.988 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+             1,022      page-faults:u             #    0.004 K/sec                  
+   645,173,688,426      cycles:u                  #    2.469 GHz                      (25.00%)
+   618,262,153,547      instructions:u            #    0.96  insn per cycle           (37.50%)
+    77,015,045,496      branches:u                #  294.717 M/sec                    (37.50%)
+       351,364,225      branch-misses:u           #    0.46% of all branches          (37.50%)
+   420,125,770,011      L1-dcache-loads:u         # 1607.714 M/sec                    (25.00%)
+         4,401,051      L1-dcache-load-misses:u   #    0.00% of all L1-dcache hits    (25.00%)
+         3,698,224      LLC-loads:u               #    0.014 M/sec                    (25.00%)
+             2,004      LLC-load-misses:u         #    0.05% of all LL-cache hits     (25.00%)
+
+      52.387196090 seconds time elapsed
+
+     261.286127000 seconds user
+       0.035998000 seconds sys
+
+
+--------------------
+pi_par test with threads=6
+Number of points    = 1000000000
+Random number seed  = 314159265
+Number of tasks     = 6
+Approximation of pi = 3.1416045
+
+ Performance counter stats for './pi_par':
+
+        262,099.50 msec task-clock:u              #    5.942 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+             1,045      page-faults:u             #    0.004 K/sec                  
+   646,127,888,013      cycles:u                  #    2.465 GHz                      (25.00%)
+   617,978,255,140      instructions:u            #    0.96  insn per cycle           (37.50%)
+    77,004,712,446      branches:u                #  293.800 M/sec                    (37.50%)
+       308,836,852      branch-misses:u           #    0.40% of all branches          (37.50%)
+   422,522,108,670      L1-dcache-loads:u         # 1612.068 M/sec                    (25.00%)
+         4,478,542      L1-dcache-load-misses:u   #    0.00% of all L1-dcache hits    (25.00%)
+         3,657,705      LLC-loads:u               #    0.014 M/sec                    (25.00%)
+            10,356      LLC-load-misses:u         #    0.28% of all LL-cache hits     (25.00%)
+
+      44.111044685 seconds time elapsed
+
+     262.051854000 seconds user
+       0.050990000 seconds sys
+
+
+--------------------
+pi_par test with threads=7
+Number of points    = 1000000000
+Random number seed  = 314159265
+Number of tasks     = 7
+Approximation of pi = 3.1416045
+
+ Performance counter stats for './pi_par':
+
+        261,525.65 msec task-clock:u              #    6.989 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+             1,065      page-faults:u             #    0.004 K/sec                  
+   645,307,632,746      cycles:u                  #    2.467 GHz                      (25.00%)
+   618,209,297,058      instructions:u            #    0.96  insn per cycle           (37.50%)
+    77,017,131,237      branches:u                #  294.492 M/sec                    (37.50%)
+       351,872,719      branch-misses:u           #    0.46% of all branches          (37.50%)
+   420,438,605,608      L1-dcache-loads:u         # 1607.638 M/sec                    (25.00%)
+         4,187,350      L1-dcache-load-misses:u   #    0.00% of all L1-dcache hits    (25.00%)
+         3,485,190      LLC-loads:u               #    0.013 M/sec                    (25.00%)
+             9,461      LLC-load-misses:u         #    0.27% of all LL-cache hits     (25.00%)
+
+      37.418083845 seconds time elapsed
+
+     261.495659000 seconds user
+       0.032999000 seconds sys
+
+
+--------------------
+pi_par test with threads=8
+Number of points    = 1000000000
+Random number seed  = 314159265
+Number of tasks     = 8
+Approximation of pi = 3.1416045
+
+ Performance counter stats for './pi_par':
+
+        261,595.85 msec task-clock:u              #    7.925 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+             1,151      page-faults:u             #    0.004 K/sec                  
+   646,009,589,836      cycles:u                  #    2.469 GHz                      (24.99%)
+   618,037,041,458      instructions:u            #    0.96  insn per cycle           (37.49%)
+    77,018,480,515      branches:u                #  294.418 M/sec                    (37.50%)
+       320,251,565      branch-misses:u           #    0.42% of all branches          (37.50%)
+   422,066,646,513      L1-dcache-loads:u         # 1613.430 M/sec                    (25.00%)
+         4,389,847      L1-dcache-load-misses:u   #    0.00% of all L1-dcache hits    (25.00%)
+         3,774,836      LLC-loads:u               #    0.014 M/sec                    (25.00%)
+             7,865      LLC-load-misses:u         #    0.21% of all LL-cache hits     (25.00%)
+
+      33.009707224 seconds time elapsed
+
+     261.571785000 seconds user
+       0.032002000 seconds sys
+
+
+--------------------
