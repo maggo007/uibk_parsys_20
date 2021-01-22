@@ -1,0 +1,116 @@
+  Loading openmpi/4.0.3 for compiler gnu-4.8.5
+pi_node_par test with threads=1
+internal error: execvp() failed: No such file or directory
+
+ Performance counter stats for './pi_node_par -nl 1':
+
+              6.72 msec task-clock:u              #    0.589 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               322      page-faults:u             #    0.048 M/sec                  
+         1,596,177      cycles:u                  #    0.237 GHz                      (5.38%)
+            45,950      instructions:u            #    0.03  insn per cycle           (20.15%)
+            13,844      branches:u                #    2.059 M/sec                    (34.94%)
+             9,523      branch-misses:u           #   68.79% of all branches          (44.32%)
+         1,270,190      L1-dcache-loads:u         #  188.922 M/sec                    (29.48%)
+            38,611      L1-dcache-load-misses:u   #    3.04% of all L1-dcache hits    (29.50%)
+             2,920      LLC-loads:u               #    0.434 M/sec                    (35.58%)
+                63      LLC-load-misses:u         #    2.16% of all LL-cache hits     (20.79%)
+
+       0.011407368 seconds time elapsed
+
+       0.000000000 seconds user
+       0.007873000 seconds sys
+
+
+--------------------
+pi_node_par test with threads=2
+error: Only 1 locale may be used for CHPL_COMM layer 'none'
+To use multiple locales, see $CHPL_HOME/doc/rst/usingchapel/multilocale.rst
+
+ Performance counter stats for './pi_node_par -nl 2':
+
+              3.87 msec task-clock:u              #    0.699 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               298      page-faults:u             #    0.077 M/sec                  
+           808,814      cycles:u                  #    0.209 GHz                      (9.10%)
+            26,677      instructions:u            #    0.03  insn per cycle           (34.71%)
+             8,020      branches:u                #    2.074 M/sec                    (60.32%)
+             6,299      branch-misses:u           #   78.54% of all branches          (77.11%)
+           933,950      L1-dcache-loads:u         #  241.552 M/sec                    (39.68%)
+            63,195      L1-dcache-load-misses:u   #    6.77% of all L1-dcache hits    (13.80%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.005534379 seconds time elapsed
+
+       0.001200000 seconds user
+       0.003601000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+--------------------
+pi_node_par test with threads=3
+error: Only 1 locale may be used for CHPL_COMM layer 'none'
+To use multiple locales, see $CHPL_HOME/doc/rst/usingchapel/multilocale.rst
+
+ Performance counter stats for './pi_node_par -nl 3':
+
+              3.82 msec task-clock:u              #    0.724 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               298      page-faults:u             #    0.078 M/sec                  
+           335,058      cycles:u                  #    0.088 GHz                      (25.01%)
+            28,327      instructions:u            #    0.08  insn per cycle           (51.08%)
+            39,007      branches:u                #   10.209 M/sec                    (77.04%)
+            12,390      branch-misses:u           #   31.76% of all branches          (74.99%)
+         1,391,066      L1-dcache-loads:u         #  364.065 M/sec                    (22.96%)
+     <not counted>      L1-dcache-load-misses:u                                       (0.00%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.005280672 seconds time elapsed
+
+       0.000000000 seconds user
+       0.004754000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+--------------------
+pi_node_par test with threads=4
+error: Only 1 locale may be used for CHPL_COMM layer 'none'
+To use multiple locales, see $CHPL_HOME/doc/rst/usingchapel/multilocale.rst
+
+ Performance counter stats for './pi_node_par -nl 4':
+
+              3.81 msec task-clock:u              #    0.727 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               298      page-faults:u             #    0.078 M/sec                  
+           394,835      cycles:u                  #    0.104 GHz                      (21.18%)
+            19,938      instructions:u            #    0.05  insn per cycle           (47.24%)
+            21,210      branches:u                #    5.565 M/sec                    (73.64%)
+            11,667      branch-misses:u           #   55.01% of all branches          (78.82%)
+         1,318,627      L1-dcache-loads:u         #  345.991 M/sec                    (26.36%)
+     <not counted>      L1-dcache-load-misses:u                                       (0.00%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.005242494 seconds time elapsed
+
+       0.000000000 seconds user
+       0.004741000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+--------------------

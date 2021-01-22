@@ -20,9 +20,15 @@ forall (i,j) in B.domain do
 
 var C : [1..N, 1..N] real; // matrix for results.
 
+const nPerTask = N/tasks,
+      extras = N%tasks;
 
-coforall (i,j) in A.domain do {
-  forall k in 1..N do {
-    C[i,j] += A[i,k] * B[k,j];
+var counts: [0..#tasks] int;
+coforall tid in 0..#tasks {
+  forall i in (1+tid*nPerTask..nPerTask+nPerTask*tid) do {
+    forall j in 1..N do
+      forall k in 1..N do {
+        C[i,j] += A[i,k] * B[k,j];
+      }
   }
 }

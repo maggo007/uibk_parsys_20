@@ -14,7 +14,7 @@ use Random;
 //   seed: the random number generator seed
 //   tasks: the number of tasks to parallelize the computation (per locale)
 //
-config const n = 100000;
+config const n = 1000000000;
 config const tasks = here.maxTaskPar;
 config const seed = 314159265;
 

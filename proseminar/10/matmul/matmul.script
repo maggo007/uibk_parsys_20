@@ -8,7 +8,7 @@
 
 # Name your job. Unless you use the -o and -e options, output will
 # go to a unique file name.ojob_id for each job.
-#$ -N kopp_pi_chapel
+#$ -N kopp_matmul_chapel
 
 ##$ -M markus.kopp@student.uibk.ac.at
 ##$ -m e
@@ -17,17 +17,17 @@
 #$ -j yes
 
 #$ -pe openmpi-8perhost 8
+## module load gcc
+## module load openmpi/4.0.3
 
-##module load gcc
-module load openmpi/4.0.3
 
 echo "seq for comparison"
-perf stat -d ./pi
+perf stat -d ./matmul
 echo "--------------------"
-for FILE in pi_par
+for FILE in matmul_par matmul
 do
     for X in {1..8..1}; do
-        echo "$FILE test with threads=$X" 
+        echo "$FILE test with threads=$X"
         CHPL_RT_NUM_THREADS_PER_LOCALE=$X perf stat -d ./$FILE
         echo "--------------------"
     done

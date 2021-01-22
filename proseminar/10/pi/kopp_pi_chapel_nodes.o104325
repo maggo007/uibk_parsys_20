@@ -1,0 +1,141 @@
+  Loading openmpi/4.0.3 for compiler gnu-4.8.5
+pi_node_par test with nodes=1
+WARNING: Using GASNet's mpi-conduit, which exists for portability convenience.
+WARNING: This system appears to contain recognized network hardware: InfiniBand IBV
+WARNING: which is supported by a GASNet native conduit, although
+WARNING: it was not detected at configure time (missing drivers?)
+WARNING: You should *really* use the high-performance native GASNet conduit
+WARNING: if communication performance is at all important in this program run.
+Number of locales   = 1
+Number of points    = 100000
+Random number seed  = 314159265
+Number of tasks     = 8 (per locale)
+Approximation of PI = 3.1444400
+
+ Performance counter stats for './pi_node_par -nl 1':
+
+            817.35 msec task-clock:u              #    0.553 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            18,815      page-faults:u             #    0.023 M/sec                  
+       506,504,182      cycles:u                  #    0.620 GHz                      (24.96%)
+       444,598,235      instructions:u            #    0.88  insn per cycle           (36.95%)
+       106,233,012      branches:u                #  129.973 M/sec                    (36.08%)
+         3,087,539      branch-misses:u           #    2.91% of all branches          (35.83%)
+       131,850,078      L1-dcache-loads:u         #  161.315 M/sec                    (24.55%)
+         4,922,466      L1-dcache-load-misses:u   #    3.73% of all L1-dcache hits    (25.68%)
+         3,510,167      LLC-loads:u               #    4.295 M/sec                    (26.41%)
+           108,543      LLC-load-misses:u         #    3.09% of all LL-cache hits     (26.50%)
+
+       1.477111984 seconds time elapsed
+
+       0.170590000 seconds user
+       0.503654000 seconds sys
+
+
+--------------------
+pi_node_par test with nodes=2
+WARNING: Using GASNet's mpi-conduit, which exists for portability convenience.
+WARNING: This system appears to contain recognized network hardware: InfiniBand IBV
+WARNING: which is supported by a GASNet native conduit, although
+WARNING: it was not detected at configure time (missing drivers?)
+WARNING: You should *really* use the high-performance native GASNet conduit
+WARNING: if communication performance is at all important in this program run.
+Number of locales   = 2
+Number of points    = 100000
+Random number seed  = 314159265
+Number of tasks     = 8 (per locale)
+Approximation of PI = 3.1411200
+
+ Performance counter stats for './pi_node_par -nl 2':
+
+            836.36 msec task-clock:u              #    0.683 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            18,953      page-faults:u             #    0.023 M/sec                  
+       630,417,650      cycles:u                  #    0.754 GHz                      (24.81%)
+       533,888,112      instructions:u            #    0.85  insn per cycle           (37.70%)
+       123,063,058      branches:u                #  147.141 M/sec                    (38.37%)
+         2,634,714      branch-misses:u           #    2.14% of all branches          (37.55%)
+       173,581,309      L1-dcache-loads:u         #  207.543 M/sec                    (23.64%)
+         4,118,532      L1-dcache-load-misses:u   #    2.37% of all L1-dcache hits    (24.25%)
+         3,281,187      LLC-loads:u               #    3.923 M/sec                    (25.73%)
+           102,510      LLC-load-misses:u         #    3.12% of all LL-cache hits     (25.65%)
+
+       1.223940634 seconds time elapsed
+
+       0.230728000 seconds user
+       0.463858000 seconds sys
+
+
+--------------------
+pi_node_par test with nodes=3
+WARNING: Using GASNet's mpi-conduit, which exists for portability convenience.
+WARNING: This system appears to contain recognized network hardware: InfiniBand IBV
+WARNING: which is supported by a GASNet native conduit, although
+WARNING: it was not detected at configure time (missing drivers?)
+WARNING: You should *really* use the high-performance native GASNet conduit
+WARNING: if communication performance is at all important in this program run.
+Number of locales   = 3
+Number of points    = 100000
+Random number seed  = 314159265
+Number of tasks     = 8 (per locale)
+Approximation of PI = 3.1362000
+
+ Performance counter stats for './pi_node_par -nl 3':
+
+            865.69 msec task-clock:u              #    0.689 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            18,981      page-faults:u             #    0.022 M/sec                  
+       592,972,327      cycles:u                  #    0.685 GHz                      (23.94%)
+       544,867,470      instructions:u            #    0.92  insn per cycle           (36.32%)
+       134,983,033      branches:u                #  155.925 M/sec                    (36.73%)
+         2,991,499      branch-misses:u           #    2.22% of all branches          (37.14%)
+       192,707,700      L1-dcache-loads:u         #  222.605 M/sec                    (26.19%)
+         5,038,079      L1-dcache-load-misses:u   #    2.61% of all L1-dcache hits    (25.72%)
+         3,240,973      LLC-loads:u               #    3.744 M/sec                    (25.30%)
+            88,660      LLC-load-misses:u         #    2.74% of all LL-cache hits     (24.98%)
+
+       1.256403706 seconds time elapsed
+
+       0.242478000 seconds user
+       0.482289000 seconds sys
+
+
+--------------------
+pi_node_par test with nodes=4
+WARNING: Using GASNet's mpi-conduit, which exists for portability convenience.
+WARNING: This system appears to contain recognized network hardware: InfiniBand IBV
+WARNING: which is supported by a GASNet native conduit, although
+WARNING: it was not detected at configure time (missing drivers?)
+WARNING: You should *really* use the high-performance native GASNet conduit
+WARNING: if communication performance is at all important in this program run.
+Number of locales   = 4
+Number of points    = 100000
+Random number seed  = 314159265
+Number of tasks     = 8 (per locale)
+Approximation of PI = 3.1380800
+
+ Performance counter stats for './pi_node_par -nl 4':
+
+            953.17 msec task-clock:u              #    0.702 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            19,056      page-faults:u             #    0.020 M/sec                  
+       880,072,374      cycles:u                  #    0.923 GHz                      (25.16%)
+       724,558,536      instructions:u            #    0.82  insn per cycle           (37.51%)
+       185,093,847      branches:u                #  194.187 M/sec                    (36.68%)
+         3,308,308      branch-misses:u           #    1.79% of all branches          (36.78%)
+       294,732,649      L1-dcache-loads:u         #  309.212 M/sec                    (24.37%)
+         4,484,301      L1-dcache-load-misses:u   #    1.52% of all L1-dcache hits    (24.97%)
+         3,573,704      LLC-loads:u               #    3.749 M/sec                    (25.89%)
+           114,319      LLC-load-misses:u         #    3.20% of all LL-cache hits     (26.14%)
+
+       1.358658053 seconds time elapsed
+
+       0.324758000 seconds user
+       0.488919000 seconds sys
+
+
+--------------------

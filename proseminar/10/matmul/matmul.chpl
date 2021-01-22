@@ -16,9 +16,9 @@ forall (i,j) in B.domain do
 
 var C : [1..N, 1..N] real; // matrix for results.
 
-
+//transposed access
 forall (i,j) in A.domain do {
   forall k in 1..N do {
-    C[i,j] += A[i,k] * B[k,j];
+    C[i,j] += A[i,k] * B[j,k];
   }
 }

@@ -1,0 +1,224 @@
+seq for comparison
+
+ Performance counter stats for './matmul':
+
+         89,307.32 msec task-clock:u              #    7.679 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            39,263      page-faults:u             #    0.440 K/sec                  
+   218,809,936,017      cycles:u                  #    2.450 GHz                      (25.00%)
+   138,979,778,943      instructions:u            #    0.64  insn per cycle           (37.50%)
+    17,727,920,453      branches:u                #  198.505 M/sec                    (37.51%)
+        22,305,157      branch-misses:u           #    0.13% of all branches          (37.50%)
+    35,773,741,196      L1-dcache-loads:u         #  400.569 M/sec                    (25.00%)
+    12,139,668,168      L1-dcache-load-misses:u   #   33.93% of all L1-dcache hits    (25.00%)
+     4,463,436,790      LLC-loads:u               #   49.978 M/sec                    (25.00%)
+        27,423,231      LLC-load-misses:u         #    0.61% of all LL-cache hits     (25.00%)
+
+      11.630331675 seconds time elapsed
+
+      88.917444000 seconds user
+       0.394740000 seconds sys
+
+
+--------------------
+matmul_par test with threads=1
+Number of tasks     = 1
+
+ Performance counter stats for './matmul_par':
+
+        171,077.05 msec task-clock:u              #    0.999 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            38,968      page-faults:u             #    0.228 K/sec                  
+   421,443,025,843      cycles:u                  #    2.463 GHz                      (25.01%)
+   169,398,936,618      instructions:u            #    0.40  insn per cycle           (37.50%)
+    20,727,674,199      branches:u                #  121.160 M/sec                    (37.50%)
+       129,082,626      branch-misses:u           #    0.62% of all branches          (37.50%)
+    58,126,021,566      L1-dcache-loads:u         #  339.765 M/sec                    (25.01%)
+    29,887,242,247      L1-dcache-load-misses:u   #   51.42% of all L1-dcache hits    (24.99%)
+    30,174,000,224      LLC-loads:u               #  176.377 M/sec                    (24.99%)
+     1,319,147,823      LLC-load-misses:u         #    4.37% of all LL-cache hits     (25.00%)
+
+     171.182148032 seconds time elapsed
+
+     170.914894000 seconds user
+       0.165953000 seconds sys
+
+
+--------------------
+matmul_par test with threads=2
+Number of tasks     = 2
+
+ Performance counter stats for './matmul_par':
+
+        164,292.33 msec task-clock:u              #    1.999 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            39,020      page-faults:u             #    0.238 K/sec                  
+   404,408,057,929      cycles:u                  #    2.462 GHz                      (25.00%)
+   155,327,281,839      instructions:u            #    0.38  insn per cycle           (37.51%)
+    17,649,336,915      branches:u                #  107.426 M/sec                    (37.50%)
+        12,991,491      branch-misses:u           #    0.07% of all branches          (37.50%)
+    52,613,757,434      L1-dcache-loads:u         #  320.245 M/sec                    (25.00%)
+    29,117,012,477      L1-dcache-load-misses:u   #   55.34% of all L1-dcache hits    (25.00%)
+    29,575,983,501      LLC-loads:u               #  180.020 M/sec                    (25.00%)
+     1,347,458,846      LLC-load-misses:u         #    4.56% of all LL-cache hits     (25.00%)
+
+      82.195897189 seconds time elapsed
+
+     164.078323000 seconds user
+       0.216958000 seconds sys
+
+
+--------------------
+matmul_par test with threads=3
+Number of tasks     = 3
+
+ Performance counter stats for './matmul_par':
+
+        175,895.80 msec task-clock:u              #    2.910 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            39,052      page-faults:u             #    0.222 K/sec                  
+   432,796,170,890      cycles:u                  #    2.461 GHz                      (24.99%)
+   154,860,228,318      instructions:u            #    0.36  insn per cycle           (37.49%)
+    17,570,069,105      branches:u                #   99.889 M/sec                    (37.50%)
+        10,152,758      branch-misses:u           #    0.06% of all branches          (37.50%)
+    52,498,617,161      L1-dcache-loads:u         #  298.464 M/sec                    (25.00%)
+    29,080,238,994      L1-dcache-load-misses:u   #   55.39% of all L1-dcache hits    (25.00%)
+    29,562,386,270      LLC-loads:u               #  168.068 M/sec                    (25.01%)
+     1,372,979,474      LLC-load-misses:u         #    4.64% of all LL-cache hits     (25.00%)
+
+      60.455451666 seconds time elapsed
+
+     175.684187000 seconds user
+       0.213974000 seconds sys
+
+
+--------------------
+matmul_par test with threads=4
+Number of tasks     = 4
+
+ Performance counter stats for './matmul_par':
+
+        181,804.00 msec task-clock:u              #    3.987 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            39,116      page-faults:u             #    0.215 K/sec                  
+   447,627,566,996      cycles:u                  #    2.462 GHz                      (25.00%)
+   155,015,044,549      instructions:u            #    0.35  insn per cycle           (37.50%)
+    17,587,827,639      branches:u                #   96.741 M/sec                    (37.50%)
+        10,101,781      branch-misses:u           #    0.06% of all branches          (37.50%)
+    52,545,067,589      L1-dcache-loads:u         #  289.020 M/sec                    (25.00%)
+    29,147,452,354      L1-dcache-load-misses:u   #   55.47% of all L1-dcache hits    (25.00%)
+    29,590,168,049      LLC-loads:u               #  162.759 M/sec                    (25.00%)
+     1,380,140,639      LLC-load-misses:u         #    4.66% of all LL-cache hits     (25.00%)
+
+      45.593661331 seconds time elapsed
+
+     181.564112000 seconds user
+       0.241978000 seconds sys
+
+
+--------------------
+matmul_par test with threads=5
+Number of tasks     = 5
+
+ Performance counter stats for './matmul_par':
+
+        181,962.31 msec task-clock:u              #    4.879 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            39,149      page-faults:u             #    0.215 K/sec                  
+   448,045,227,326      cycles:u                  #    2.462 GHz                      (25.00%)
+   155,039,722,472      instructions:u            #    0.35  insn per cycle           (37.50%)
+    17,591,786,063      branches:u                #   96.678 M/sec                    (37.50%)
+        11,202,054      branch-misses:u           #    0.06% of all branches          (37.50%)
+    54,833,139,638      L1-dcache-loads:u         #  301.343 M/sec                    (25.00%)
+    30,599,827,903      L1-dcache-load-misses:u   #   55.81% of all L1-dcache hits    (25.00%)
+    29,563,431,084      LLC-loads:u               #  162.470 M/sec                    (25.00%)
+       795,166,132      LLC-load-misses:u         #    2.69% of all LL-cache hits     (25.00%)
+
+      37.297637466 seconds time elapsed
+
+     181.688179000 seconds user
+       0.275972000 seconds sys
+
+
+--------------------
+matmul_par test with threads=6
+Number of tasks     = 6
+
+ Performance counter stats for './matmul_par':
+
+        191,887.95 msec task-clock:u              #    5.765 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            39,179      page-faults:u             #    0.204 K/sec                  
+   470,751,247,113      cycles:u                  #    2.453 GHz                      (25.00%)
+   155,152,635,965      instructions:u            #    0.33  insn per cycle           (37.50%)
+    17,609,754,735      branches:u                #   91.771 M/sec                    (37.50%)
+        12,313,987      branch-misses:u           #    0.07% of all branches          (37.49%)
+    54,617,507,505      L1-dcache-loads:u         #  284.632 M/sec                    (25.00%)
+    30,854,389,327      L1-dcache-load-misses:u   #   56.49% of all L1-dcache hits    (25.00%)
+    29,557,191,056      LLC-loads:u               #  154.034 M/sec                    (25.00%)
+       960,282,846      LLC-load-misses:u         #    3.25% of all LL-cache hits     (25.00%)
+
+      33.287390963 seconds time elapsed
+
+     191.558894000 seconds user
+       0.331882000 seconds sys
+
+
+--------------------
+matmul_par test with threads=7
+Number of tasks     = 7
+
+ Performance counter stats for './matmul_par':
+
+        187,872.88 msec task-clock:u              #    6.938 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            39,201      page-faults:u             #    0.209 K/sec                  
+   462,366,414,295      cycles:u                  #    2.461 GHz                      (25.00%)
+   154,880,530,885      instructions:u            #    0.33  insn per cycle           (37.50%)
+    17,575,542,684      branches:u                #   93.550 M/sec                    (37.50%)
+        11,337,592      branch-misses:u           #    0.06% of all branches          (37.50%)
+    55,038,946,539      L1-dcache-loads:u         #  292.958 M/sec                    (25.00%)
+    30,725,495,524      L1-dcache-load-misses:u   #   55.83% of all L1-dcache hits    (25.00%)
+    29,540,705,008      LLC-loads:u               #  157.238 M/sec                    (25.00%)
+       764,556,355      LLC-load-misses:u         #    2.59% of all LL-cache hits     (25.00%)
+
+      27.077368053 seconds time elapsed
+
+     187.542441000 seconds user
+       0.332975000 seconds sys
+
+
+--------------------
+matmul_par test with threads=8
+Number of tasks     = 8
+
+ Performance counter stats for './matmul_par':
+
+        186,594.09 msec task-clock:u              #    7.965 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            39,303      page-faults:u             #    0.211 K/sec                  
+   458,945,611,600      cycles:u                  #    2.460 GHz                      (25.00%)
+   155,068,069,556      instructions:u            #    0.34  insn per cycle           (37.50%)
+    17,575,039,035      branches:u                #   94.189 M/sec                    (37.50%)
+        11,334,766      branch-misses:u           #    0.06% of all branches          (37.50%)
+    55,464,983,378      L1-dcache-loads:u         #  297.249 M/sec                    (25.00%)
+    30,996,096,991      L1-dcache-load-misses:u   #   55.88% of all L1-dcache hits    (25.00%)
+    29,601,803,169      LLC-loads:u               #  158.643 M/sec                    (25.00%)
+       652,305,445      LLC-load-misses:u         #    2.20% of all LL-cache hits     (25.00%)
+
+      23.426265770 seconds time elapsed
+
+     186.206361000 seconds user
+       0.393861000 seconds sys
+
+
+--------------------

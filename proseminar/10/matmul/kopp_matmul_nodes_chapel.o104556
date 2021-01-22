@@ -1,0 +1,137 @@
+  Loading openmpi/4.0.3 for compiler gnu-4.8.5
+matmul_node_par test with nodes=1
+WARNING: Using GASNet's mpi-conduit, which exists for portability convenience.
+WARNING: This system appears to contain recognized network hardware: InfiniBand IBV
+WARNING: which is supported by a GASNet native conduit, although
+WARNING: it was not detected at configure time (missing drivers?)
+WARNING: You should *really* use the high-performance native GASNet conduit
+WARNING: if communication performance is at all important in this program run.
+Number of locales   = 1
+Number of points    = 2552
+Random number seed  = 314159265
+Number of tasks     = 8 (per locale)
+
+ Performance counter stats for './matmul_node_par -nl 1':
+
+        232,825.42 msec task-clock:u              #    7.164 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            69,617      page-faults:u             #    0.299 K/sec                  
+   543,007,079,191      cycles:u                  #    2.332 GHz                      (25.00%)
+   161,284,938,524      instructions:u            #    0.30  insn per cycle           (37.50%)
+    19,257,525,190      branches:u                #   82.712 M/sec                    (37.50%)
+        29,136,864      branch-misses:u           #    0.15% of all branches          (37.51%)
+    55,468,520,451      L1-dcache-loads:u         #  238.241 M/sec                    (25.00%)
+    30,589,441,273      L1-dcache-load-misses:u   #   55.15% of all L1-dcache hits    (24.99%)
+    29,670,650,654      LLC-loads:u               #  127.437 M/sec                    (25.00%)
+     1,388,872,516      LLC-load-misses:u         #    4.68% of all LL-cache hits     (25.00%)
+
+      32.500547108 seconds time elapsed
+
+     222.421661000 seconds user
+      10.254078000 seconds sys
+
+
+--------------------
+matmul_node_par test with nodes=2
+WARNING: Using GASNet's mpi-conduit, which exists for portability convenience.
+WARNING: This system appears to contain recognized network hardware: InfiniBand IBV
+WARNING: which is supported by a GASNet native conduit, although
+WARNING: it was not detected at configure time (missing drivers?)
+WARNING: You should *really* use the high-performance native GASNet conduit
+WARNING: if communication performance is at all important in this program run.
+Number of locales   = 2
+Number of points    = 2552
+Random number seed  = 314159265
+Number of tasks     = 8 (per locale)
+
+ Performance counter stats for './matmul_node_par -nl 2':
+
+        357,454.72 msec task-clock:u              #    3.678 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            82,446      page-faults:u             #    0.231 K/sec                  
+   757,031,010,043      cycles:u                  #    2.118 GHz                      (25.00%)
+   337,461,452,067      instructions:u            #    0.45  insn per cycle           (37.50%)
+    61,681,798,399      branches:u                #  172.558 M/sec                    (37.49%)
+     1,628,871,260      branch-misses:u           #    2.64% of all branches          (37.50%)
+   131,883,972,027      L1-dcache-loads:u         #  368.953 M/sec                    (25.00%)
+    30,595,963,018      L1-dcache-load-misses:u   #   23.20% of all L1-dcache hits    (25.00%)
+    30,259,970,279      LLC-loads:u               #   84.654 M/sec                    (25.00%)
+     1,138,528,299      LLC-load-misses:u         #    3.76% of all LL-cache hits     (25.00%)
+
+      97.189340902 seconds time elapsed
+
+     313.897238000 seconds user
+      43.420216000 seconds sys
+
+
+--------------------
+matmul_node_par test with nodes=3
+WARNING: Using GASNet's mpi-conduit, which exists for portability convenience.
+WARNING: This system appears to contain recognized network hardware: InfiniBand IBV
+WARNING: which is supported by a GASNet native conduit, although
+WARNING: it was not detected at configure time (missing drivers?)
+WARNING: You should *really* use the high-performance native GASNet conduit
+WARNING: if communication performance is at all important in this program run.
+Number of locales   = 3
+Number of points    = 2552
+Random number seed  = 314159265
+Number of tasks     = 8 (per locale)
+
+ Performance counter stats for './matmul_node_par -nl 3':
+
+        310,606.47 msec task-clock:u              #    4.347 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            95,197      page-faults:u             #    0.306 K/sec                  
+   678,569,407,985      cycles:u                  #    2.185 GHz                      (25.00%)
+   292,405,144,804      instructions:u            #    0.43  insn per cycle           (37.50%)
+    50,940,517,130      branches:u                #  164.003 M/sec                    (37.51%)
+     1,202,817,178      branch-misses:u           #    2.36% of all branches          (37.50%)
+   112,745,643,372      L1-dcache-loads:u         #  362.985 M/sec                    (25.00%)
+    30,185,744,473      L1-dcache-load-misses:u   #   26.77% of all L1-dcache hits    (25.00%)
+    30,017,564,726      LLC-loads:u               #   96.642 M/sec                    (24.99%)
+     1,121,334,727      LLC-load-misses:u         #    3.74% of all LL-cache hits     (25.00%)
+
+      71.450086917 seconds time elapsed
+
+     281.717010000 seconds user
+      28.735445000 seconds sys
+
+
+--------------------
+matmul_node_par test with nodes=4
+WARNING: Using GASNet's mpi-conduit, which exists for portability convenience.
+WARNING: This system appears to contain recognized network hardware: InfiniBand IBV
+WARNING: which is supported by a GASNet native conduit, although
+WARNING: it was not detected at configure time (missing drivers?)
+WARNING: You should *really* use the high-performance native GASNet conduit
+WARNING: if communication performance is at all important in this program run.
+Number of locales   = 4
+Number of points    = 2552
+Random number seed  = 314159265
+Number of tasks     = 8 (per locale)
+
+ Performance counter stats for './matmul_node_par -nl 4':
+
+        287,061.45 msec task-clock:u              #    5.037 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+           107,943      page-faults:u             #    0.376 K/sec                  
+   641,687,026,930      cycles:u                  #    2.235 GHz                      (25.00%)
+   270,007,126,472      instructions:u            #    0.42  insn per cycle           (37.50%)
+    45,564,545,240      branches:u                #  158.727 M/sec                    (37.51%)
+       993,398,238      branch-misses:u           #    2.18% of all branches          (37.50%)
+   103,836,064,969      L1-dcache-loads:u         #  361.721 M/sec                    (25.00%)
+    30,902,247,246      L1-dcache-load-misses:u   #   29.76% of all L1-dcache hits    (25.00%)
+    29,991,813,975      LLC-loads:u               #  104.479 M/sec                    (25.00%)
+       867,693,494      LLC-load-misses:u         #    2.89% of all LL-cache hits     (25.00%)
+
+      56.992608581 seconds time elapsed
+
+     264.460812000 seconds user
+      22.452620000 seconds sys
+
+
+--------------------

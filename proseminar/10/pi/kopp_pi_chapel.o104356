@@ -1,0 +1,4 @@
+  Loading openmpi/4.0.3 for compiler gnu-4.8.5
+/usr/sge/lcc2/spool/n002/job_scripts/104356: line 23: chpl: command not found
+/usr/sge/lcc2/spool/n002/job_scripts/104356: line 24: chpl: command not found
+seq for comparison

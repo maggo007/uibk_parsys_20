@@ -1,0 +1,248 @@
+  Loading openmpi/4.0.3 for compiler gnu-4.8.5
+seq for comparison
+WARNING: Using GASNet's mpi-conduit, which exists for portability convenience.
+WARNING: This system appears to contain recognized network hardware: InfiniBand IBV
+WARNING: which is supported by a GASNet native conduit, although
+WARNING: it was not detected at configure time (missing drivers?)
+WARNING: You should *really* use the high-performance native GASNet conduit
+WARNING: if communication performance is at all important in this program run.
+
+ Performance counter stats for './matmul -nl 1':
+
+          8,376.25 msec task-clock:u              #    4.977 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            16,014      page-faults:u             #    0.002 M/sec                  
+    19,142,375,425      cycles:u                  #    2.285 GHz                      (25.06%)
+    25,363,953,572      instructions:u            #    1.33  insn per cycle           (37.61%)
+     1,712,724,414      branches:u                #  204.474 M/sec                    (37.55%)
+         4,024,386      branch-misses:u           #    0.23% of all branches          (37.52%)
+    11,400,345,634      L1-dcache-loads:u         # 1361.032 M/sec                    (24.88%)
+        24,097,559      L1-dcache-load-misses:u   #    0.21% of all L1-dcache hits    (24.86%)
+        22,234,328      LLC-loads:u               #    2.654 M/sec                    (25.03%)
+           110,929      LLC-load-misses:u         #    0.50% of all LL-cache hits     (25.10%)
+
+       1.683030399 seconds time elapsed
+
+       7.836760000 seconds user
+       0.550020000 seconds sys
+
+
+--------------------
+matmul_par test with threads=2
+WARNING: Using GASNet's mpi-conduit, which exists for portability convenience.
+WARNING: This system appears to contain recognized network hardware: InfiniBand IBV
+WARNING: which is supported by a GASNet native conduit, although
+WARNING: it was not detected at configure time (missing drivers?)
+WARNING: You should *really* use the high-performance native GASNet conduit
+WARNING: if communication performance is at all important in this program run.
+Number of tasks     = 2
+
+ Performance counter stats for './matmul_par -nl 1':
+
+         14,548.19 msec task-clock:u              #    2.720 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            99,482      page-faults:u             #    0.007 M/sec                  
+    22,420,511,584      cycles:u                  #    1.541 GHz                      (24.98%)
+    25,851,846,808      instructions:u            #    1.15  insn per cycle           (37.48%)
+     1,853,208,403      branches:u                #  127.384 M/sec                    (37.45%)
+         9,007,936      branch-misses:u           #    0.49% of all branches          (37.47%)
+    11,416,263,876      L1-dcache-loads:u         #  784.720 M/sec                    (25.02%)
+        52,639,469      L1-dcache-load-misses:u   #    0.46% of all L1-dcache hits    (24.99%)
+        48,819,507      LLC-loads:u               #    3.356 M/sec                    (25.04%)
+           372,561      LLC-load-misses:u         #    0.76% of all LL-cache hits     (25.05%)
+
+       5.348363788 seconds time elapsed
+
+       9.774607000 seconds user
+       4.816060000 seconds sys
+
+
+--------------------
+matmul_par test with threads=3
+WARNING: Using GASNet's mpi-conduit, which exists for portability convenience.
+WARNING: This system appears to contain recognized network hardware: InfiniBand IBV
+WARNING: which is supported by a GASNet native conduit, although
+WARNING: it was not detected at configure time (missing drivers?)
+WARNING: You should *really* use the high-performance native GASNet conduit
+WARNING: if communication performance is at all important in this program run.
+Number of tasks     = 3
+
+ Performance counter stats for './matmul_par -nl 1':
+
+         13,657.90 msec task-clock:u              #    3.445 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            99,169      page-faults:u             #    0.007 M/sec                  
+    21,933,076,077      cycles:u                  #    1.606 GHz                      (25.08%)
+    25,704,551,986      instructions:u            #    1.17  insn per cycle           (37.57%)
+     1,807,149,190      branches:u                #  132.315 M/sec                    (37.54%)
+         7,497,669      branch-misses:u           #    0.41% of all branches          (37.48%)
+    11,353,226,356      L1-dcache-loads:u         #  831.257 M/sec                    (24.85%)
+        54,172,873      L1-dcache-load-misses:u   #    0.48% of all L1-dcache hits    (24.87%)
+        49,117,399      LLC-loads:u               #    3.596 M/sec                    (25.05%)
+           476,874      LLC-load-misses:u         #    0.97% of all LL-cache hits     (25.12%)
+
+       3.964074906 seconds time elapsed
+
+       9.673211000 seconds user
+       4.063499000 seconds sys
+
+
+--------------------
+matmul_par test with threads=4
+WARNING: Using GASNet's mpi-conduit, which exists for portability convenience.
+WARNING: This system appears to contain recognized network hardware: InfiniBand IBV
+WARNING: which is supported by a GASNet native conduit, although
+WARNING: it was not detected at configure time (missing drivers?)
+WARNING: You should *really* use the high-performance native GASNet conduit
+WARNING: if communication performance is at all important in this program run.
+Number of tasks     = 4
+
+ Performance counter stats for './matmul_par -nl 1':
+
+         15,739.08 msec task-clock:u              #    3.820 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            98,401      page-faults:u             #    0.006 M/sec                  
+    22,588,510,500      cycles:u                  #    1.435 GHz                      (24.85%)
+    25,674,632,269      instructions:u            #    1.14  insn per cycle           (37.33%)
+     1,818,696,247      branches:u                #  115.553 M/sec                    (37.42%)
+         7,932,759      branch-misses:u           #    0.44% of all branches          (37.48%)
+    11,333,909,644      L1-dcache-loads:u         #  720.113 M/sec                    (25.05%)
+        63,017,261      L1-dcache-load-misses:u   #    0.56% of all L1-dcache hits    (25.13%)
+        57,608,011      LLC-loads:u               #    3.660 M/sec                    (25.13%)
+           956,814      LLC-load-misses:u         #    1.66% of all LL-cache hits     (24.94%)
+
+       4.119683103 seconds time elapsed
+
+      10.209742000 seconds user
+       5.889230000 seconds sys
+
+
+--------------------
+matmul_par test with threads=5
+WARNING: Using GASNet's mpi-conduit, which exists for portability convenience.
+WARNING: This system appears to contain recognized network hardware: InfiniBand IBV
+WARNING: which is supported by a GASNet native conduit, although
+WARNING: it was not detected at configure time (missing drivers?)
+WARNING: You should *really* use the high-performance native GASNet conduit
+WARNING: if communication performance is at all important in this program run.
+Number of tasks     = 5
+
+ Performance counter stats for './matmul_par -nl 1':
+
+         16,695.13 msec task-clock:u              #    4.179 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            97,441      page-faults:u             #    0.006 M/sec                  
+    22,606,797,150      cycles:u                  #    1.354 GHz                      (25.10%)
+    25,600,648,486      instructions:u            #    1.13  insn per cycle           (37.47%)
+     1,804,436,537      branches:u                #  108.082 M/sec                    (37.50%)
+         8,132,833      branch-misses:u           #    0.45% of all branches          (37.40%)
+    11,329,118,993      L1-dcache-loads:u         #  678.588 M/sec                    (25.05%)
+        64,078,452      L1-dcache-load-misses:u   #    0.57% of all L1-dcache hits    (24.93%)
+        56,317,394      LLC-loads:u               #    3.373 M/sec                    (24.98%)
+           892,746      LLC-load-misses:u         #    1.59% of all LL-cache hits     (25.04%)
+
+       3.994837586 seconds time elapsed
+
+      10.585112000 seconds user
+       6.720247000 seconds sys
+
+
+--------------------
+matmul_par test with threads=6
+WARNING: Using GASNet's mpi-conduit, which exists for portability convenience.
+WARNING: This system appears to contain recognized network hardware: InfiniBand IBV
+WARNING: which is supported by a GASNet native conduit, although
+WARNING: it was not detected at configure time (missing drivers?)
+WARNING: You should *really* use the high-performance native GASNet conduit
+WARNING: if communication performance is at all important in this program run.
+Number of tasks     = 6
+
+ Performance counter stats for './matmul_par -nl 1':
+
+         18,139.96 msec task-clock:u              #    4.398 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            95,721      page-faults:u             #    0.005 M/sec                  
+    22,833,800,676      cycles:u                  #    1.259 GHz                      (24.95%)
+    25,698,715,284      instructions:u            #    1.13  insn per cycle           (37.49%)
+     1,819,031,380      branches:u                #  100.278 M/sec                    (37.34%)
+         8,269,826      branch-misses:u           #    0.45% of all branches          (37.51%)
+    11,290,745,680      L1-dcache-loads:u         #  622.424 M/sec                    (24.88%)
+        69,295,657      L1-dcache-load-misses:u   #    0.61% of all L1-dcache hits    (24.91%)
+        60,435,141      LLC-loads:u               #    3.332 M/sec                    (25.15%)
+           809,945      LLC-load-misses:u         #    1.34% of all LL-cache hits     (25.26%)
+
+       4.124579072 seconds time elapsed
+
+      10.673440000 seconds user
+       8.328281000 seconds sys
+
+
+--------------------
+matmul_par test with threads=7
+WARNING: Using GASNet's mpi-conduit, which exists for portability convenience.
+WARNING: This system appears to contain recognized network hardware: InfiniBand IBV
+WARNING: which is supported by a GASNet native conduit, although
+WARNING: it was not detected at configure time (missing drivers?)
+WARNING: You should *really* use the high-performance native GASNet conduit
+WARNING: if communication performance is at all important in this program run.
+Number of tasks     = 7
+
+ Performance counter stats for './matmul_par -nl 1':
+
+         19,486.91 msec task-clock:u              #    4.509 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            93,923      page-faults:u             #    0.005 M/sec                  
+    22,954,806,088      cycles:u                  #    1.178 GHz                      (24.98%)
+    25,765,650,890      instructions:u            #    1.12  insn per cycle           (37.56%)
+     1,836,525,853      branches:u                #   94.244 M/sec                    (37.64%)
+         8,723,313      branch-misses:u           #    0.47% of all branches          (37.40%)
+    11,361,036,871      L1-dcache-loads:u         #  583.009 M/sec                    (25.12%)
+        66,345,762      L1-dcache-load-misses:u   #    0.58% of all L1-dcache hits    (25.25%)
+        58,296,559      LLC-loads:u               #    2.992 M/sec                    (24.88%)
+           925,106      LLC-load-misses:u         #    1.59% of all LL-cache hits     (24.73%)
+
+       4.321870868 seconds time elapsed
+
+      10.861096000 seconds user
+       9.628137000 seconds sys
+
+
+--------------------
+matmul_par test with threads=8
+WARNING: Using GASNet's mpi-conduit, which exists for portability convenience.
+WARNING: This system appears to contain recognized network hardware: InfiniBand IBV
+WARNING: which is supported by a GASNet native conduit, although
+WARNING: it was not detected at configure time (missing drivers?)
+WARNING: You should *really* use the high-performance native GASNet conduit
+WARNING: if communication performance is at all important in this program run.
+Number of tasks     = 8
+
+ Performance counter stats for './matmul_par -nl 1':
+
+         18,219.96 msec task-clock:u              #    4.410 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            94,030      page-faults:u             #    0.005 M/sec                  
+    22,292,645,059      cycles:u                  #    1.224 GHz                      (25.09%)
+    25,540,884,689      instructions:u            #    1.15  insn per cycle           (37.71%)
+     1,769,240,065      branches:u                #   97.104 M/sec                    (37.84%)
+         6,894,744      branch-misses:u           #    0.39% of all branches          (37.43%)
+    11,275,934,071      L1-dcache-loads:u         #  618.878 M/sec                    (24.98%)
+        61,588,481      L1-dcache-load-misses:u   #    0.55% of all L1-dcache hits    (25.12%)
+        52,958,284      LLC-loads:u               #    2.907 M/sec                    (24.89%)
+           938,033      LLC-load-misses:u         #    1.77% of all LL-cache hits     (24.66%)
+
+       4.131122904 seconds time elapsed
+
+      10.211953000 seconds user
+       8.915874000 seconds sys
+
+
+--------------------

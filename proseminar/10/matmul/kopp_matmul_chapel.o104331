@@ -1,0 +1,233 @@
+  Loading openmpi/4.0.3 for compiler gnu-4.8.5
+seq for comparison
+./matmul: /lib64/libc.so.6: version `GLIBC_2.32' not found (required by ./matmul)
+
+ Performance counter stats for './matmul':
+
+              5.48 msec task-clock:u              #    0.126 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+                93      page-faults:u             #    0.017 M/sec                  
+                 0      cycles:u                  #    0.000 GHz                      (9.08%)
+            79,522      instructions:u                                                (32.62%)
+            13,485      branches:u                #    2.459 M/sec                    (50.72%)
+             1,623      branch-misses:u           #   12.04% of all branches          (59.78%)
+            23,668      L1-dcache-loads:u         #    4.316 M/sec                    (36.26%)
+             9,518      L1-dcache-load-misses:u   #   40.21% of all L1-dcache hits    (31.14%)
+             9,171      LLC-loads:u               #    1.672 M/sec                    (13.02%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.043629097 seconds time elapsed
+
+       0.000000000 seconds user
+       0.006591000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+--------------------
+matmul_par test with threads=2
+error: Specify number of locales via -nl <#> or --numLocales=<#>
+
+ Performance counter stats for './matmul_par':
+
+              2.78 msec task-clock:u              #    0.148 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               170      page-faults:u             #    0.061 M/sec                  
+                 0      cycles:u                  #    0.000 GHz                      (2.39%)
+            29,625      instructions:u                                                (30.24%)
+             3,629      branches:u                #    1.306 M/sec                    (65.83%)
+             4,697      branch-misses:u           #  129.43% of all branches          (97.61%)
+           211,204      L1-dcache-loads:u         #   76.000 M/sec                    (34.17%)
+     <not counted>      L1-dcache-load-misses:u                                       (0.00%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.018725589 seconds time elapsed
+
+       0.000000000 seconds user
+       0.003842000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+--------------------
+matmul_par test with threads=3
+error: Specify number of locales via -nl <#> or --numLocales=<#>
+
+ Performance counter stats for './matmul_par':
+
+              2.71 msec task-clock:u              #    0.640 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               170      page-faults:u             #    0.063 M/sec                  
+           749,242      cycles:u                  #    0.277 GHz                      (9.72%)
+            19,693      instructions:u            #    0.03  insn per cycle           (46.32%)
+             5,373      branches:u                #    1.985 M/sec                    (83.04%)
+             4,639      branch-misses:u           #   86.34% of all branches          (90.28%)
+           407,261      L1-dcache-loads:u         #  150.483 M/sec                    (16.96%)
+     <not counted>      L1-dcache-load-misses:u                                       (0.00%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.004228849 seconds time elapsed
+
+       0.000731000 seconds user
+       0.002926000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+--------------------
+matmul_par test with threads=4
+error: Specify number of locales via -nl <#> or --numLocales=<#>
+
+ Performance counter stats for './matmul_par':
+
+              2.72 msec task-clock:u              #    0.656 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               170      page-faults:u             #    0.062 M/sec                  
+           562,358      cycles:u                  #    0.207 GHz                      (12.72%)
+            18,666      instructions:u            #    0.03  insn per cycle           (49.13%)
+            10,154      branches:u                #    3.730 M/sec                    (85.89%)
+             4,793      branch-misses:u           #   47.20% of all branches          (87.28%)
+           419,185      L1-dcache-loads:u         #  153.992 M/sec                    (14.11%)
+     <not counted>      L1-dcache-load-misses:u                                       (0.00%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.004150631 seconds time elapsed
+
+       0.000903000 seconds user
+       0.002711000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+--------------------
+matmul_par test with threads=5
+error: Specify number of locales via -nl <#> or --numLocales=<#>
+
+ Performance counter stats for './matmul_par':
+
+              2.66 msec task-clock:u              #    0.595 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               170      page-faults:u             #    0.064 M/sec                  
+           206,458      cycles:u                  #    0.078 GHz                      (35.96%)
+            17,450      instructions:u            #    0.08  insn per cycle           (73.25%)
+            43,599      branches:u                #   16.369 M/sec                  
+             6,488      branch-misses:u           #   14.88% of all branches          (64.04%)
+     <not counted>      L1-dcache-loads:u                                             (0.00%)
+     <not counted>      L1-dcache-load-misses:u                                       (0.00%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.004474757 seconds time elapsed
+
+       0.000000000 seconds user
+       0.003533000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+--------------------
+matmul_par test with threads=6
+error: Specify number of locales via -nl <#> or --numLocales=<#>
+
+ Performance counter stats for './matmul_par':
+
+              2.72 msec task-clock:u              #    0.630 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               170      page-faults:u             #    0.062 M/sec                  
+           698,961      cycles:u                  #    0.257 GHz                      (8.89%)
+            20,049      instructions:u            #    0.03  insn per cycle           (45.49%)
+             5,306      branches:u                #    1.951 M/sec                    (82.03%)
+             4,636      branch-misses:u           #   87.37% of all branches          (91.11%)
+           383,147      L1-dcache-loads:u         #  140.852 M/sec                    (17.97%)
+     <not counted>      L1-dcache-load-misses:u                                       (0.00%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.004315115 seconds time elapsed
+
+       0.000000000 seconds user
+       0.003629000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+--------------------
+matmul_par test with threads=7
+error: Specify number of locales via -nl <#> or --numLocales=<#>
+
+ Performance counter stats for './matmul_par':
+
+              2.69 msec task-clock:u              #    0.676 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               170      page-faults:u             #    0.063 M/sec                  
+           655,060      cycles:u                  #    0.244 GHz                      (11.21%)
+            18,979      instructions:u            #    0.03  insn per cycle           (48.06%)
+             8,852      branches:u                #    3.292 M/sec                    (85.10%)
+             4,771      branch-misses:u           #   53.90% of all branches          (88.79%)
+           416,972      L1-dcache-loads:u         #  155.051 M/sec                    (14.90%)
+     <not counted>      L1-dcache-load-misses:u                                       (0.00%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.003979645 seconds time elapsed
+
+       0.000892000 seconds user
+       0.002676000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+--------------------
+matmul_par test with threads=8
+error: Specify number of locales via -nl <#> or --numLocales=<#>
+
+ Performance counter stats for './matmul_par':
+
+              2.72 msec task-clock:u              #    0.644 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+               170      page-faults:u             #    0.063 M/sec                  
+           380,631      cycles:u                  #    0.140 GHz                      (19.27%)
+            16,527      instructions:u            #    0.04  insn per cycle           (55.49%)
+            36,283      branches:u                #   13.352 M/sec                    (92.32%)
+             5,170      branch-misses:u           #   14.25% of all branches          (80.73%)
+           195,737      L1-dcache-loads:u         #   72.032 M/sec                    (7.68%)
+     <not counted>      L1-dcache-load-misses:u                                       (0.00%)
+     <not counted>      LLC-loads:u                                                   (0.00%)
+     <not counted>      LLC-load-misses:u                                             (0.00%)
+
+       0.004220225 seconds time elapsed
+
+       0.000901000 seconds user
+       0.002704000 seconds sys
+
+
+Some events weren't counted. Try disabling the NMI watchdog:
+	echo 0 > /proc/sys/kernel/nmi_watchdog
+	perf stat ...
+	echo 1 > /proc/sys/kernel/nmi_watchdog
+--------------------

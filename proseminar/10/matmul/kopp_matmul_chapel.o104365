@@ -1,0 +1,333 @@
+  Loading gcc/8.2.0
+  Loading openmpi/4.0.3 for compiler gcc-8.2.0
+seq for comparison
+WARNING: Using GASNet's mpi-conduit, which exists for portability convenience.
+WARNING: This system appears to contain recognized network hardware: InfiniBand IBV
+WARNING: which is supported by a GASNet native conduit, although
+WARNING: it was not detected at configure time (missing drivers?)
+WARNING: You should *really* use the high-performance native GASNet conduit
+WARNING: if communication performance is at all important in this program run.
+
+ Performance counter stats for './matmul -nl 1':
+
+      7,413,901.59 msec task-clock:u              #    7.789 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            15,487      page-faults:u             #    0.002 K/sec                  
+17,492,103,988,592      cycles:u                  #    2.359 GHz                      (25.00%)
+24,002,546,905,128      instructions:u            #    1.37  insn per cycle           (37.50%)
+ 1,499,339,773,104      branches:u                #  202.234 M/sec                    (37.50%)
+       793,906,749      branch-misses:u           #    0.05% of all branches          (37.50%)
+10,719,132,717,789      L1-dcache-loads:u         # 1445.815 M/sec                    (25.00%)
+     2,709,108,926      L1-dcache-load-misses:u   #    0.03% of all L1-dcache hits    (25.00%)
+     6,174,821,492      LLC-loads:u               #    0.833 M/sec                    (25.00%)
+        33,957,155      LLC-load-misses:u         #    0.55% of all LL-cache hits     (25.00%)
+
+     951.892184076 seconds time elapsed
+
+    7144.712572000 seconds user
+     269.398516000 seconds sys
+
+
+--------------------
+matmul_par test with threads=2
+WARNING: Using GASNet's mpi-conduit, which exists for portability convenience.
+WARNING: This system appears to contain recognized network hardware: InfiniBand IBV
+WARNING: which is supported by a GASNet native conduit, although
+WARNING: it was not detected at configure time (missing drivers?)
+WARNING: You should *really* use the high-performance native GASNet conduit
+WARNING: if communication performance is at all important in this program run.
+Number of tasks     = 2
+<internal>: error: Out of memory allocating "tasking layer unspecified data"
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun detected that one or more processes exited with non-zero status, thus causing
+the job to be terminated. The first process to do so was:
+
+  Process name: [[10281,1],0]
+  Exit code:    1
+--------------------------------------------------------------------------
+
+ Performance counter stats for './matmul_par -nl 1':
+
+         20,618.39 msec task-clock:u              #    2.145 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            22,738      page-faults:u             #    0.001 M/sec                  
+    29,023,135,853      cycles:u                  #    1.408 GHz                      (24.97%)
+    33,636,522,287      instructions:u            #    1.16  insn per cycle           (37.49%)
+     2,992,751,207      branches:u                #  145.150 M/sec                    (37.54%)
+        14,531,630      branch-misses:u           #    0.49% of all branches          (37.57%)
+    12,812,079,330      L1-dcache-loads:u         #  621.391 M/sec                    (24.98%)
+        35,597,027      L1-dcache-load-misses:u   #    0.28% of all L1-dcache hits    (24.98%)
+        35,315,566      LLC-loads:u               #    1.713 M/sec                    (25.00%)
+           189,761      LLC-load-misses:u         #    0.54% of all LL-cache hits     (24.96%)
+
+       9.614275992 seconds time elapsed
+
+      12.453185000 seconds user
+       8.194389000 seconds sys
+
+
+--------------------
+matmul_par test with threads=3
+WARNING: Using GASNet's mpi-conduit, which exists for portability convenience.
+WARNING: This system appears to contain recognized network hardware: InfiniBand IBV
+WARNING: which is supported by a GASNet native conduit, although
+WARNING: it was not detected at configure time (missing drivers?)
+WARNING: You should *really* use the high-performance native GASNet conduit
+WARNING: if communication performance is at all important in this program run.
+Number of tasks     = 3
+<internal>: error: Out of memory allocating "tasking layer unspecified data"
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun detected that one or more processes exited with non-zero status, thus causing
+the job to be terminated. The first process to do so was:
+
+  Process name: [[10435,1],0]
+  Exit code:    1
+--------------------------------------------------------------------------
+
+ Performance counter stats for './matmul_par -nl 1':
+
+         23,784.91 msec task-clock:u              #    2.736 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            25,783      page-faults:u             #    0.001 M/sec                  
+    37,745,381,233      cycles:u                  #    1.587 GHz                      (24.95%)
+    44,767,516,073      instructions:u            #    1.19  insn per cycle           (37.52%)
+     3,653,109,385      branches:u                #  153.589 M/sec                    (37.53%)
+        13,704,278      branch-misses:u           #    0.38% of all branches          (37.53%)
+    17,611,426,978      L1-dcache-loads:u         #  740.445 M/sec                    (25.04%)
+        48,191,435      L1-dcache-load-misses:u   #    0.27% of all L1-dcache hits    (25.04%)
+        48,482,028      LLC-loads:u               #    2.038 M/sec                    (24.98%)
+         1,417,094      LLC-load-misses:u         #    2.92% of all LL-cache hits     (24.93%)
+
+       8.693623057 seconds time elapsed
+
+      15.934571000 seconds user
+       7.917257000 seconds sys
+
+
+--------------------
+matmul_par test with threads=4
+WARNING: Using GASNet's mpi-conduit, which exists for portability convenience.
+WARNING: This system appears to contain recognized network hardware: InfiniBand IBV
+WARNING: which is supported by a GASNet native conduit, although
+WARNING: it was not detected at configure time (missing drivers?)
+WARNING: You should *really* use the high-performance native GASNet conduit
+WARNING: if communication performance is at all important in this program run.
+Number of tasks     = 4
+<internal>: error: Out of memory allocating "tasking layer unspecified data"
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun detected that one or more processes exited with non-zero status, thus causing
+the job to be terminated. The first process to do so was:
+
+  Process name: [[10394,1],0]
+  Exit code:    1
+--------------------------------------------------------------------------
+
+ Performance counter stats for './matmul_par -nl 1':
+
+         27,746.86 msec task-clock:u              #    3.348 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            29,482      page-faults:u             #    0.001 M/sec                  
+    47,398,110,762      cycles:u                  #    1.708 GHz                      (24.91%)
+    58,349,205,420      instructions:u            #    1.23  insn per cycle           (37.40%)
+     4,476,356,972      branches:u                #  161.328 M/sec                    (37.50%)
+        13,381,850      branch-misses:u           #    0.30% of all branches          (37.58%)
+    23,343,884,643      L1-dcache-loads:u         #  841.316 M/sec                    (25.03%)
+        30,700,362      L1-dcache-load-misses:u   #    0.13% of all L1-dcache hits    (24.99%)
+        33,359,720      LLC-loads:u               #    1.202 M/sec                    (25.01%)
+         1,336,290      LLC-load-misses:u         #    4.01% of all LL-cache hits     (24.98%)
+
+       8.287516913 seconds time elapsed
+
+      19.870844000 seconds user
+       7.974442000 seconds sys
+
+
+--------------------
+matmul_par test with threads=5
+WARNING: Using GASNet's mpi-conduit, which exists for portability convenience.
+WARNING: This system appears to contain recognized network hardware: InfiniBand IBV
+WARNING: which is supported by a GASNet native conduit, although
+WARNING: it was not detected at configure time (missing drivers?)
+WARNING: You should *really* use the high-performance native GASNet conduit
+WARNING: if communication performance is at all important in this program run.
+Number of tasks     = 5
+<internal>: error: Out of memory allocating "tasking layer unspecified data"
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun detected that one or more processes exited with non-zero status, thus causing
+the job to be terminated. The first process to do so was:
+
+  Process name: [[10420,1],0]
+  Exit code:    1
+--------------------------------------------------------------------------
+
+ Performance counter stats for './matmul_par -nl 1':
+
+         32,141.71 msec task-clock:u              #    4.008 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            33,337      page-faults:u             #    0.001 M/sec                  
+    58,398,446,935      cycles:u                  #    1.817 GHz                      (25.00%)
+    72,508,992,933      instructions:u            #    1.24  insn per cycle           (37.50%)
+     5,330,646,666      branches:u                #  165.848 M/sec                    (37.50%)
+        13,376,228      branch-misses:u           #    0.25% of all branches          (37.49%)
+    29,479,005,875      L1-dcache-loads:u         #  917.157 M/sec                    (24.97%)
+        36,350,035      L1-dcache-load-misses:u   #    0.12% of all L1-dcache hits    (24.98%)
+        40,040,381      LLC-loads:u               #    1.246 M/sec                    (25.04%)
+           519,651      LLC-load-misses:u         #    1.30% of all LL-cache hits     (25.02%)
+
+       8.018784754 seconds time elapsed
+
+      24.330781000 seconds user
+       7.903999000 seconds sys
+
+
+--------------------
+matmul_par test with threads=6
+WARNING: Using GASNet's mpi-conduit, which exists for portability convenience.
+WARNING: This system appears to contain recognized network hardware: InfiniBand IBV
+WARNING: which is supported by a GASNet native conduit, although
+WARNING: it was not detected at configure time (missing drivers?)
+WARNING: You should *really* use the high-performance native GASNet conduit
+WARNING: if communication performance is at all important in this program run.
+Number of tasks     = 6
+<internal>: error: Out of memory allocating "tasking layer unspecified data"
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun detected that one or more processes exited with non-zero status, thus causing
+the job to be terminated. The first process to do so was:
+
+  Process name: [[10574,1],0]
+  Exit code:    1
+--------------------------------------------------------------------------
+
+ Performance counter stats for './matmul_par -nl 1':
+
+         35,888.52 msec task-clock:u              #    4.560 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            36,703      page-faults:u             #    0.001 M/sec                  
+    66,779,445,758      cycles:u                  #    1.861 GHz                      (24.94%)
+    84,790,821,441      instructions:u            #    1.27  insn per cycle           (37.44%)
+     6,093,791,186      branches:u                #  169.798 M/sec                    (37.47%)
+        13,343,103      branch-misses:u           #    0.22% of all branches          (37.50%)
+    34,851,786,658      L1-dcache-loads:u         #  971.112 M/sec                    (24.93%)
+        29,245,557      L1-dcache-load-misses:u   #    0.08% of all L1-dcache hits    (25.02%)
+        35,014,210      LLC-loads:u               #    0.976 M/sec                    (25.10%)
+           714,180      LLC-load-misses:u         #    2.04% of all LL-cache hits     (25.03%)
+
+       7.870336307 seconds time elapsed
+
+      27.917695000 seconds user
+       8.134557000 seconds sys
+
+
+--------------------
+matmul_par test with threads=7
+WARNING: Using GASNet's mpi-conduit, which exists for portability convenience.
+WARNING: This system appears to contain recognized network hardware: InfiniBand IBV
+WARNING: which is supported by a GASNet native conduit, although
+WARNING: it was not detected at configure time (missing drivers?)
+WARNING: You should *really* use the high-performance native GASNet conduit
+WARNING: if communication performance is at all important in this program run.
+Number of tasks     = 7
+<internal>: error: Out of memory allocating "tasking layer unspecified data"
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun detected that one or more processes exited with non-zero status, thus causing
+the job to be terminated. The first process to do so was:
+
+  Process name: [[10523,1],0]
+  Exit code:    1
+--------------------------------------------------------------------------
+
+ Performance counter stats for './matmul_par -nl 1':
+
+         39,819.20 msec task-clock:u              #    5.145 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            39,908      page-faults:u             #    0.001 M/sec                  
+    75,685,717,202      cycles:u                  #    1.901 GHz                      (24.95%)
+    96,705,737,195      instructions:u            #    1.28  insn per cycle           (37.44%)
+     6,817,133,315      branches:u                #  171.202 M/sec                    (37.52%)
+        17,070,417      branch-misses:u           #    0.25% of all branches          (37.55%)
+    39,964,080,249      L1-dcache-loads:u         # 1003.639 M/sec                    (25.04%)
+        30,953,560      L1-dcache-load-misses:u   #    0.08% of all L1-dcache hits    (25.03%)
+        37,662,795      LLC-loads:u               #    0.946 M/sec                    (24.97%)
+           674,184      LLC-load-misses:u         #    1.79% of all LL-cache hits     (24.94%)
+
+       7.739382476 seconds time elapsed
+
+      31.628245000 seconds user
+       8.387534000 seconds sys
+
+
+--------------------
+matmul_par test with threads=8
+WARNING: Using GASNet's mpi-conduit, which exists for portability convenience.
+WARNING: This system appears to contain recognized network hardware: InfiniBand IBV
+WARNING: which is supported by a GASNet native conduit, although
+WARNING: it was not detected at configure time (missing drivers?)
+WARNING: You should *really* use the high-performance native GASNet conduit
+WARNING: if communication performance is at all important in this program run.
+Number of tasks     = 8
+<internal>: error: Out of memory allocating "tasking layer unspecified data"
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun detected that one or more processes exited with non-zero status, thus causing
+the job to be terminated. The first process to do so was:
+
+  Process name: [[10550,1],0]
+  Exit code:    1
+--------------------------------------------------------------------------
+
+ Performance counter stats for './matmul_par -nl 1':
+
+         38,689.05 msec task-clock:u              #    4.737 CPUs utilized          
+                 0      context-switches:u        #    0.000 K/sec                  
+                 0      cpu-migrations:u          #    0.000 K/sec                  
+            41,919      page-faults:u             #    0.001 M/sec                  
+    79,445,510,491      cycles:u                  #    2.053 GHz                      (25.00%)
+   103,627,870,992      instructions:u            #    1.30  insn per cycle           (37.51%)
+     7,122,179,282      branches:u                #  184.088 M/sec                    (37.46%)
+         9,828,808      branch-misses:u           #    0.14% of all branches          (37.53%)
+    42,883,529,756      L1-dcache-loads:u         # 1108.415 M/sec                    (25.06%)
+        27,169,584      L1-dcache-load-misses:u   #    0.06% of all L1-dcache hits    (25.00%)
+        34,480,314      LLC-loads:u               #    0.891 M/sec                    (24.95%)
+         1,004,265      LLC-load-misses:u         #    2.91% of all LL-cache hits     (25.01%)
+
+       8.168271249 seconds time elapsed
+
+      32.967210000 seconds user
+       5.925803000 seconds sys
+
+
+--------------------

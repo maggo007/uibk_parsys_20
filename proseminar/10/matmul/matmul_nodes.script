@@ -8,7 +8,7 @@
 
 # Name your job. Unless you use the -o and -e options, output will
 # go to a unique file name.ojob_id for each job.
-#$ -N kopp_pi_chapel
+#$ -N kopp_matmul_nodes_chapel
 
 ##$ -M markus.kopp@student.uibk.ac.at
 ##$ -m e
@@ -16,19 +16,17 @@
 # Join the error stream to the output stream.
 #$ -j yes
 
-#$ -pe openmpi-8perhost 8
-
+#$ -pe openmpi-8perhost 32
 ##module load gcc
 module load openmpi/4.0.3
 
-echo "seq for comparison"
-perf stat -d ./pi
-echo "--------------------"
-for FILE in pi_par
+##chpl pi_node_par.chpl 
+
+for FILE in matmul_node_par
 do
-    for X in {1..8..1}; do
-        echo "$FILE test with threads=$X" 
-        CHPL_RT_NUM_THREADS_PER_LOCALE=$X perf stat -d ./$FILE
+    for X in {1..4..1}; do
+        echo "$FILE test with nodes=$X"
+        perf stat -d ./$FILE -nl $X
         echo "--------------------"
     done
 done    
