@@ -1,0 +1,418 @@
+#+options: ':nil *:t -:t ::t <:t H:t \n:t ^:nil arch:headline
+#+options: author:t broken-links:nil c:nil creator:nil
+#+options: d:(not "LOGBOOK") date:t e:t email:t f:t inline:t num:t
+#+options: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+options: timestamp:t title:t toc:t todo:t |:t
+#+options: center:nil
+#+title: Assignment 10
+#+author: Markus Kopp
+#+email: markus.kopp@student.uibk.ac.at
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 28.0.50 (Org mode 9.4)
+
+#+latex_class: scrartcl
+#+latex_class_options:
+#+latex_header: \usepackage[margin=0.5in]{geometry}
+#+latex_header_extra:
+#+description:
+#+keywords:
+#+subtitle:
+#+latex_compiler: pdflatex
+#+date: \today
+* Exercise 1
+Downloading and building chapel wasn't really a problem when you are not using the multilocale support. The quickstartguide is good enough for simple things that run on one locale/node. Implementing the monte carlo pi and the matrix multiplication was more easy if you try to stay close to =c= standard but then your solution may be slower than expected. All solutions were compiled with =--fast=.
+** pi.chpl
+Most of the code was taken from the chapel github repo. Interesting was that this solution was already using 2 of 4 available cores on my system.
+#+begin_src chapel :eval never-export
+  //https://github.com/chapel-lang/chapel/blob/master/test/exercises/MonteCarloPi/deitz/MonteCarloPi
+
+  use Random;
+
+  config const problemSize = 1000000000;
+  //config const problemSize = 10000000;
+  config const seed = 314159265;
+
+  writeln("Number of points    = ", problemSize);
+  writeln("Random number seed  = ", seed);
+
+  var rs = new owned NPBRandomStream(real, seed, parSafe=false);
+  var count = 0;
+  for i in 1..problemSize do
+    count += rs.getNext()**2 + rs.getNext()**2 <= 1.0;
+
+  writef("Approximation of pi = %{#.#######}\n", count * 4.0 / problemSize);
+
+#+end_src
+** pi_par.chpl
+The parallel version is splitting the problem size per task/thread. You can control the number of threads used by the environmental variable =CHPL_RT_NUM_THREADS_PER_LOCALE=
+#+begin_src chapel :eval never-export
+  //https://github.com/chapel-lang/chapel/blob/master/test/exercises/MonteCarloPi/
+
+  use Random;
+
+  config const n = 1000000000,
+  tasks = here.maxTaskPar,
+  seed = 314159265;
+
+  writeln("Number of points    = ", n);
+  writeln("Random number seed  = ", seed);
+  writeln("Number of tasks     = ", tasks);
+
+  //
+  // Use a coforall to create the configured number of tasks.  Have each 
+  // task construct a RandomStream object with the same seed, fast forward
+  // to the task's unique point in the stream (in order to avoid using
+  // the same random numbers redundantly while also getting the same
+  // answer as the serial version), run the Monte Carlo method for its
+  // portion of the n total points, and delete the RandomStream object.
+  // Store the resulting count in an array of counts with one element per
+  // task.
+  //
+  var counts: [0..#tasks] int;
+  coforall tid in 0..#tasks {
+    var rs = new owned NPBRandomStream(real, seed, parSafe=false);
+    const nPerTask = n/tasks,
+          extras = n%tasks;
+    rs.skipToNth(2*(tid*nPerTask + (if tid < extras then tid else extras)));
+
+    var count = 0;
+    for i in 1..nPerTask + (tid < extras) do
+      count += (rs.getNext()**2 + rs.getNext()**2) <= 1.0;
+
+    counts[tid] = count;
+  }
+
+  //
+  // Sum the counts across all the tasks using a reduction.
+  //
+  var count = + reduce counts;
+
+  writef("Approximation of pi = %{#.#######}\n", count * 4.0 / n);
+
+#+end_src
+** pi.script
+#+begin_src bash :eval never-export
+  #!/bin/bash
+
+  # Execute job in the queue "std.q" unless you have special requirements.
+  #$ -q std.q
+
+  # The batch system should use the current directory as working directory.
+  #$ -cwd
+
+  # Name your job. Unless you use the -o and -e options, output will
+  # go to a unique file name.ojob_id for each job.
+  #$ -N kopp_pi_chapel
+
+  ##$ -M markus.kopp@student.uibk.ac.at
+  ##$ -m e
+
+  # Join the error stream to the output stream.
+  #$ -j yes
+
+  #$ -pe openmpi-8perhost 8
+
+  ##module load gcc
+  module load openmpi/4.0.3
+
+  echo "seq for comparison"
+  perf stat -d ./pi
+  echo "--------------------"
+  for FILE in pi_par
+  do
+      for X in {1..8..1}; do
+          echo "$FILE test with threads=$X" 
+          CHPL_RT_NUM_THREADS_PER_LOCALE=$X perf stat -d ./$FILE
+          echo "--------------------"
+      done
+  done    
+#+end_src
+** matmul.chpl
+Interestingly enough this version is already the best version because it is already parallel and has the fastest execution time. Transposed access is used in this version ti increase cache hits.
+#+begin_src chapel :eval never-export
+  //https://github.com/Spartee/Matrix-Multiplication-Chapel/blob/master/parmMultiply.chpl
+
+
+  use Random;
+  use LinearAlgebra;
+
+  config const N = 2552;
+  config const seed = 314159265;
+
+  var A : [1..N, 1..N] real;  // first matrix
+  fillRandom(A, seed);
+
+  var B : [1..N, 1..N] real; // second matrix
+  forall (i,j) in B.domain do
+    if (i==j) then B(i,j) = 1.0;
+
+  var C : [1..N, 1..N] real; // matrix for results.
+
+  //transposed access
+  forall (i,j) in A.domain do {
+    forall k in 1..N do {
+      C[i,j] += A[i,k] * B[j,k];
+    }
+  }
+
+#+end_src
+** matmul_par.chpl
+This version splits up the array row vise but is not able 
+#+begin_src chapel :eval never-export
+//https://github.com/Spartee/Matrix-Multiplication-Chapel/blob/master/parmMultiply.chpl
+
+//using CHPL_RT_NUM_THREADS_PER_LOCALE=  for number of threads. not working with 1
+
+use Random;
+use LinearAlgebra;
+
+config const N = 2552;
+config const seed = 314159265;
+config const tasks = here.maxTaskPar;
+
+writeln("Number of tasks     = ", tasks);
+
+var A : [1..N, 1..N] real;  // first matrix
+fillRandom(A, seed);
+
+var B : [1..N, 1..N] real; // second matrix
+forall (i,j) in B.domain do
+  if (i==j) then B(i,j) = 1.0;
+
+var C : [1..N, 1..N] real; // matrix for results.
+
+const nPerTask = N/tasks,
+      extras = N%tasks;
+
+var counts: [0..#tasks] int;
+coforall tid in 0..#tasks {
+  forall i in (1+tid*nPerTask..nPerTask+nPerTask*tid) do {
+    forall j in 1..N do
+      forall k in 1..N do {
+        C[i,j] += A[i,k] * B[k,j];
+      }
+  }
+}
+#+end_src
+** matmul.script
+#+begin_src bash :eval never-export
+  #!/bin/bash
+
+  # Execute job in the queue "std.q" unless you have special requirements.
+  #$ -q std.q
+
+  # The batch system should use the current directory as working directory.
+  #$ -cwd
+
+  # Name your job. Unless you use the -o and -e options, output will
+  # go to a unique file name.ojob_id for each job.
+  #$ -N kopp_matmul_chapel
+
+  ##$ -M markus.kopp@student.uibk.ac.at
+  ##$ -m e
+
+  # Join the error stream to the output stream.
+  #$ -j yes
+
+  #$ -pe openmpi-8perhost 8
+  ## module load gcc
+  ## module load openmpi/4.0.3
+
+
+  echo "seq for comparison"
+  perf stat -d ./matmul
+  echo "--------------------"
+  for FILE in matmul_par matmul
+  do
+      for X in {1..8..1}; do
+          echo "$FILE test with threads=$X"
+          CHPL_RT_NUM_THREADS_PER_LOCALE=$X perf stat -d ./$FILE
+          echo "--------------------"
+      done
+  done    
+#+end_src
+
+* Exercise 2
+This part is where you lose all hope and just accept that your version may or may not have a speed increase. It parallelizes over the locales/nodes and the threads.
+** pi_node_par.chpl
+This version is faster than one with simple thread parallel option because it was taken from chapel itself and uses some advanced things like =borrow=
+#+begin_src chapel :eval never-export
+//https://github.com/chapel-lang/chapel/blob/master/test/exercises/MonteCarloPi/deitz/MonteCarloPi
+//
+// Multi-Locale Task-Parallel Monte Carlo Approximation of PI
+//
+
+//
+// Use the standard random numbers module.
+//
+use Random;
+
+//
+// Declare command-line configuration constants for:
+//   n: the number of random points to generate
+//   seed: the random number generator seed
+//   tasks: the number of tasks to parallelize the computation (per locale)
+//
+config const n = 1000000000;
+config const tasks = here.maxTaskPar;
+config const seed = 314159265;
+
+//
+// Output simulation setup.
+//
+writeln("Number of locales   = ", numLocales);
+writeln("Number of points    = ", n);
+writeln("Random number seed  = ", seed);
+writeln("Number of tasks     = ", tasks, " (per locale)");
+
+//
+// On each locale, for each task on that locale, construct a
+// RandomStream object, run the Monte Carlo simulation, and delete the
+// RandomStream object.  Store the resulting count in an array of
+// counts, one element per task per locale.  Since there are no
+// parallel accesses to the RandomStream object (each task has its own
+// object), set parSafe to false to avoid locking overhead.
+//
+var counts: [LocaleSpace] [1..tasks] int;
+coforall loc in Locales do on loc {
+  var myN = (loc.id+1)*n/numLocales - (loc.id)*n/numLocales;
+  coforall task in 1..tasks {
+    var rs = new borrowed NPBRandomStream(real, seed + loc.id*tasks*2 + task*2, parSafe=false);
+    var count = 0;
+    for i in (task-1)*myN/tasks+1..task*myN/tasks do
+      count += rs.getNext()**2 + rs.getNext()**2 <= 1.0;
+    counts[loc.id][task] = count;
+  }
+}
+
+//
+// Sum the counts across all the tasks.
+//
+var count = 0;
+for loc in Locales do
+  for task in 1..tasks do
+    count += counts[loc.id][task];
+
+//
+// Output the approximation of PI.
+//
+writef("Approximation of PI = %{#.#######}\n", count * 4.0 / n);
+
+#+end_src
+** pi_nodes.script
+#+begin_src bash :eval never-export
+  #!/bin/bash
+
+  # Execute job in the queue "std.q" unless you have special requirements.
+  #$ -q std.q
+
+  # The batch system should use the current directory as working directory.
+  #$ -cwd
+
+  # Name your job. Unless you use the -o and -e options, output will
+  # go to a unique file name.ojob_id for each job.
+  #$ -N kopp_pi_chapel_nodes
+
+  ##$ -M markus.kopp@student.uibk.ac.at
+  ##$ -m e
+
+  # Join the error stream to the output stream.
+  #$ -j yes
+
+  #$ -pe openmpi-8perhost 32
+  ##module load gcc
+  module load openmpi/4.0.3
+
+  ##chpl pi_node_par.chpl 
+
+  for FILE in pi_node_par
+  do
+      for X in {1..4..1}; do
+          echo "$FILE test with nodes=$X"
+          perf stat -d ./$FILE -nl $X
+          echo "--------------------"
+      done
+  done    
+#+end_src
+** matmul_node_par.chpl
+Try to use a simple parallel version but speedup is not working =sadface=.
+#+begin_src chapel :eval never-export
+
+//using CHPL_RT_NUM_THREADS_PER_LOCALE=  for number of threads. not working with 1
+
+use Random;
+use LinearAlgebra;
+
+config const N = 2552;
+config const seed = 314159265;
+config const tasks = here.maxTaskPar;
+
+//
+// Output simulation setup.
+//
+writeln("Number of locales   = ", numLocales);
+writeln("Number of points    = ", N);
+writeln("Random number seed  = ", seed);
+writeln("Number of tasks     = ", tasks, " (per locale)");
+
+var A : [1..N, 1..N] real;  // first matrix
+fillRandom(A, seed);
+
+var B : [1..N, 1..N] real; // second matrix
+forall (i,j) in B.domain do
+  if (i==j) then B(i,j) = 1.0;
+
+var C : [1..N, 1..N] real;
+
+const nPerLocale = N/numLocales,
+      extras = N%numLocales;
+
+var counts: [0..#numLocales] int;
+coforall localnum in 0..#numLocales {
+  forall i in (1+localnum*nPerLocale..nPerLocale+nPerLocale*localnum) do {
+    forall j in 1..N do {
+      forall k in 1..N do {
+        C[i,j] += A[i,k] * B[k,j];
+      }
+    }
+  }
+}
+
+#+end_src
+** matmul_nodes.script
+#+begin_src bash :eval never-export
+  #!/bin/bash
+
+  # Execute job in the queue "std.q" unless you have special requirements.
+  #$ -q std.q
+
+  # The batch system should use the current directory as working directory.
+  #$ -cwd
+
+  # Name your job. Unless you use the -o and -e options, output will
+  # go to a unique file name.ojob_id for each job.
+  #$ -N kopp_matmul_nodes_chapel
+
+  ##$ -M markus.kopp@student.uibk.ac.at
+  ##$ -m e
+
+  # Join the error stream to the output stream.
+  #$ -j yes
+
+  #$ -pe openmpi-8perhost 32
+  ##module load gcc
+  module load openmpi/4.0.3
+
+  ##chpl pi_node_par.chpl 
+
+  for FILE in matmul_node_par
+  do
+      for X in {1..4..1}; do
+          echo "$FILE test with nodes=$X"
+          perf stat -d ./$FILE -nl $X
+          echo "--------------------"
+      done
+  done    
+#+end_src
