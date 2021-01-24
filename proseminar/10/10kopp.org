@@ -129,6 +129,11 @@ The parallel version is splitting the problem size per task/thread. You can cont
       done
   done    
 #+end_src
+** results pi [s]
+#+ATTR_LATEX: :width \textwidth :caption Execution time on lcc2 in seconds from benchmk time
+|  1 Thr | 2 Thr |  4 Thr | 8 Thr |
+|--------+-------+--------+-------|
+| 56.916 |  28.5 | 14.293 | 7.153 |
 ** matmul.chpl
 Interestingly enough this version is already the best version because it is already parallel and has the fastest execution time. Transposed access is used in this version ti increase cache hits.
 #+begin_src chapel :eval never-export
@@ -233,6 +238,11 @@ coforall tid in 0..#tasks {
       done
   done    
 #+end_src
+** results matmul [s]
+#+ATTR_LATEX: :width \textwidth :caption Execution time on lcc2 in seconds
+|  1 Thr |  2 Thr |  4 Thr |  8 Thr |
+|--------+--------+--------+--------|
+| 60.656 | 30.115 | 22.623 | 11.664 |
 
 * Exercise 2
 This part is where you lose all hope and just accept that your version may or may not have a speed increase. It parallelizes over the locales/nodes and the threads.
@@ -336,6 +346,12 @@ writef("Approximation of PI = %{#.#######}\n", count * 4.0 / n);
       done
   done    
 #+end_src
+** pi_nodes results [s]
+#+ATTR_LATEX: :width \textwidth :caption Execution time on lcc2 in seconds from benchmk time
+| 1 Node | 2 Nodes | 4 Nodes |
+|--------+---------+---------|
+|  9.058 |   5.051 |   3.367 |
+
 ** matmul_node_par.chpl
 Try to use a simple parallel version but speedup is not working =sadface=.
 #+begin_src chapel :eval never-export
@@ -416,3 +432,8 @@ coforall localnum in 0..#numLocales {
       done
   done    
 #+end_src
+** matmul_nodes results [s]
+#+ATTR_LATEX: :width \textwidth :caption Execution time on lcc2 in seconds from benchmk time
+| 1 Node | 2 Nodes | 4 Nodes |
+|--------+---------+---------|
+| 22.029 |  24.885 |  33.278 |
